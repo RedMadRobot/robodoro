@@ -23,7 +23,6 @@ struct PomodoroView: View {
                 timerState: viewModel.timerState)
             Text("POMODORO")
         }
-        .ignoresSafeArea()
     }
 }
 

@@ -41,7 +41,7 @@ struct FocusedBackground: View {
                         y: geometry.frame(in: .global).midY)
                     for i in 0...Constants.numberOfLines {
                         path.move(to: center)
-                        path.addLine(to: CGPoint(
+                        path.addLine(to: .init(
                             x: center.x + Constants.radius * cos(
                                 degrees: Double(i) * 360 / Double(Constants.numberOfLines)),
                             y: center.y + Constants.radius * sin(
@@ -52,6 +52,7 @@ struct FocusedBackground: View {
                 .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
             }
         }
+        .ignoresSafeArea()
     }
     
     // MARK: - Private Methods
@@ -64,6 +65,8 @@ struct FocusedBackground: View {
         return __cospi(degrees/180.0)
     }
 }
+
+// MARK: - PreviewProvider
 
 struct FocusedBackground_Previews: PreviewProvider {
     static var previews: some View {

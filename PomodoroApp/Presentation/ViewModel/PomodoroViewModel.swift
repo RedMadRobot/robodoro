@@ -11,6 +11,6 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Public Properties
     
-    var pomodoroState: PomodoroState = .focus
+    var pomodoroState: PomodoroState = .break
     var timerState: TimerState = .running
 }

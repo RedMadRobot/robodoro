@@ -45,12 +45,16 @@ struct BackgroundView: View {
                 backgroundColor: backgroundColor,
                 strokeColor: strokeColor)
         case .break:
-            BreakBackground()
+            BreakBackground(
+                backgroundColor: backgroundColor,
+                strokeColor: strokeColor)
         case .longBreak:
             LongBreakBackground()
         }
     }
 }
+
+// MARK: - PreviewProvider
 
 struct BackgroundView_Previews: PreviewProvider {
     static var previews: some View {
