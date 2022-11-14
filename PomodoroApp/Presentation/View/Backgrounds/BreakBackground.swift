@@ -37,12 +37,14 @@ struct BreakBackground: View {
                 Path { path in
                     let globalFrame = geometry.frame(in: .global)
                     for coordinate in Constants.coodrdinates {
-                        path.move(to: .init(
-                            x: coordinate,
-                            y: globalFrame.minY))
-                        path.addLine(to: .init(
-                            x: coordinate,
-                            y: globalFrame.maxY))
+                        path.move(
+                            to: .init(
+                                x: coordinate,
+                                y: globalFrame.minY))
+                        path.addLine(
+                            to: .init(
+                                x: coordinate,
+                                y: globalFrame.maxY))
                     }
                 }
                 .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)

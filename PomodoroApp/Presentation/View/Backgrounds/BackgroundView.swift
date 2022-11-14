@@ -49,7 +49,9 @@ struct BackgroundView: View {
                 backgroundColor: backgroundColor,
                 strokeColor: strokeColor)
         case .longBreak:
-            LongBreakBackground()
+            LongBreakBackground(
+                backgroundColor: backgroundColor,
+                strokeColor: strokeColor)
         }
     }
 }

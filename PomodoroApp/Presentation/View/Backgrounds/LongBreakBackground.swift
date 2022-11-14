@@ -8,13 +8,63 @@
 import SwiftUI
 
 struct LongBreakBackground: View {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let initialY = CGFloat(45.35)
+        static let xOffset = CGFloat(50)
+        static let height = CGFloat(33.27)
+        static let linesSpacing = CGFloat(135.54)
+        static let frequency = CGFloat(0.013)
+        static let lineWidth = CGFloat(0.5)
+    }
+    
+    // MARK: - Private Properties
+    
+    private let backgroundColor: UIColor
+    private let strokeColor: UIColor
+    
+    // MARK: - Init
+    
+    init(backgroundColor: UIColor, strokeColor: UIColor) {
+        self.backgroundColor = backgroundColor
+        self.strokeColor = strokeColor
+    }
+    
+    // MARK: - View
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(backgroundColor)
+            GeometryReader { geometry in
+                Path { path in
+                    let globalFrame = geometry.frame(in: .global)
+                    let width = globalFrame.maxX
+                    var y = Constants.initialY
+                    while y - Constants.height < globalFrame.maxY {
+                        path.move(to: .init(x: -Constants.xOffset, y: y))
+                        for x in stride(from: 0, through: width, by: 1) {
+                            let y = Constants.height * sin(Constants.frequency * (x + Constants.xOffset)) + y
+                            path.addLine(to: CGPoint(x: x, y: y))
+                        }
+                        y += Constants.linesSpacing
+                    }
+                    
+                }
+                .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
+            }
+        }
+        .ignoresSafeArea()
     }
 }
 
+// MARK: - PreviewProvider
+
 struct LongBreakBackground_Previews: PreviewProvider {
     static var previews: some View {
-        LongBreakBackground()
+        LongBreakBackground(
+            backgroundColor: Colors.longBreakBackground,
+            strokeColor: Colors.longBreakLine)
     }
 }
