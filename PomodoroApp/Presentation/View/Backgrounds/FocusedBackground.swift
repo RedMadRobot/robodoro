@@ -48,7 +48,6 @@ struct FocusedBackground: View {
                                 y: center.y + Constants.radius * sin(
                                     degrees: Double(i) * 360 / Double(Constants.numberOfLines))))
                     }
-                    
                 }
                 .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
             }

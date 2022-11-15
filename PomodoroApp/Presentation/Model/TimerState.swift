@@ -13,7 +13,7 @@ enum TimerState {
     case paused
 }
 
-// MARK: - Colors
+// MARK: - Color
 
 extension TimerState {
     

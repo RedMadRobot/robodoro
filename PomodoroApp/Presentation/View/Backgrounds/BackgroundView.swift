@@ -39,20 +39,23 @@ struct BackgroundView: View {
     // MARK: - View
     
     var body: some View {
-        switch pomodoroState {
-        case .focus:
-            FocusedBackground(
-                backgroundColor: backgroundColor,
-                strokeColor: strokeColor)
-        case .break:
-            BreakBackground(
-                backgroundColor: backgroundColor,
-                strokeColor: strokeColor)
-        case .longBreak:
-            LongBreakBackground(
-                backgroundColor: backgroundColor,
-                strokeColor: strokeColor)
+        ZStack {
+            switch pomodoroState {
+            case .focus:
+                FocusedBackground(
+                    backgroundColor: backgroundColor,
+                    strokeColor: strokeColor)
+            case .break:
+                BreakBackground(
+                    backgroundColor: backgroundColor,
+                    strokeColor: strokeColor)
+            case .longBreak:
+                LongBreakBackground(
+                    backgroundColor: backgroundColor,
+                    strokeColor: strokeColor)
+            }
         }
+        .animation(.easeInOut, value: pomodoroState)
     }
 }
 

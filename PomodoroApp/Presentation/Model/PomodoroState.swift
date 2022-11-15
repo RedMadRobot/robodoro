@@ -13,7 +13,7 @@ enum PomodoroState {
     case longBreak
 }
 
-// MARK: - Colors
+// MARK: - Color
 
 extension PomodoroState {
     
@@ -36,6 +36,22 @@ extension PomodoroState {
             return Colors.breakLine
         case .longBreak:
             return Colors.longBreakLine
+        }
+    }
+}
+
+// MARK: - Title
+
+extension PomodoroState {
+    
+    var title: String {
+        switch self {
+        case .focus:
+            return "FOCUS"
+        case .break:
+            return "BREAK"
+        case .longBreak:
+            return "LONG BREAK"
         }
     }
 }

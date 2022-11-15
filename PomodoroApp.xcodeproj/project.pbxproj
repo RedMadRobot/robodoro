@@ -18,6 +18,10 @@
 		352039502922709E00A4028E /* BreakBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520394F2922709E00A4028E /* BreakBackground.swift */; };
 		35203953292270B600A4028E /* LongBreakBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35203952292270B600A4028E /* LongBreakBackground.swift */; };
 		352039552922739500A4028E /* TimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039542922739500A4028E /* TimerState.swift */; };
+		3520396C2923999E00A4028E /* Unbounded-Blond.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3520396B2923999E00A4028E /* Unbounded-Blond.ttf */; };
+		3520396E2923BD5300A4028E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520396D2923BD5300A4028E /* StageView.swift */; };
+		352039712923BE0100A4028E /* StageElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039702923BE0100A4028E /* StageElementView.swift */; };
+		352039732923C45B00A4028E /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039722923C45B00A4028E /* Font+Extension.swift */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
 		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
@@ -34,6 +38,11 @@
 		3520394F2922709E00A4028E /* BreakBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakBackground.swift; sourceTree = "<group>"; };
 		35203952292270B600A4028E /* LongBreakBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongBreakBackground.swift; sourceTree = "<group>"; };
 		352039542922739500A4028E /* TimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerState.swift; sourceTree = "<group>"; };
+		35203967292396B100A4028E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3520396B2923999E00A4028E /* Unbounded-Blond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Unbounded-Blond.ttf"; sourceTree = "<group>"; };
+		3520396D2923BD5300A4028E /* StageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageView.swift; sourceTree = "<group>"; };
+		352039702923BE0100A4028E /* StageElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageElementView.swift; sourceTree = "<group>"; };
+		352039722923C45B00A4028E /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
@@ -74,6 +83,7 @@
 		35203939291EB37B00A4028E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3520396F2923BDE300A4028E /* Stage */,
 				3520394B2922704A00A4028E /* Backgrounds */,
 				3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */,
 			);
@@ -94,6 +104,7 @@
 				3520394029223D8600A4028E /* Colors.swift */,
 				352039442922424500A4028E /* UIColor+Hex.swift */,
 				352039462922486F00A4028E /* Images.swift */,
+				352039722923C45B00A4028E /* Font+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -101,6 +112,7 @@
 		3520394829224A3200A4028E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				352039642923966E00A4028E /* Fonts */,
 				3585B8EC291EA7B3007B01B1 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -115,6 +127,32 @@
 				35203952292270B600A4028E /* LongBreakBackground.swift */,
 			);
 			path = Backgrounds;
+			sourceTree = "<group>";
+		};
+		352039642923966E00A4028E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3520396B2923999E00A4028E /* Unbounded-Blond.ttf */,
+			);
+			name = Fonts;
+			path = ../Utility/Fonts;
+			sourceTree = "<group>";
+		};
+		352039682923974800A4028E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				35203967292396B100A4028E /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3520396F2923BDE300A4028E /* Stage */ = {
+			isa = PBXGroup;
+			children = (
+				3520396D2923BD5300A4028E /* StageView.swift */,
+				352039702923BE0100A4028E /* StageElementView.swift */,
+			);
+			path = Stage;
 			sourceTree = "<group>";
 		};
 		3585B8DC291EA7B2007B01B1 = {
@@ -140,6 +178,7 @@
 				35203936291EAD5700A4028E /* Presentation */,
 				3520393F29223D6D00A4028E /* Utility */,
 				3520394829224A3200A4028E /* Resources */,
+				352039682923974800A4028E /* Supporting Files */,
 				3585B8EE291EA7B3007B01B1 /* Preview Content */,
 			);
 			path = PomodoroApp;
@@ -220,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */,
+				3520396C2923999E00A4028E /* Unbounded-Blond.ttf in Resources */,
 				3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,14 +272,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				352039472922486F00A4028E /* Images.swift in Sources */,
+				3520396E2923BD5300A4028E /* StageView.swift in Sources */,
 				352039552922739500A4028E /* TimerState.swift in Sources */,
 				3520393B291EB3A100A4028E /* PomodoroState.swift in Sources */,
 				3520394A2922532700A4028E /* BackgroundView.swift in Sources */,
 				3520394129223D8600A4028E /* Colors.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
 				3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */,
+				352039712923BE0100A4028E /* StageElementView.swift in Sources */,
 				35203953292270B600A4028E /* LongBreakBackground.swift in Sources */,
 				352039452922424500A4028E /* UIColor+Hex.swift in Sources */,
+				352039732923C45B00A4028E /* Font+Extension.swift in Sources */,
 				352039502922709E00A4028E /* BreakBackground.swift in Sources */,
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
 				3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */,
@@ -374,6 +417,7 @@
 				DEVELOPMENT_TEAM = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PomodoroApp/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -405,6 +449,7 @@
 				DEVELOPMENT_TEAM = 42LRQS6X44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PomodoroApp/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
