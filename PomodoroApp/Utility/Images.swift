@@ -8,9 +8,6 @@
 import UIKit
 
 enum Images {
-    static let `break` = UIImage(named: "break.pdf")!
-    static let focus = UIImage(named: "focus.pdf")!
-    static let longBreak = UIImage(named: "longBreak.pdf")!
     static let pause = UIImage(named: "pause.pdf")!
     static let play = UIImage(named: "play.pdf")!
     static let restart = UIImage(named: "restart.pdf")!

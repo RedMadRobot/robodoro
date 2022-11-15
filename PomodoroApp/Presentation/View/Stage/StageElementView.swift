@@ -39,6 +39,7 @@ struct StageElementView: View {
                     .frame(width: Constants.frameSize)
             }
         }
+        .animation(.easeInOut, value: isFilled)
     }
 }
 

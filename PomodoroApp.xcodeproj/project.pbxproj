@@ -22,6 +22,11 @@
 		3520396E2923BD5300A4028E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520396D2923BD5300A4028E /* StageView.swift */; };
 		352039712923BE0100A4028E /* StageElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039702923BE0100A4028E /* StageElementView.swift */; };
 		352039732923C45B00A4028E /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039722923C45B00A4028E /* Font+Extension.swift */; };
+		352039772923D31200A4028E /* DI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039762923D31200A4028E /* DI.swift */; };
+		352039792923D33400A4028E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039782923D33400A4028E /* AppServices.swift */; };
+		3520397B2923D48000A4028E /* PomodoroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397A2923D48000A4028E /* PomodoroService.swift */; };
+		3520397D2923D61000A4028E /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397C2923D61000A4028E /* TimerService.swift */; };
+		3520397F2923DC3700A4028E /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateFormatter+Extension.swift */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
 		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
@@ -43,6 +48,11 @@
 		3520396D2923BD5300A4028E /* StageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageView.swift; sourceTree = "<group>"; };
 		352039702923BE0100A4028E /* StageElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageElementView.swift; sourceTree = "<group>"; };
 		352039722923C45B00A4028E /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		352039762923D31200A4028E /* DI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DI.swift; sourceTree = "<group>"; };
+		352039782923D33400A4028E /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
+		3520397A2923D48000A4028E /* PomodoroService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroService.swift; sourceTree = "<group>"; };
+		3520397C2923D61000A4028E /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
+		3520397E2923DC3700A4028E /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
@@ -105,6 +115,7 @@
 				352039442922424500A4028E /* UIColor+Hex.swift */,
 				352039462922486F00A4028E /* Images.swift */,
 				352039722923C45B00A4028E /* Font+Extension.swift */,
+				3520397E2923DC3700A4028E /* DateFormatter+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -155,6 +166,24 @@
 			path = Stage;
 			sourceTree = "<group>";
 		};
+		352039742923D29C00A4028E /* Business Logic */ = {
+			isa = PBXGroup;
+			children = (
+				3520397A2923D48000A4028E /* PomodoroService.swift */,
+				3520397C2923D61000A4028E /* TimerService.swift */,
+			);
+			path = "Business Logic";
+			sourceTree = "<group>";
+		};
+		352039752923D2E300A4028E /* Dependency Injection */ = {
+			isa = PBXGroup;
+			children = (
+				352039762923D31200A4028E /* DI.swift */,
+				352039782923D33400A4028E /* AppServices.swift */,
+			);
+			path = "Dependency Injection";
+			sourceTree = "<group>";
+		};
 		3585B8DC291EA7B2007B01B1 = {
 			isa = PBXGroup;
 			children = (
@@ -175,7 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				3585B8F6291EA9A9007B01B1 /* App */,
+				352039742923D29C00A4028E /* Business Logic */,
 				35203936291EAD5700A4028E /* Presentation */,
+				352039752923D2E300A4028E /* Dependency Injection */,
 				3520393F29223D6D00A4028E /* Utility */,
 				3520394829224A3200A4028E /* Resources */,
 				352039682923974800A4028E /* Supporting Files */,
@@ -271,11 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3520397D2923D61000A4028E /* TimerService.swift in Sources */,
+				352039772923D31200A4028E /* DI.swift in Sources */,
 				352039472922486F00A4028E /* Images.swift in Sources */,
 				3520396E2923BD5300A4028E /* StageView.swift in Sources */,
 				352039552922739500A4028E /* TimerState.swift in Sources */,
 				3520393B291EB3A100A4028E /* PomodoroState.swift in Sources */,
 				3520394A2922532700A4028E /* BackgroundView.swift in Sources */,
+				3520397B2923D48000A4028E /* PomodoroService.swift in Sources */,
 				3520394129223D8600A4028E /* Colors.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
 				3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */,
@@ -286,6 +320,8 @@
 				352039502922709E00A4028E /* BreakBackground.swift in Sources */,
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
 				3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */,
+				3520397F2923DC3700A4028E /* DateFormatter+Extension.swift in Sources */,
+				352039792923D33400A4028E /* AppServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

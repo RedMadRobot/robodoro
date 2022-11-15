@@ -9,38 +9,54 @@ import SwiftUI
 
 struct PomodoroView: View {
     
+    // MARK: - Private Properties
+    
     @ObservedObject
     private var viewModel: PomodoroViewModel
+    
+    // MARK: - Init
     
     init() {
         viewModel = PomodoroViewModel()
     }
     
+    // MARK: - View
+    
     var body: some View {
         NavigationView {
             ZStack {
-                BackgroundView(
-                    pomodoroState: viewModel.pomodoroState,
-                    timerState: viewModel.timerState)
+                BackgroundView(viewModel: viewModel)
                 VStack(spacing: 16) {
                     Spacer()
-                    Text("25:00")
+                    Text(viewModel.showingTime)
                         .font(.time)
-                    StageView(filledCount: 3)
+                    StageView(
+                        stagesCount: viewModel.stagesCount,
+                        filledCount: viewModel.filledCount)
                     Spacer()
-                    Button {
-                        viewModel.moveState()
-                    } label: {
-                        Image(uiImage: Images.pause)
+                    // TODO: - Убрать вторую кнопку
+                    HStack(spacing: 10) {
+                        Button {
+                            viewModel.pause()
+                        } label: {
+                            Image(uiImage: Images.pause)
+                        }
+                        Button {
+                            viewModel.moveForward()
+                        } label: {
+                            Image(uiImage: Images.stop)
+                        }
                     }
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        print("Restart")
-                    } label: {
-                        Image(uiImage: Images.restart)
+                if viewModel.showResetButton {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            viewModel.reset()
+                        } label: {
+                            Image(uiImage: Images.restart)
+                        }
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -48,9 +64,13 @@ struct PomodoroView: View {
                         .font(.stageLabel)
                 }
             }
+            // TODO: - Разобраться почему не работает
+//            .animation(.easeInOut, value: viewModel.pomodoroState)
         }
     }
 }
+
+// MARK: - PreviewProvider
 
 struct PomodoroView_Previews: PreviewProvider {
     static var previews: some View {

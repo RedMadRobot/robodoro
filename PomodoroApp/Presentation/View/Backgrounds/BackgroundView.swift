@@ -11,51 +11,36 @@ struct BackgroundView: View {
     
     // MARK: - Private Properties
     
-    private var pomodoroState: PomodoroState
-    private var timerState: TimerState
-    
-    private var backgroundColor: UIColor {
-        timerState.isPaused
-            ? timerState.backgroundColor
-            : pomodoroState.backgroundColor
-    }
-    
-    private var strokeColor: UIColor {
-        timerState.isPaused
-            ? timerState.strokeColor
-            : pomodoroState.strokeColor
-    }
+    @ObservedObject
+    private var viewModel: PomodoroViewModel
     
     // MARK: - Init
     
-    init(
-        pomodoroState: PomodoroState,
-        timerState: TimerState
-    ) {
-        self.pomodoroState = pomodoroState
-        self.timerState = timerState
+    init(viewModel: PomodoroViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
     
     var body: some View {
         ZStack {
-            switch pomodoroState {
+            switch viewModel.pomodoroState {
             case .focus:
                 FocusedBackground(
-                    backgroundColor: backgroundColor,
-                    strokeColor: strokeColor)
+                    backgroundColor: viewModel.backgroundColor,
+                    strokeColor: viewModel.strokeColor)
             case .break:
                 BreakBackground(
-                    backgroundColor: backgroundColor,
-                    strokeColor: strokeColor)
+                    backgroundColor: viewModel.backgroundColor,
+                    strokeColor: viewModel.strokeColor)
             case .longBreak:
                 LongBreakBackground(
-                    backgroundColor: backgroundColor,
-                    strokeColor: strokeColor)
+                    backgroundColor: viewModel.backgroundColor,
+                    strokeColor: viewModel.strokeColor)
             }
         }
-        .animation(.easeInOut, value: pomodoroState)
+        .animation(.easeInOut, value: viewModel.pomodoroState)
+        .animation(.easeInOut, value: viewModel.timerState)
     }
 }
 
@@ -63,8 +48,6 @@ struct BackgroundView: View {
 
 struct BackgroundView_Previews: PreviewProvider {
     static var previews: some View {
-        BackgroundView(
-            pomodoroState: .focus,
-            timerState: .running)
+        BackgroundView(viewModel: PomodoroViewModel())
     }
 }

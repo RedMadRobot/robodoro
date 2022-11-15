@@ -13,16 +13,20 @@ struct StageView: View {
     
     private enum Constants {
         static let spacing = CGFloat(6)
-        static let stagesCount = 4
     }
     
     // MARK: - Private Properties
     
+    private let stagesCount: Int
     private let filledCount: Int
     
     // MARK: - Init
     
-    init(filledCount: Int) {
+    init(
+        stagesCount: Int,
+        filledCount: Int
+    ) {
+        self.stagesCount = stagesCount
         self.filledCount = filledCount
     }
     
@@ -30,7 +34,7 @@ struct StageView: View {
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            ForEach(0..<Constants.stagesCount, id: \.self) { stage in
+            ForEach(0..<stagesCount, id: \.self) { stage in
                 StageElementView(isFilled: stage < filledCount)
             }
         }
@@ -41,6 +45,6 @@ struct StageView: View {
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(filledCount: 3)
+        StageView(stagesCount: 4, filledCount: 3)
     }
 }
