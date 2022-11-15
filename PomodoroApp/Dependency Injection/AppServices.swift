@@ -9,5 +9,6 @@ import Foundation
 
 final class AppServices {
     
-    lazy var pomodoroService = PomodoroService()
+    lazy var pomodoroService: PomodoroService = PomodoroServiceImpl()
+    lazy var timerService: TimerService = TimerServiceImpl()
 }

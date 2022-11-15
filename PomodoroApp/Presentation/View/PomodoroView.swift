@@ -11,14 +11,8 @@ struct PomodoroView: View {
     
     // MARK: - Private Properties
     
-    @ObservedObject
-    private var viewModel: PomodoroViewModel
-    
-    // MARK: - Init
-    
-    init() {
-        viewModel = PomodoroViewModel()
-    }
+    @StateObject
+    private var viewModel: PomodoroViewModel = PomodoroViewModel()
     
     // MARK: - View
     
@@ -28,24 +22,17 @@ struct PomodoroView: View {
                 BackgroundView(viewModel: viewModel)
                 VStack(spacing: 16) {
                     Spacer()
-                    Text(viewModel.showingTime)
+                    Text(viewModel.formattedTime)
                         .font(.time)
+//                        .animation(.easeInOut, value: viewModel.leftTime)
                     StageView(
                         stagesCount: viewModel.stagesCount,
                         filledCount: viewModel.filledCount)
                     Spacer()
-                    // TODO: - Убрать вторую кнопку
-                    HStack(spacing: 10) {
-                        Button {
-                            viewModel.pause()
-                        } label: {
-                            Image(uiImage: Images.pause)
-                        }
-                        Button {
-                            viewModel.moveForward()
-                        } label: {
-                            Image(uiImage: Images.stop)
-                        }
+                    Button {
+                        viewModel.mainButtonAction()
+                    } label: {
+                        Image(uiImage: viewModel.buttonImage)
                     }
                 }
             }

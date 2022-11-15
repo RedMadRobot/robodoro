@@ -7,11 +7,28 @@
 
 import Foundation
 
+// MARK: - PomodoroServiceDelegate
+
 protocol PomodoroServiceDelegate: AnyObject {
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState)
 }
 
-final class PomodoroService {
+// MARK: - PomodoroService
+
+protocol PomodoroService {
+    var delegate: PomodoroServiceDelegate? { get set }
+    var currentState: PomodoroState { get }
+    var atInitialState: Bool { get }
+    var stagesCount: Int { get }
+    var completedStages: Int { get }
+    
+    func moveForward()
+    func reset()
+}
+
+// MARK: - PomodoroService
+
+final class PomodoroServiceImpl: PomodoroService {
     
     // MARK: - Public Properties
     
@@ -32,7 +49,7 @@ final class PomodoroService {
     var completedStages: Int {
         outerIndex
     }
-    
+        
     // MARK: - Private Properties
     
     private let pomodoroCycle: [[PomodoroState]] = [
@@ -42,7 +59,11 @@ final class PomodoroService {
         [.focus],
         [.longBreak]
     ]
-    private var innerIndex: Int = 0
+    private var innerIndex: Int = 0 {
+        didSet {
+            delegate?.pomododoService(self, didChangeStateTo: currentState)
+        }
+    }
     private var outerIndex: Int = 0 {
         didSet {
             innerIndex = 0
@@ -55,15 +76,11 @@ final class PomodoroService {
         if innerIndex < pomodoroCycle[outerIndex].count - 1 {
             innerIndex += 1
         } else if outerIndex < pomodoroCycle.count - 1 {
-             outerIndex += 1
-        } else {
-            return reset()
+            outerIndex += 1
         }
-        delegate?.pomododoService(self, didChangeStateTo: currentState)
     }
     
     func reset() {
         outerIndex = 0
-        delegate?.pomododoService(self, didChangeStateTo: currentState)
     }
 }

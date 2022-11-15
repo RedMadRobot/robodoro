@@ -8,6 +8,7 @@
 import UIKit
 
 enum TimerState {
+    case initial
     case running
     case ended
     case paused
@@ -21,7 +22,7 @@ extension TimerState {
         switch self {
         case .running, .ended:
             return false
-        case .paused:
+        case .paused, .initial:
             return true
         }
     }
@@ -32,5 +33,21 @@ extension TimerState {
     
     var strokeColor: UIColor {
         return Colors.pauseLine
+    }
+}
+
+// MARK: - Image
+
+extension TimerState {
+    
+    var buttonImage: UIImage {
+        switch self {
+        case .running:
+            return Images.pause
+        case .ended:
+            return Images.stop
+        case .initial, .paused:
+            return Images.play
+        }
     }
 }

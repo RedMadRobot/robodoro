@@ -12,13 +12,17 @@ final class PomodoroViewModel: ObservableObject {
     // MARK: - Public Properties
     
     @Published
-    private(set) var pomodoroState: PomodoroState = .focus
+    private(set) var pomodoroState: PomodoroState
     
     @Published
-    private(set) var showingTime: String = "25:00"
+    private(set) var timerState: TimerState
     
     @Published
-    private(set) var timerState: TimerState = .running
+    private(set) var leftTime: TimeInterval
+    
+    var formattedTime: String {
+        dateComponentsFormatter.string(from: leftTime) ?? "NaN"
+    }
     
     var stagesCount: Int {
         pomodoroService.stagesCount
@@ -29,7 +33,7 @@ final class PomodoroViewModel: ObservableObject {
     }
     
     var showResetButton: Bool {
-        !pomodoroService.atInitialState
+        timerService.canBeReseted
     }
     
     var backgroundColor: UIColor {
@@ -44,35 +48,52 @@ final class PomodoroViewModel: ObservableObject {
             : pomodoroState.strokeColor
     }
     
+    var buttonImage: UIImage {
+        timerState.buttonImage
+    }
+    
     // MARK: - Private Propeties
     
     private var pomodoroService: PomodoroService
+    private var timerService: TimerService
+    
+    private var dateComponentsFormatter: DateComponentsFormatter = .hourAndMinutesFormatter
     
     // MARK: - Init
     
-    init(pomodoroService: PomodoroService = DI.services.pomodoroService) {
+    init(
+        pomodoroService: PomodoroService = DI.services.pomodoroService,
+        timerService: TimerService = DI.services.timerService
+    ) {
         self.pomodoroService = pomodoroService
         self.pomodoroState = pomodoroService.currentState
-
-        pomodoroService.delegate = self
+        self.timerService = timerService
+        self.timerState = timerService.currentState
+        self.leftTime = pomodoroService.currentState.waitingTime
+        
+        self.pomodoroService.delegate = self
+        self.timerService.delegate = self
     }
     
     // MARK: - Public Methods
     
-    func pause() {
-        if timerState == .running {
-            timerState = .paused
-        } else {
-            timerState = .running
+    func mainButtonAction() {
+        switch timerState {
+        case .initial:
+            timerService.start(waitingTime: pomodoroState.waitingTime)
+        case .running:
+            timerService.pause()
+        case .ended:
+            reset()
+        case .paused:
+            timerService.resume()
         }
-    }
-    
-    func moveForward() {
-        pomodoroService.moveForward()
     }
     
     func reset() {
         pomodoroService.reset()
+        timerService.reset()
+        self.leftTime = pomodoroService.currentState.waitingTime
     }
 }
 
@@ -82,5 +103,24 @@ extension PomodoroViewModel: PomodoroServiceDelegate {
     
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
         pomodoroState = state
+        guard !service.atInitialState else { return }
+        timerService.start(waitingTime: pomodoroState.waitingTime)
+    }
+}
+
+// MARK: - TimerServiceDelegate
+
+extension PomodoroViewModel: TimerServiceDelegate {
+    
+    func timerService(_ service: TimerService, didChangeStateTo state: TimerState) {
+        timerState = state
+    }
+    
+    func timerService(_ service: TimerService, didTickAtInterval interval: TimeInterval) {
+        leftTime = interval
+    }
+    
+    func timerServiceDidFinish(_ service: TimerService) {
+        pomodoroService.moveForward()
     }
 }
