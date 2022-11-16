@@ -19,6 +19,7 @@ protocol PomodoroService {
     var delegate: PomodoroServiceDelegate? { get set }
     var currentState: PomodoroState { get }
     var atInitialState: Bool { get }
+    var atLastState: Bool { get }
     var stagesCount: Int { get }
     var completedStages: Int { get }
     
@@ -40,6 +41,11 @@ final class PomodoroServiceImpl: PomodoroService {
     
     var atInitialState: Bool {
         innerIndex == 0 && outerIndex == 0
+    }
+    
+    var atLastState: Bool {
+        outerIndex == pomodoroCycle.count - 1 &&
+        innerIndex == pomodoroCycle[outerIndex].count - 1
     }
     
     var stagesCount: Int {

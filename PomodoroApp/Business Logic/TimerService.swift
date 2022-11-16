@@ -60,6 +60,7 @@ final class TimerServiceImpl: TimerService {
     // MARK: - Public Methods
     
     func start(waitingTime: TimeInterval) {
+        clearTimer()
         runTimer(waitingTime: waitingTime)
     }
     

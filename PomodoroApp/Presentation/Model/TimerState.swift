@@ -50,4 +50,15 @@ extension TimerState {
             return Images.play
         }
     }
+    
+    var smallButtonImage: UIImage {
+        switch self {
+        case .running:
+            return Images.smallPause
+        case .ended:
+            return Images.smallStop
+        case .initial, .paused:
+            return Images.smallPlay
+        }
+    }
 }

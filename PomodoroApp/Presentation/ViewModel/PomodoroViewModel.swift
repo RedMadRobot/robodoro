@@ -5,6 +5,8 @@
 //  Created by Петр Тартынских  on 11.11.2022.
 //
 
+import ActivityKit
+import Combine
 import SwiftUI
 
 final class PomodoroViewModel: ObservableObject {
@@ -21,7 +23,7 @@ final class PomodoroViewModel: ObservableObject {
     private(set) var leftTime: TimeInterval
     
     var formattedTime: String {
-        dateComponentsFormatter.string(from: leftTime) ?? "NaN"
+        getFormattedTime(time: leftTime)
     }
     
     var stagesCount: Int {
@@ -54,17 +56,22 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Private Propeties
     
+    private var activityService: LiveActivityService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
     
     private var dateComponentsFormatter: DateComponentsFormatter = .hourAndMinutesFormatter
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Init
     
     init(
+        activityService: LiveActivityService = DI.services.activityService,
         pomodoroService: PomodoroService = DI.services.pomodoroService,
         timerService: TimerService = DI.services.timerService
     ) {
+        self.activityService = activityService
         self.pomodoroService = pomodoroService
         self.pomodoroState = pomodoroService.currentState
         self.timerService = timerService
@@ -73,6 +80,8 @@ final class PomodoroViewModel: ObservableObject {
         
         self.pomodoroService.delegate = self
         self.timerService.delegate = self
+        
+        addSubsctiptions()
     }
     
     // MARK: - Public Methods
@@ -80,6 +89,12 @@ final class PomodoroViewModel: ObservableObject {
     func mainButtonAction() {
         switch timerState {
         case .initial:
+            activityService.start(
+                pomodoroState: pomodoroState,
+                timerState: timerState,
+                leftTime: formattedTime,
+                stagesCount: stagesCount,
+                filledCount: filledCount)
             timerService.start(waitingTime: pomodoroState.waitingTime)
         case .running:
             timerService.pause()
@@ -94,6 +109,43 @@ final class PomodoroViewModel: ObservableObject {
         pomodoroService.reset()
         timerService.reset()
         self.leftTime = pomodoroService.currentState.waitingTime
+    }
+    
+    // MARK: - Private Properties
+    
+    private func addSubsctiptions() {
+        $pomodoroState.sink { [weak self] state in
+            guard state != self?.pomodoroState else { return }
+            self?.updateActivity(newPomodoroState: state)
+        }
+        .store(in: &subscriptions)
+        $timerState.sink { [weak self] state in
+            // TODO: - Проверить переход на состояние ended
+            guard state != self?.timerState else { return }
+            self?.updateActivity(newTimerState: state)
+        }
+        .store(in: &subscriptions)
+        $leftTime.sink { [weak self] leftTime in
+            self?.updateActivity(newLeftTime: leftTime)
+        }
+        .store(in: &subscriptions)
+    }
+    
+    private func updateActivity(
+        newPomodoroState: PomodoroState? = nil,
+        newTimerState: TimerState? = nil,
+        newLeftTime: TimeInterval? = nil
+    ) {
+        let newFormattedTime = getFormattedTime(time: newLeftTime ?? leftTime)
+        activityService.update(
+            pomodoroState: newPomodoroState ?? pomodoroState,
+            timerState: newTimerState ?? timerState,
+            leftTime: newFormattedTime,
+            filledCount: filledCount)
+    }
+    
+    private func getFormattedTime(time: TimeInterval) -> String {
+        dateComponentsFormatter.string(from: time) ?? "NaN"
     }
 }
 
