@@ -11,8 +11,14 @@ struct PomodoroView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel: PomodoroViewModel = PomodoroViewModel()
+    @ObservedObject
+    private var viewModel: PomodoroViewModel
+    
+    // MARK: - Init
+    
+    init(viewModel: PomodoroViewModel) {
+        self.viewModel = viewModel
+    }
     
     // MARK: - View
     
@@ -61,6 +67,6 @@ struct PomodoroView: View {
 
 struct PomodoroView_Previews: PreviewProvider {
     static var previews: some View {
-        PomodoroView()
+        PomodoroView(viewModel: PomodoroViewModel())
     }
 }

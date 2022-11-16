@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PomodoroState {
+enum PomodoroState: Codable, Hashable {
     case focus
     case `break`
     case longBreak

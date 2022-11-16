@@ -8,7 +8,7 @@
 import Foundation
 
 final class AppServices {
-    
+    lazy var activityService: LiveActivityService = LiveActivityServiceImpl()
     lazy var pomodoroService: PomodoroService = PomodoroServiceImpl()
     lazy var timerService: TimerService = TimerServiceImpl()
 }

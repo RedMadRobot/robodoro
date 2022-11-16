@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum TimerState {
+enum TimerState: Codable, Hashable {
     case initial
     case running
     case ended
