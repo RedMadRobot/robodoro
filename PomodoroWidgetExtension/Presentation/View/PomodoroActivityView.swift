@@ -10,6 +10,14 @@ import SwiftUI
 
 struct PomodoroActivityView: View {
     
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let timeSpacing = CGFloat(35)
+        static let stageViewSpacing = CGFloat(8)
+        static let sidePadding = CGFloat(16)
+    }
+    
     // MARK: - Private Properties
     
     private let attribute: LiveActivityAttributes
@@ -29,20 +37,29 @@ struct PomodoroActivityView: View {
     
     var body: some View {
         ZStack {
-            Color(uiColor: ColorHelper.getBackgroundColor(
-                pomodoroState: state.pomodoroState,
-                timerState: state.timerState))
-            VStack(alignment: .center) {
-                Text("\(attribute.stagesCount)")
-                Text("\(state.filledCount)")
-                Text("\(state.leftTime)")
-                    .font(.time)
-                Text(String(describing: state.pomodoroState))
-                Text(String(describing: state.timerState))
-                // TODO: - Перенести маленькие иконки в ассеты виджета
-                Image(uiImage: state.timerState.smallButtonImage)
+            BackgroundView(state: state)
+            VStack(alignment: .center, spacing: Constants.timeSpacing) {
+                HStack {
+                    Text("\(state.leftTime)")
+                        .font(.time)
+                    Spacer()
+                    // TODO: - Ссылки в константы
+                    Link(destination: URL(string: "pomodoroApp://action")!) {
+                        Image(uiImage: state.timerState.smallButtonImage)
+                    }
+                }
+                HStack {
+                    VStack(alignment: .leading, spacing: Constants.stageViewSpacing) {
+                        StageView(
+                            stagesCount: attribute.stagesCount,
+                            filledCount: state.filledCount)
+                        Text(state.pomodoroState.title)
+                            .font(.stageLabel)
+                    }
+                    Spacer()
+                }
             }
-            .padding()
+            .padding(Constants.sidePadding)
         }
         .frame(maxWidth: .infinity, alignment: .center)
     }

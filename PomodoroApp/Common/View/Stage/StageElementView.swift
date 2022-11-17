@@ -36,7 +36,7 @@ struct StageElementView: View {
             if isFilled {
                 Circle()
                     .fill()
-                    .frame(width: Constants.frameSize)
+                    .frame(width: Constants.frameSize, height: Constants.frameSize)
             }
         }
         .animation(.easeInOut, value: isFilled)

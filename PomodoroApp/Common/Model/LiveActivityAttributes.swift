@@ -6,7 +6,7 @@
 //
 
 import ActivityKit
-import Foundation
+import UIKit
 
 struct LiveActivityAttributes: ActivityAttributes {
     
@@ -15,6 +15,18 @@ struct LiveActivityAttributes: ActivityAttributes {
         var timerState: TimerState
         var leftTime: String
         var filledCount: Int
+        
+        var backgroundColor: UIColor {
+            ColorHelper.getBackgroundColor(
+                pomodoroState: pomodoroState,
+                timerState: timerState)
+        }
+        
+        var strokeColor: UIColor {
+            ColorHelper.getStrokeColor(
+                pomodoroState: pomodoroState,
+                timerState: timerState)
+        }
     }
     
     var stagesCount: Int

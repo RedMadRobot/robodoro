@@ -38,6 +38,7 @@ struct StageView: View {
                 StageElementView(isFilled: stage < filledCount)
             }
         }
+        .fixedSize()
     }
 }
 

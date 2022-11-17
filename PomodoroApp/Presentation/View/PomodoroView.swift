@@ -30,7 +30,7 @@ struct PomodoroView: View {
                     Spacer()
                     Text(viewModel.formattedTime)
                         .font(.time)
-//                        .animation(.easeInOut, value: viewModel.leftTime)
+                        //.animation(.easeInOut, value: viewModel.leftTime)
                     StageView(
                         stagesCount: viewModel.stagesCount,
                         filledCount: viewModel.filledCount)
@@ -58,7 +58,7 @@ struct PomodoroView: View {
                 }
             }
             // TODO: - Разобраться почему не работает
-//            .animation(.easeInOut, value: viewModel.pomodoroState)
+            //.animation(.easeInOut, value: viewModel.pomodoroState)
         }
     }
 }
