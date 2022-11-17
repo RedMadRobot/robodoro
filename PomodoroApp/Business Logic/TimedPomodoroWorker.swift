@@ -29,10 +29,9 @@ protocol TimedPomodoroWorker {
 final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     // MARK: - Public Properties
-    private(set) var pomodoroState: CurrentValueSubject<PomodoroState, Never>
-
-    private(set) var timerState: CurrentValueSubject<TimerState, Never>
     
+    private(set) var pomodoroState: CurrentValueSubject<PomodoroState, Never>
+    private(set) var timerState: CurrentValueSubject<TimerState, Never>
     private(set) var leftTime: CurrentValueSubject<TimeInterval, Never>
     
     var formattedTime: String {

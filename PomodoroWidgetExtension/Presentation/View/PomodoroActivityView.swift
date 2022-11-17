@@ -43,8 +43,7 @@ struct PomodoroActivityView: View {
                     Text("\(state.leftTime)")
                         .font(.time)
                     Spacer()
-                    // TODO: - Ссылки в константы
-                    Link(destination: URL(string: "pomodoroApp://action")!) {
+                    Link(destination: LinkManager.buttonActionURL) {
                         Image(uiImage: state.timerState.smallButtonImage)
                     }
                 }

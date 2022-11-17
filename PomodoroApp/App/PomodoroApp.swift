@@ -14,6 +14,7 @@ struct PomodoroApp: App {
     
     @StateObject
     private var pomodoroViewModel = PomodoroViewModel()
+    
     private let timedPomodoroWorker: TimedPomodoroWorker
     
     // MARK: - Init
@@ -28,6 +29,10 @@ struct PomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             PomodoroView(viewModel: pomodoroViewModel)
+                .onOpenURL { url in
+                    guard case .mainButtonAction = LinkManager.manage(url: url) else { return }
+                    timedPomodoroWorker.mainAction()
+                }
         }
     }
     
