@@ -29,11 +29,14 @@ struct PomodoroActivityView: View {
     
     var body: some View {
         ZStack {
-            Color(uiColor: state.pomodoroState.backgroundColor)
+            Color(uiColor: ColorHelper.getBackgroundColor(
+                pomodoroState: state.pomodoroState,
+                timerState: state.timerState))
             VStack(alignment: .center) {
                 Text("\(attribute.stagesCount)")
                 Text("\(state.filledCount)")
                 Text("\(state.leftTime)")
+                    .font(.time)
                 Text(String(describing: state.pomodoroState))
                 Text(String(describing: state.timerState))
                 // TODO: - Перенести маленькие иконки в ассеты виджета

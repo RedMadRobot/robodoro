@@ -11,6 +11,7 @@ import Foundation
 
 protocol PomodoroServiceDelegate: AnyObject {
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState)
+    func pomodoroServiceDidFinishCycle(_ service: PomodoroService)
 }
 
 // MARK: - PomodoroService
@@ -83,6 +84,8 @@ final class PomodoroServiceImpl: PomodoroService {
             innerIndex += 1
         } else if outerIndex < pomodoroCycle.count - 1 {
             outerIndex += 1
+        } else {
+            delegate?.pomodoroServiceDidFinishCycle(self)
         }
     }
     

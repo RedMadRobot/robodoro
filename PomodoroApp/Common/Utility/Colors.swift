@@ -16,5 +16,5 @@ enum Colors {
     static let breakLine = UIColor("#B17FC8")
     static let longBreakBackground = UIColor("#95CC6A")
     static let longBreakLine = UIColor("#76A552")
-    static let elements = UIColor("#000000")
+    static let element = UIColor("#000000")
 }

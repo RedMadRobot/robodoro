@@ -39,15 +39,15 @@ final class PomodoroViewModel: ObservableObject {
     }
     
     var backgroundColor: UIColor {
-        timerState.isPaused
-            ? timerState.backgroundColor
-            : pomodoroState.backgroundColor
+        ColorHelper.getBackgroundColor(
+            pomodoroState: pomodoroState,
+            timerState: timerState)
     }
     
     var strokeColor: UIColor {
-        timerState.isPaused
-            ? timerState.strokeColor
-            : pomodoroState.strokeColor
+        ColorHelper.getStrokeColor(
+            pomodoroState: pomodoroState,
+            timerState: timerState)
     }
     
     var buttonImage: UIImage {
@@ -120,7 +120,6 @@ final class PomodoroViewModel: ObservableObject {
         }
         .store(in: &subscriptions)
         $timerState.sink { [weak self] state in
-            // TODO: - Проверить переход на состояние ended
             guard state != self?.timerState else { return }
             self?.updateActivity(newTimerState: state)
         }
@@ -157,6 +156,10 @@ extension PomodoroViewModel: PomodoroServiceDelegate {
         pomodoroState = state
         guard !service.atInitialState else { return }
         timerService.start(waitingTime: pomodoroState.waitingTime)
+    }
+    
+    func pomodoroServiceDidFinishCycle(_ service: PomodoroService) {
+        timerService.stop()
     }
 }
 

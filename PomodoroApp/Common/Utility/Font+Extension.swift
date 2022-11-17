@@ -21,17 +21,9 @@ extension Font {
         unbounded(size: 14)
     }
     
-    static var time: Font {
-        unbounded(size: 64)
-    }
+    // MARK: - Public Methods
     
-    static var activityTime: Font {
-        unbounded(size: 56)
-    }
-    
-    // MARK: - Private Methods
-    
-    private static func unbounded(size: CGFloat) -> Font {
+    static func unbounded(size: CGFloat) -> Font {
         .custom(Constants.unbounded, size: size)
     }
 }
