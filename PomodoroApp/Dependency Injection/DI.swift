@@ -9,4 +9,5 @@ import Foundation
 
 final class DI {
     static var services = AppServices()
+    static var workers = AppWorkers(services: services)
 }
