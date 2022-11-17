@@ -60,10 +60,15 @@ final class LiveActivityServiceImpl: LiveActivityService {
     
     func stop() {
         guard let activity = activity else { return }
+        
+        // Сомнительное решение, возможно нужно пересмотреть
+        let semaphore = DispatchSemaphore(value: 0)
         Task {
             await activity.end(dismissalPolicy: .immediate)
             self.activity = nil
+            semaphore.signal()
         }
+        semaphore.wait()
     }
     
     func update(

@@ -55,7 +55,7 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Private Propeties
     
-    private var timedPomodoroWorker: TimedPomodoroWorker
+    private let timedPomodoroWorker: TimedPomodoroWorker
     
     private var subscriptions = Set<AnyCancellable>()
     

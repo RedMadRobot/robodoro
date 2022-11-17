@@ -53,11 +53,11 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     // MARK: - Private Properties
     
-    private var activityService: LiveActivityService
+    private let activityService: LiveActivityService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
     
-    private var dateComponentsFormatter: DateComponentsFormatter = .hourAndMinutesFormatter
+    private let dateComponentsFormatter: DateComponentsFormatter = .hourAndMinutesFormatter
     
     private var subscriptions = Set<AnyCancellable>()
     
