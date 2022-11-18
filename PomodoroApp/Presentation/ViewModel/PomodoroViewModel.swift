@@ -21,8 +21,12 @@ final class PomodoroViewModel: ObservableObject {
     @Published
     private(set) var leftTime: TimeInterval
     
-    var formattedTime: String {
-        timedPomodoroWorker.formattedTime
+    var minutes: String {
+        formattedTimeComponent(leftTime.minutes)
+    }
+    
+    var seconds: String {
+        formattedTimeComponent(leftTime.seconds)
     }
     
     var stagesCount: Int {
@@ -92,5 +96,9 @@ final class PomodoroViewModel: ObservableObject {
             self?.leftTime = leftTime
         }
         .store(in: &subscriptions)
+    }
+    
+    private func formattedTimeComponent(_ component: Int) -> String {
+        String(format: "%0.2d", component)
     }
 }

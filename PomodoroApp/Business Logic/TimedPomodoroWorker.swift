@@ -35,7 +35,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private(set) var leftTime: CurrentValueSubject<TimeInterval, Never>
     
     var formattedTime: String {
-        getFormattedTime(time: leftTime.value)
+        dateComponentsFormatter.getFormattedTime(time: leftTime.value)
     }
     
     var stagesCount: Int {
@@ -55,8 +55,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private let activityService: LiveActivityService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
-    
-    private let dateComponentsFormatter: DateComponentsFormatter = .hourAndMinutesFormatter
+    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -121,14 +120,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             self.activityService.update(
                 pomodoroState: pomodoroState,
                 timerState: timerState,
-                leftTime: self.getFormattedTime(time: leftTime),
+                leftTime: self.dateComponentsFormatter.getFormattedTime(time: leftTime),
                 filledCount: self.filledCount)
         }
         .store(in: &subscriptions)
-    }
-    
-    private func getFormattedTime(time: TimeInterval) -> String {
-        dateComponentsFormatter.string(from: time) ?? "NaN"
     }
 }
 

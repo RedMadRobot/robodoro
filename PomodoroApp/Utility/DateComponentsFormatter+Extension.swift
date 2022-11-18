@@ -9,7 +9,11 @@ import Foundation
 
 extension DateComponentsFormatter {
     
-    static var hourAndMinutesFormatter: DateComponentsFormatter {
+    func getFormattedTime(time: TimeInterval) -> String {
+        self.string(from: time) ?? "NaN"
+    }
+    
+    static var minutesAndSecondsFormatter: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
         formatter.unitsStyle = .positional

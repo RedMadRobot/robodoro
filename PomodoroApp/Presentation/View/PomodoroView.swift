@@ -9,6 +9,12 @@ import SwiftUI
 
 struct PomodoroView: View {
     
+    // MARK: - Constants
+    
+    private enum Constants {
+        
+    }
+    
     // MARK: - Private Properties
     
     @ObservedObject
@@ -26,22 +32,7 @@ struct PomodoroView: View {
         NavigationView {
             ZStack {
                 BackgroundView(viewModel: viewModel)
-                VStack(spacing: 16) {
-                    Spacer()
-                    Text(viewModel.formattedTime)
-                        .font(.time)
-                        .foregroundColor(Color(uiColor: Colors.element))
-                        //.animation(.easeInOut, value: viewModel.leftTime)
-                    StageView(
-                        stagesCount: viewModel.stagesCount,
-                        filledCount: viewModel.filledCount)
-                    Spacer()
-                    Button {
-                        viewModel.mainButtonAction()
-                    } label: {
-                        Image(uiImage: viewModel.buttonImage)
-                    }
-                }
+                frontView
             }
             .toolbar {
                 if viewModel.showResetButton {
@@ -61,6 +52,42 @@ struct PomodoroView: View {
             }
             // TODO: - Разобраться почему не работает
             //.animation(.easeInOut, value: viewModel.pomodoroState)
+        }
+    }
+    
+    // MARK: - Private Properties
+    
+    private var frontView: some View {
+        VStack(spacing: 16) {
+            Spacer()
+            timeSection
+            StageView(
+                stagesCount: viewModel.stagesCount,
+                filledCount: viewModel.filledCount)
+            Spacer()
+            Button {
+                viewModel.mainButtonAction()
+            } label: {
+                Image(uiImage: viewModel.buttonImage)
+            }
+        }
+    }
+    
+    private var timeSection: some View {
+        HStack(alignment: .center, spacing: 0) {
+            Text(viewModel.minutes)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .font(.time)
+                .foregroundColor(Color(uiColor: Colors.element))
+//                .animation(.easeInOut, value: viewModel.leftTime)
+            Text(":")
+                .font(.time)
+                .foregroundColor(Color(uiColor: Colors.element))
+            Text(viewModel.seconds)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.time)
+                .foregroundColor(Color(uiColor: Colors.element))
+//                .animation(.easeInOut, value: viewModel.leftTime)
         }
     }
 }
