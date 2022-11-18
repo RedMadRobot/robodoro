@@ -29,6 +29,7 @@ struct PomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             PomodoroView(viewModel: pomodoroViewModel)
+                .preferredColorScheme(.light)
                 .onOpenURL { url in
                     guard case .mainButtonAction = LinkManager.manage(url: url) else { return }
                     timedPomodoroWorker.mainAction()

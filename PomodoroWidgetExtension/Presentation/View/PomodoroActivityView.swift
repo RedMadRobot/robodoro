@@ -42,6 +42,7 @@ struct PomodoroActivityView: View {
                 HStack {
                     Text("\(state.leftTime)")
                         .font(.time)
+                        .foregroundColor(Color(uiColor: Colors.element))
                     Spacer()
                     Link(destination: LinkManager.buttonActionURL) {
                         Image(uiImage: state.timerState.smallButtonImage)
@@ -54,6 +55,7 @@ struct PomodoroActivityView: View {
                             filledCount: state.filledCount)
                         Text(state.pomodoroState.title)
                             .font(.stageLabel)
+                            .foregroundColor(Color(uiColor: Colors.element))
                     }
                     Spacer()
                 }

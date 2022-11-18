@@ -30,6 +30,7 @@ struct PomodoroView: View {
                     Spacer()
                     Text(viewModel.formattedTime)
                         .font(.time)
+                        .foregroundColor(Color(uiColor: Colors.element))
                         //.animation(.easeInOut, value: viewModel.leftTime)
                     StageView(
                         stagesCount: viewModel.stagesCount,
@@ -55,6 +56,7 @@ struct PomodoroView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Text(viewModel.pomodoroState.title)
                         .font(.stageLabel)
+                        .foregroundColor(Color(uiColor: Colors.element))
                 }
             }
             // TODO: - Разобраться почему не работает

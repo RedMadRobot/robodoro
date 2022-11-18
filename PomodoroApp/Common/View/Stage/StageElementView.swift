@@ -31,7 +31,7 @@ struct StageElementView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(lineWidth: Constants.lineWidth)
+                .stroke(Color(uiColor: Colors.element), lineWidth: Constants.lineWidth)
                 .frame(width: Constants.frameSize)
             if isFilled {
                 Circle()
