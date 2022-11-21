@@ -35,7 +35,7 @@ struct StageElementView: View {
                 .frame(width: Constants.frameSize)
             if isFilled {
                 Circle()
-                    .fill()
+                    .fill(Color(uiColor: Colors.element))
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
             }
         }
