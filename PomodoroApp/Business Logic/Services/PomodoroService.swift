@@ -23,6 +23,7 @@ protocol PomodoroService {
     var atLastState: Bool { get }
     var stagesCount: Int { get }
     var completedStages: Int { get }
+    var leftIntervals: [TimeInterval] { get }
     
     func moveForward()
     func reset()
@@ -56,7 +57,23 @@ final class PomodoroServiceImpl: PomodoroService {
     var completedStages: Int {
         outerIndex
     }
+    
+    var leftIntervals: [TimeInterval] {
+        // Учытывается, что переход между фазами занимает одну дополнительную секунду
+        var intervals: [TimeInterval] = []
+        for inner in innerIndex..<pomodoroCycle[outerIndex].count {
+            intervals.append(pomodoroCycle[outerIndex][inner].waitingTime + 1.0)
+        }
         
+        for outer in (outerIndex + 1)..<pomodoroCycle.count {
+            for inner in 0..<pomodoroCycle[outer].count {
+                intervals.append(pomodoroCycle[outer][inner].waitingTime + 1.0)
+            }
+        }
+        
+        return intervals
+    }
+    
     // MARK: - Private Properties
     
     private let pomodoroCycle: [[PomodoroState]] = [

@@ -14,7 +14,7 @@ protocol LiveActivityService {
     func start(
         pomodoroState: PomodoroState,
         timerState: TimerState,
-        leftTime: String,
+        stageEndDate: Date,
         stagesCount: Int,
         filledCount: Int
     )
@@ -22,7 +22,7 @@ protocol LiveActivityService {
     func update(
         pomodoroState: PomodoroState,
         timerState: TimerState,
-        leftTime: String,
+        stageEndDate: Date,
         filledCount: Int
     )
 }
@@ -40,7 +40,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
     func start(
         pomodoroState: PomodoroState,
         timerState: TimerState,
-        leftTime: String,
+        stageEndDate: Date,
         stagesCount: Int,
         filledCount: Int
     ) {
@@ -49,7 +49,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
         let state = LiveActivityAttributes.ContentState(
             pomodoroState: pomodoroState,
             timerState: timerState,
-            leftTime: leftTime,
+            stageEndDate: stageEndDate,
             filledCount: filledCount)
 
         activity = try? Activity<LiveActivityAttributes>.request(
@@ -74,7 +74,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
     func update(
         pomodoroState: PomodoroState,
         timerState: TimerState,
-        leftTime: String,
+        stageEndDate: Date,
         filledCount: Int
     ) {
         guard let activity = activity else { return }
@@ -82,7 +82,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
             let newState = LiveActivityAttributes.ContentState(
                 pomodoroState: pomodoroState,
                 timerState: timerState,
-                leftTime: leftTime,
+                stageEndDate: stageEndDate,
                 filledCount: filledCount)
             await activity.update(using: newState)
         }

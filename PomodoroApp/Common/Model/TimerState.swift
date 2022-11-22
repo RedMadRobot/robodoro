@@ -11,7 +11,7 @@ enum TimerState: Codable, Hashable {
     case initial
     case running
     case ended
-    case paused
+    case paused(TimeInterval)
     
     var isPaused: Bool {
         switch self {

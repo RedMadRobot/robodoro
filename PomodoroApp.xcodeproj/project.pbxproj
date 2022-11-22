@@ -24,7 +24,6 @@
 		352039792923D33400A4028E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039782923D33400A4028E /* AppServices.swift */; };
 		3520397B2923D48000A4028E /* PomodoroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397A2923D48000A4028E /* PomodoroService.swift */; };
 		3520397D2923D61000A4028E /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397C2923D61000A4028E /* TimerService.swift */; };
-		3520397F2923DC3700A4028E /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 		354957712926358F000C216C /* Images+Small.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354957702926358F000C216C /* Images+Small.swift */; };
 		354957742926360D000C216C /* TimerState+Small.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354957732926360D000C216C /* TimerState+Small.swift */; };
 		35495777292637C8000C216C /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35495776292637C8000C216C /* ColorHelper.swift */; };
@@ -67,6 +66,7 @@
 		35C69BF729251E76004D176C /* LiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305592924EC780062FDA9 /* LiveActivityAttributes.swift */; };
 		35C69BFA29252365004D176C /* PomodoroActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305792924F94F0062FDA9 /* PomodoroActivityView.swift */; };
 		35D305582924EB530062FDA9 /* LiveActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305572924EB530062FDA9 /* LiveActivityService.swift */; };
+		35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				354957A62927C511000C216C /* TimeInterval+Extension.swift */,
-				3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */,
 				35495786292640D7000C216C /* Images+Big.swift */,
 				3549578B2926425E000C216C /* Font+Big.swift */,
 			);
@@ -306,6 +305,7 @@
 		3549576F29263560000C216C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */,
 				354957702926358F000C216C /* Images+Small.swift */,
 				3549578D29264329000C216C /* Font+Small.swift */,
 			);
@@ -604,7 +604,6 @@
 				354957A129269EFB000C216C /* LinkManager.swift in Sources */,
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
 				3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */,
-				3520397F2923DC3700A4028E /* DateComponentsFormatter+Extension.swift in Sources */,
 				352039792923D33400A4028E /* AppServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,6 +626,7 @@
 				354957852926400D000C216C /* Images.swift in Sources */,
 				3549579129264988000C216C /* StageView.swift in Sources */,
 				354957712926358F000C216C /* Images+Small.swift in Sources */,
+				35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */,
 				3549578229263CCF000C216C /* PomodoroState.swift in Sources */,
 				3549579629265BA0000C216C /* FocusedBackground.swift in Sources */,
 				35C69BE92925194B004D176C /* PomodoroWidgetExtensionLiveActivity.swift in Sources */,

@@ -10,7 +10,9 @@ import Foundation
 extension DateComponentsFormatter {
     
     func getFormattedTime(time: TimeInterval) -> String {
-        self.string(from: time) ?? "NaN"
+        let string = self.string(from: time) ?? "NaN"
+        return string.hasPrefix("0") && string.count > 4 ?
+            .init(string.dropFirst()) : string
     }
     
     static var minutesAndSecondsFormatter: DateComponentsFormatter {

@@ -47,9 +47,33 @@ struct PomodoroApp: App {
         ) { _ in
             applicationWillTerminate()
         }
+        
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didEnterBackgroundNotification,
+            object: nil,
+            queue: .main)
+        { _ in
+            applicationDidEnterBackground()
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.willEnterForegroundNotification,
+            object: nil,
+            queue: .main)
+        { _ in
+            applicationWillEnterForeground()
+        }
     }
     
     private func applicationWillTerminate() {
         timedPomodoroWorker.reset()
+    }
+    
+    private func applicationDidEnterBackground() {
+        timedPomodoroWorker.handleEnterBackground()
+    }
+    
+    private func applicationWillEnterForeground() {
+        timedPomodoroWorker.handleEnterForeground()
     }
 }

@@ -29,6 +29,7 @@ protocol TimerService {
     func resume()
     func reset()
     func stop()
+    func suspend()
 }
 
 // MARK: - TimerServiceImpl
@@ -52,7 +53,12 @@ final class TimerServiceImpl: TimerService {
     }
     
     var canBeReseted: Bool {
-        currentState != .initial && currentState != .paused
+        switch currentState {
+        case .initial, .paused:
+            return false
+        default:
+            return true
+        }
     }
     
     var autoStop: Bool = false
@@ -69,7 +75,7 @@ final class TimerServiceImpl: TimerService {
     }
     
     func pause() {
-        currentState = .paused
+        currentState = .paused(currentWaitingTime)
         timer?.invalidate()
     }
     
@@ -88,11 +94,15 @@ final class TimerServiceImpl: TimerService {
         clearTimer()
     }
     
+    func suspend() {
+        timer?.invalidate()
+    }
+    
     // MARK: - Private Methods
     
     private func runTimer(waitingTime: TimeInterval) {
-        currentState = .running
         currentWaitingTime = waitingTime
+        currentState = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.currentWaitingTime >= 1.0 {

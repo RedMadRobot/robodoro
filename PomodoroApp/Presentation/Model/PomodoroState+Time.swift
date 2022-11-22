@@ -13,9 +13,13 @@ extension PomodoroState {
     var waitingTime: TimeInterval {
         switch self {
         case .focus, .longBreak:
-            return 5 //60.0 * 25
+//            return 60.0 * 25
+            return 5
+//            return 60
         case .break:
-            return 3 //60.0 * 6
+//            return 60.0 * 6
+            return 5
+//            return 60
         }
     }
 }

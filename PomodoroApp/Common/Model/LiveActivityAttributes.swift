@@ -13,7 +13,7 @@ struct LiveActivityAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var pomodoroState: PomodoroState
         var timerState: TimerState
-        var leftTime: String
+        var stageEndDate: Date
         var filledCount: Int
         
         var backgroundColor: UIColor {

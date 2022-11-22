@@ -15,13 +15,14 @@ protocol TimedPomodoroWorker {
     var timerState: CurrentValueSubject<TimerState, Never> { get }
     var leftTime: CurrentValueSubject<TimeInterval, Never> { get }
     
-    var formattedTime: String { get }
     var stagesCount: Int { get }
     var filledCount: Int { get }
     var canBeReseted: Bool { get }
     
     func mainAction()
     func reset()
+    func handleEnterBackground()
+    func handleEnterForeground()
 }
 
 // MARK: - TimedPomodoroWorkerImpl
@@ -33,10 +34,6 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private(set) var pomodoroState: CurrentValueSubject<PomodoroState, Never>
     private(set) var timerState: CurrentValueSubject<TimerState, Never>
     private(set) var leftTime: CurrentValueSubject<TimeInterval, Never>
-    
-    var formattedTime: String {
-        dateComponentsFormatter.getFormattedTime(time: leftTime.value)
-    }
     
     var stagesCount: Int {
         pomodoroService.stagesCount
@@ -55,9 +52,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private let activityService: LiveActivityService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
-    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
     
     private var subscriptions = Set<AnyCancellable>()
+    
+    private var backgroundDate: Date?
     
     // MARK: - Init
     
@@ -85,12 +83,12 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     func mainAction() {
         switch timerState.value {
         case .initial:
-            activityService.start(
-                pomodoroState: pomodoroState.value,
-                timerState: timerState.value,
-                leftTime: formattedTime,
-                stagesCount: stagesCount,
-                filledCount: filledCount)
+//            activityService.start(
+//                pomodoroState: pomodoroState.value,
+//                timerState: timerState.value,
+//                stageEndDate: Date.now.addingTimeInterval(leftTime.value),
+//                stagesCount: stagesCount,
+//                filledCount: filledCount)
             timerService.start(waitingTime: pomodoroState.value.waitingTime)
         case .running:
             timerService.pause()
@@ -102,28 +100,66 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     }
     
     func reset() {
-        activityService.stop()
+//        activityService.stop()
         pomodoroService.reset()
         timerService.reset()
         leftTime.send(pomodoroService.currentState.waitingTime)
     }
     
+    func handleEnterBackground() {
+        // Зафиксировать дату перехода в фоновый режим
+        backgroundDate = Date.now
+        
+        // Остановить работу таймера без изменения состояния
+        timerService.suspend()
+    }
+    
+    func handleEnterForeground() {
+        defer {
+            self.backgroundDate = nil
+        }
+        
+        // Если последняя дата зафиксирована, и таймер в состоянии running
+        guard let backgroundDate = backgroundDate,
+              let currentInterval = pomodoroService.leftIntervals.first,
+              timerState.value == .running else { return }
+        
+        // Посчитать количество секунд, между текущей датой и последней зафиксированной датой
+        // Прибавляем к этому числу уже пройденное время этого этапа
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.second], from: backgroundDate, to: Date.now)
+        var seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
+        
+        // Сдвинуть этапы время которых прошло
+        var leftIntervals = pomodoroService.leftIntervals
+        while let interval = leftIntervals.first,
+              interval - seconds < 0 {
+            seconds -= interval
+            leftIntervals.removeFirst()
+            pomodoroService.moveForward()
+        }
+        
+        // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение
+        let currentWaitingTime: TimeInterval = leftIntervals.first ?? 0 - seconds
+        
+        timerService.start(waitingTime: currentWaitingTime)
+    }
+    
     // MARK: - Private Methods
     
     private func addSubsctiptions() {
-        Publishers.CombineLatest3(
-            pomodoroState,
-            timerState,
-            leftTime)
-        .sink { [weak self] pomodoroState, timerState, leftTime in
-            guard let self = self else { return }
-            self.activityService.update(
-                pomodoroState: pomodoroState,
-                timerState: timerState,
-                leftTime: self.dateComponentsFormatter.getFormattedTime(time: leftTime),
-                filledCount: self.filledCount)
-        }
-        .store(in: &subscriptions)
+//        Publishers.CombineLatest(
+//            pomodoroState,
+//            timerState)
+//        .sink { [weak self] pomodoroState, timerState in
+//            guard let self = self else { return }
+//            self.activityService.update(
+//                pomodoroState: pomodoroState,
+//                timerState: timerState,
+//                stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
+//                filledCount: self.filledCount)
+//        }
+//        .store(in: &subscriptions)
     }
 }
 

@@ -22,6 +22,7 @@ struct PomodoroActivityView: View {
     
     private let attribute: LiveActivityAttributes
     private let state: LiveActivityAttributes.ContentState
+    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
     
     // MARK: - Init
     
@@ -40,9 +41,19 @@ struct PomodoroActivityView: View {
             BackgroundView(state: state)
             VStack(alignment: .center, spacing: Constants.timeSpacing) {
                 HStack {
-                    Text("\(state.leftTime)")
-                        .font(.time)
-                        .foregroundColor(Color(uiColor: Colors.element))
+                    Group {
+                        switch state.timerState {
+                        case .ended:
+                            Text(dateComponentsFormatter.getFormattedTime(time: 0))
+                        case .paused(let pausedTime):
+                            Text(dateComponentsFormatter.getFormattedTime(time: pausedTime))
+                        default:
+                            Text(timerInterval: Date.now...state.stageEndDate)
+                        }
+                    }
+                    .font(.time)
+                    .foregroundColor(Color(uiColor: Colors.element))
+                    
                     Spacer()
                     Link(destination: LinkManager.buttonActionURL) {
                         Image(uiImage: state.timerState.smallButtonImage)
