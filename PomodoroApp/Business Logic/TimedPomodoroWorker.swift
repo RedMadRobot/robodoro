@@ -126,22 +126,22 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         
         // Посчитать количество секунд, между текущей датой и последней зафиксированной датой
         // Прибавляем к этому числу уже пройденное время этого этапа
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.second], from: backgroundDate, to: Date.now)
+        let difference = Calendar.current.dateComponents([.second], from: backgroundDate, to: Date.now)
         var seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
         
         // Сдвинуть этапы время которых прошло
         var leftIntervals = pomodoroService.leftIntervals
         while let interval = leftIntervals.first,
               interval - seconds < 0 {
-            seconds -= interval
+            // Учитываем, что переход между фазами занимает секунду
+            seconds -= interval + 1
             leftIntervals.removeFirst()
             pomodoroService.moveForward()
         }
         
         // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение
-        let currentWaitingTime: TimeInterval = leftIntervals.first ?? 0 - seconds
-        
+        let currentWaitingTime: TimeInterval = (leftIntervals.first ?? 0) - seconds
+                
         timerService.start(waitingTime: currentWaitingTime)
     }
     

@@ -59,15 +59,14 @@ final class PomodoroServiceImpl: PomodoroService {
     }
     
     var leftIntervals: [TimeInterval] {
-        // Учытывается, что переход между фазами занимает одну дополнительную секунду
         var intervals: [TimeInterval] = []
         for inner in innerIndex..<pomodoroCycle[outerIndex].count {
-            intervals.append(pomodoroCycle[outerIndex][inner].waitingTime + 1.0)
+            intervals.append(pomodoroCycle[outerIndex][inner].waitingTime)
         }
         
         for outer in (outerIndex + 1)..<pomodoroCycle.count {
             for inner in 0..<pomodoroCycle[outer].count {
-                intervals.append(pomodoroCycle[outer][inner].waitingTime + 1.0)
+                intervals.append(pomodoroCycle[outer][inner].waitingTime)
             }
         }
         
