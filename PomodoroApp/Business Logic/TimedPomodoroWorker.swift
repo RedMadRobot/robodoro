@@ -18,6 +18,7 @@ protocol TimedPomodoroWorker {
     var stagesCount: Int { get }
     var filledCount: Int { get }
     var canBeReseted: Bool { get }
+    var isPomodoroFinished: Bool { get }
     
     func mainAction()
     func reset()
@@ -45,6 +46,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     var canBeReseted: Bool {
         timerService.canBeReseted
+    }
+    
+    var isPomodoroFinished: Bool {
+        pomodoroService.isFinished
     }
     
     // MARK: - Private Properties
@@ -88,12 +93,17 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
 //                timerState: timerState.value,
 //                stageEndDate: Date.now.addingTimeInterval(leftTime.value),
 //                stagesCount: stagesCount,
-//                filledCount: filledCount)
+//                filledCount: filledCount,
+//                isPomodoroFinished: isPomodoroFinished)
             timerService.start(waitingTime: pomodoroState.value.waitingTime)
         case .running:
             timerService.pause()
         case .ended:
-            reset()
+            if pomodoroService.isFinished {
+                reset()
+            } else {
+                timerService.start(waitingTime: pomodoroState.value.waitingTime)
+            }
         case .paused:
             timerService.resume()
         }
@@ -119,30 +129,26 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             self.backgroundDate = nil
         }
         
-        // Если последняя дата зафиксирована, и таймер в состоянии running
+        // Если последняя дата зафиксированна и таймер в состоянии .running
         guard let backgroundDate = backgroundDate,
-              let currentInterval = pomodoroService.leftIntervals.first,
               timerState.value == .running else { return }
         
-        // Посчитать количество секунд, между текущей датой и последней зафиксированной датой
-        // Прибавляем к этому числу уже пройденное время этого этапа
+        let currentInterval = pomodoroState.value.waitingTime
+        
+        // Посчитать количество секунд между текущей датой и последней зафиксированной
+        // Прибавляем к этому числу число уже пройденное время текущего этапа
         let difference = Calendar.current.dateComponents([.second], from: backgroundDate, to: Date.now)
-        var seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
+        let seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
         
-        // Сдвинуть этапы время которых прошло
-        var leftIntervals = pomodoroService.leftIntervals
-        while let interval = leftIntervals.first,
-              interval - seconds < 0 {
-            // Учитываем, что переход между фазами занимает секунду
-            seconds -= interval + 1
-            leftIntervals.removeFirst()
+        // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение, если требуется
+        let currentWaitingTime: TimeInterval = currentInterval - seconds
+        
+        if currentWaitingTime < 0 {
+            timerService.stop()
             pomodoroService.moveForward()
+        } else {
+            timerService.start(waitingTime: currentWaitingTime)
         }
-        
-        // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение
-        let currentWaitingTime: TimeInterval = (leftIntervals.first ?? 0) - seconds
-                
-        timerService.start(waitingTime: currentWaitingTime)
     }
     
     // MARK: - Private Methods
@@ -157,7 +163,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
 //                pomodoroState: pomodoroState,
 //                timerState: timerState,
 //                stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
-//                filledCount: self.filledCount)
+//                filledCount: self.filledCount,
+//                isPomodoroFinished: self.isPomodoroFinished)
 //        }
 //        .store(in: &subscriptions)
     }
@@ -168,13 +175,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
 extension TimedPomodoroWorkerImpl: PomodoroServiceDelegate {
     
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
+        leftTime.send(pomodoroState.value.waitingTime)
         pomodoroState.send(state)
-        guard !service.atInitialState else { return }
-        timerService.start(waitingTime: pomodoroState.value.waitingTime)
-    }
-    
-    func pomodoroServiceDidFinishCycle(_ service: PomodoroService) {
-        timerService.stop()
     }
 }
 

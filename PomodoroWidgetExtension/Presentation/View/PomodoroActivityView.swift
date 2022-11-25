@@ -56,7 +56,7 @@ struct PomodoroActivityView: View {
                     
                     Spacer()
                     Link(destination: LinkManager.buttonActionURL) {
-                        Image(uiImage: state.timerState.smallButtonImage)
+                        Image(uiImage: state.buttonImage)
                     }
                 }
                 HStack {

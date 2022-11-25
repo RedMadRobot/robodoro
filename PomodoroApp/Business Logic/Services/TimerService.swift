@@ -22,7 +22,6 @@ protocol TimerService {
     var currentState: TimerState { get }
     var currentWaitingTime: TimeInterval { get }
     var canBeReseted: Bool { get }
-    var autoStop: Bool { get set }
     
     func start(waitingTime: TimeInterval)
     func pause()
@@ -54,15 +53,13 @@ final class TimerServiceImpl: TimerService {
     
     var canBeReseted: Bool {
         switch currentState {
-        case .initial, .paused:
+        case .initial:
             return false
         default:
             return true
         }
     }
-    
-    var autoStop: Bool = false
-    
+        
     // MARK: - Private Properties
     
     private var timer: Timer?
@@ -108,11 +105,7 @@ final class TimerServiceImpl: TimerService {
             if self.currentWaitingTime >= 1.0 {
                 self.currentWaitingTime -= 1
             } else {
-                if self.autoStop {
-                    self.stop()
-                } else {
-                    self.clearTimer()
-                }
+                self.stop()
                 self.delegate?.timerServiceDidFinish(self)
             }
         }

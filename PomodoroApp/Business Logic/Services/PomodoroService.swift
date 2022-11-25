@@ -11,7 +11,6 @@ import Foundation
 
 protocol PomodoroServiceDelegate: AnyObject {
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState)
-    func pomodoroServiceDidFinishCycle(_ service: PomodoroService)
 }
 
 // MARK: - PomodoroService
@@ -19,10 +18,9 @@ protocol PomodoroServiceDelegate: AnyObject {
 protocol PomodoroService {
     var delegate: PomodoroServiceDelegate? { get set }
     var currentState: PomodoroState { get }
-    var atInitialState: Bool { get }
-    var atLastState: Bool { get }
     var stagesCount: Int { get }
     var completedStages: Int { get }
+    var isFinished: Bool { get }
     var leftIntervals: [TimeInterval] { get }
     
     func moveForward()
@@ -73,6 +71,8 @@ final class PomodoroServiceImpl: PomodoroService {
         return intervals
     }
     
+    private(set) var isFinished: Bool = false
+    
     // MARK: - Private Properties
     
     private let pomodoroCycle: [[PomodoroState]] = [
@@ -101,11 +101,12 @@ final class PomodoroServiceImpl: PomodoroService {
         } else if outerIndex < pomodoroCycle.count - 1 {
             outerIndex += 1
         } else {
-            delegate?.pomodoroServiceDidFinishCycle(self)
+            isFinished = true
         }
     }
     
     func reset() {
         outerIndex = 0
+        isFinished = false
     }
 }

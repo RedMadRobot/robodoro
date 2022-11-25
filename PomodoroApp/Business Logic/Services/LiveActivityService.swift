@@ -16,14 +16,16 @@ protocol LiveActivityService {
         timerState: TimerState,
         stageEndDate: Date,
         stagesCount: Int,
-        filledCount: Int
+        filledCount: Int,
+        isPomodoroFinished: Bool
     )
     func stop()
     func update(
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        filledCount: Int
+        filledCount: Int,
+        isPomodoroFinished: Bool
     )
 }
 
@@ -42,7 +44,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
         timerState: TimerState,
         stageEndDate: Date,
         stagesCount: Int,
-        filledCount: Int
+        filledCount: Int,
+        isPomodoroFinished: Bool
     ) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         let attributes = LiveActivityAttributes(stagesCount: stagesCount)
@@ -50,7 +53,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
             pomodoroState: pomodoroState,
             timerState: timerState,
             stageEndDate: stageEndDate,
-            filledCount: filledCount)
+            filledCount: filledCount,
+            isPomodoroFinished: isPomodoroFinished)
 
         activity = try? Activity<LiveActivityAttributes>.request(
             attributes: attributes,
@@ -75,7 +79,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        filledCount: Int
+        filledCount: Int,
+        isPomodoroFinished: Bool
     ) {
         guard let activity = activity else { return }
         Task {
@@ -83,7 +88,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
                 pomodoroState: pomodoroState,
                 timerState: timerState,
                 stageEndDate: stageEndDate,
-                filledCount: filledCount)
+                filledCount: filledCount,
+                isPomodoroFinished: isPomodoroFinished)
             await activity.update(using: newState)
         }
     }

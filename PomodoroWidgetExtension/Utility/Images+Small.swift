@@ -8,7 +8,7 @@
 import UIKit
 
 extension Images {
-    static let smallPause = UIImage(named: "smallPause.pdf")!
-    static let smallPlay = UIImage(named: "smallPlay.pdf")!
-    static let smallStop = UIImage(named: "smallStop.pdf")!
+    static let pause = UIImage(named: "smallPause.pdf")!
+    static let play = UIImage(named: "smallPlay.pdf")!
+    static let stop = UIImage(named: "smallStop.pdf")!
 }
