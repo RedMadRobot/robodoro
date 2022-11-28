@@ -45,9 +45,9 @@ struct PomodoroActivityView: View {
                         switch state.timerState {
                         case .ended:
                             Text(dateComponentsFormatter.getFormattedTime(time: 0))
-                        case .paused(let pausedTime):
+                        case .initial(let pausedTime), .paused(let pausedTime):
                             Text(dateComponentsFormatter.getFormattedTime(time: pausedTime))
-                        default:
+                        case .running:
                             Text(timerInterval: Date.now...state.stageEndDate)
                         }
                     }
@@ -55,7 +55,7 @@ struct PomodoroActivityView: View {
                     .foregroundColor(Color(uiColor: Colors.element))
                     
                     Spacer()
-                    Link(destination: LinkManager.buttonActionURL) {
+                    Link(destination: LinkManager.buttonActionURL(action: state.actionLink)) {
                         Image(uiImage: state.buttonImage)
                     }
                 }

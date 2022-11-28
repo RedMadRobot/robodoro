@@ -15,6 +15,9 @@ struct PomodoroApp: App {
     @StateObject
     private var pomodoroViewModel = PomodoroViewModel()
     
+    @Environment(\.scenePhase)
+    private var scenePhase: ScenePhase
+    
     private let timedPomodoroWorker: TimedPomodoroWorker
     
     // MARK: - Init
@@ -31,8 +34,16 @@ struct PomodoroApp: App {
             PomodoroView(viewModel: pomodoroViewModel)
                 .preferredColorScheme(.light)
                 .onOpenURL { url in
-                    guard case .mainButtonAction = LinkManager.manage(url: url) else { return }
-                    timedPomodoroWorker.mainAction()
+                    guard let action = LinkManager.manage(url: url) else { return }
+                    
+                    switch scenePhase {
+                    case .background:
+                        timedPomodoroWorker.setLinkAction(action)
+                    case .inactive:
+                        timedPomodoroWorker.handleLinkAction(action)
+                    default:
+                        break
+                    }
                 }
         }
     }

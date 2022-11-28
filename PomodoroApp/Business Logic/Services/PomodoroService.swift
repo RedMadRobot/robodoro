@@ -18,9 +18,9 @@ protocol PomodoroServiceDelegate: AnyObject {
 protocol PomodoroService {
     var delegate: PomodoroServiceDelegate? { get set }
     var currentState: PomodoroState { get }
+    var atInitialState: Bool { get }
     var stagesCount: Int { get }
     var completedStages: Int { get }
-    var isFinished: Bool { get }
     var leftIntervals: [TimeInterval] { get }
     
     func moveForward()
@@ -41,11 +41,6 @@ final class PomodoroServiceImpl: PomodoroService {
     
     var atInitialState: Bool {
         innerIndex == 0 && outerIndex == 0
-    }
-    
-    var atLastState: Bool {
-        outerIndex == pomodoroCycle.count - 1 &&
-        innerIndex == pomodoroCycle[outerIndex].count - 1
     }
     
     var stagesCount: Int {
@@ -70,9 +65,7 @@ final class PomodoroServiceImpl: PomodoroService {
         
         return intervals
     }
-    
-    private(set) var isFinished: Bool = false
-    
+        
     // MARK: - Private Properties
     
     private let pomodoroCycle: [[PomodoroState]] = [
@@ -100,13 +93,10 @@ final class PomodoroServiceImpl: PomodoroService {
             innerIndex += 1
         } else if outerIndex < pomodoroCycle.count - 1 {
             outerIndex += 1
-        } else {
-            isFinished = true
         }
     }
     
     func reset() {
         outerIndex = 0
-        isFinished = false
     }
 }

@@ -11,26 +11,24 @@ final class ColorHelper {
     
     static func getBackgroundColor(
         pomodoroState: PomodoroState,
-        timerState: TimerState,
-        isPomodoroFihished: Bool
+        timerState: TimerState
     ) -> UIColor {
-        switch (timerState, isPomodoroFihished) {
-        case (.initial, _), (.paused, _), (.ended, false):
+        switch timerState {
+        case .initial, .paused:
             return Colors.pauseBackground
-        case (.running, _), (.ended, true):
+        case .running, .ended:
             return pomodoroState.backgroundColor
         }
     }
     
     static func getStrokeColor(
         pomodoroState: PomodoroState,
-        timerState: TimerState,
-        isPomodoroFihished: Bool
+        timerState: TimerState
     ) -> UIColor {
-        switch (timerState, isPomodoroFihished) {
-        case (.initial, _), (.paused, _), (.ended, false):
+        switch timerState {
+        case .initial, .paused:
             return Colors.pauseLine
-        case (.running, _), (.ended, true):
+        case .running, .ended:
             return pomodoroState.strokeColor
         }
     }

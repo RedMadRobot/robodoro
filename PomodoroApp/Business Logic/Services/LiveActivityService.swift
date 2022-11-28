@@ -16,17 +16,15 @@ protocol LiveActivityService {
         timerState: TimerState,
         stageEndDate: Date,
         stagesCount: Int,
-        filledCount: Int,
-        isPomodoroFinished: Bool
+        filledCount: Int
     )
-    func stop()
     func update(
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        filledCount: Int,
-        isPomodoroFinished: Bool
+        filledCount: Int
     )
+    func stop()
 }
 
 // MARK: - LiveActivityServiceImpl
@@ -35,7 +33,9 @@ final class LiveActivityServiceImpl: LiveActivityService {
     
     // MARK: - Private Properties
     
-    private var activity: Activity<LiveActivityAttributes>?
+    private var activity: Activity<LiveActivityAttributes>? {
+        Activity<LiveActivityAttributes>.activities.first
+    }
     
     // MARK: - Public Methods
     
@@ -44,22 +44,46 @@ final class LiveActivityServiceImpl: LiveActivityService {
         timerState: TimerState,
         stageEndDate: Date,
         stagesCount: Int,
-        filledCount: Int,
-        isPomodoroFinished: Bool
+        filledCount: Int
     ) {
+        // Попытаться обновить существующую активити
+        if let _ = activity {
+            return update(
+                pomodoroState: pomodoroState,
+                timerState: timerState,
+                stageEndDate: stageEndDate,
+                filledCount: filledCount)
+        }
+        
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         let attributes = LiveActivityAttributes(stagesCount: stagesCount)
         let state = LiveActivityAttributes.ContentState(
             pomodoroState: pomodoroState,
             timerState: timerState,
             stageEndDate: stageEndDate,
-            filledCount: filledCount,
-            isPomodoroFinished: isPomodoroFinished)
+            filledCount: filledCount)
 
-        activity = try? Activity<LiveActivityAttributes>.request(
+        _ = try? Activity<LiveActivityAttributes>.request(
             attributes: attributes,
             contentState: state,
             pushType: nil)
+    }
+    
+    func update(
+        pomodoroState: PomodoroState,
+        timerState: TimerState,
+        stageEndDate: Date,
+        filledCount: Int
+    ) {
+        guard let activity = activity else { return }
+        Task {
+            let newState = LiveActivityAttributes.ContentState(
+                pomodoroState: pomodoroState,
+                timerState: timerState,
+                stageEndDate: stageEndDate,
+                filledCount: filledCount)
+            await activity.update(using: newState)
+        }
     }
     
     func stop() {
@@ -69,28 +93,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
         let semaphore = DispatchSemaphore(value: 0)
         Task {
             await activity.end(dismissalPolicy: .immediate)
-            self.activity = nil
             semaphore.signal()
         }
         semaphore.wait()
-    }
-    
-    func update(
-        pomodoroState: PomodoroState,
-        timerState: TimerState,
-        stageEndDate: Date,
-        filledCount: Int,
-        isPomodoroFinished: Bool
-    ) {
-        guard let activity = activity else { return }
-        Task {
-            let newState = LiveActivityAttributes.ContentState(
-                pomodoroState: pomodoroState,
-                timerState: timerState,
-                stageEndDate: stageEndDate,
-                filledCount: filledCount,
-                isPomodoroFinished: isPomodoroFinished)
-            await activity.update(using: newState)
-        }
     }
 }

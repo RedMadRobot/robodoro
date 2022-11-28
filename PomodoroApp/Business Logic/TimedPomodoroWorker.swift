@@ -18,10 +18,12 @@ protocol TimedPomodoroWorker {
     var stagesCount: Int { get }
     var filledCount: Int { get }
     var canBeReseted: Bool { get }
-    var isPomodoroFinished: Bool { get }
+    var enterForegroundAction: LinkManager.Action? { get }
     
     func mainAction()
     func reset()
+    func setLinkAction(_ action: LinkManager.Action)
+    func handleLinkAction(_ action: LinkManager.Action)
     func handleEnterBackground()
     func handleEnterForeground()
 }
@@ -45,12 +47,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     }
     
     var canBeReseted: Bool {
-        timerService.canBeReseted
+        timerService.canBeReseted || !pomodoroService.atInitialState
     }
     
-    var isPomodoroFinished: Bool {
-        pomodoroService.isFinished
-    }
+    var enterForegroundAction: LinkManager.Action?
     
     // MARK: - Private Properties
     
@@ -80,6 +80,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         self.pomodoroService.delegate = self
         self.timerService.delegate = self
         
+        timerService.reset(waitingTime: pomodoroService.currentState.waitingTime)
+        
         addSubsctiptions()
     }
     
@@ -88,32 +90,41 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     func mainAction() {
         switch timerState.value {
         case .initial:
-//            activityService.start(
-//                pomodoroState: pomodoroState.value,
-//                timerState: timerState.value,
-//                stageEndDate: Date.now.addingTimeInterval(leftTime.value),
-//                stagesCount: stagesCount,
-//                filledCount: filledCount,
-//                isPomodoroFinished: isPomodoroFinished)
-            timerService.start(waitingTime: pomodoroState.value.waitingTime)
+            activityService.start(
+                pomodoroState: pomodoroState.value,
+                timerState: timerState.value,
+                stageEndDate: Date.now.addingTimeInterval(leftTime.value),
+                stagesCount: stagesCount,
+                filledCount: filledCount)
+            timerService.start()
         case .running:
             timerService.pause()
         case .ended:
-            if pomodoroService.isFinished {
-                reset()
-            } else {
-                timerService.start(waitingTime: pomodoroState.value.waitingTime)
-            }
+            reset()
         case .paused:
             timerService.resume()
         }
     }
     
     func reset() {
-//        activityService.stop()
+        activityService.stop()
         pomodoroService.reset()
-        timerService.reset()
-        leftTime.send(pomodoroService.currentState.waitingTime)
+        timerService.reset(waitingTime: pomodoroService.currentState.waitingTime)
+    }
+    
+    func setLinkAction(_ action: LinkManager.Action) {
+        enterForegroundAction = action
+    }
+    
+    func handleLinkAction(_ action: LinkManager.Action) {
+        switch (action, timerState.value) {
+        case (.start, .initial), (.start, .paused),
+             (.stop, .ended),
+             (.pause, .running):
+            mainAction()
+        default:
+            break
+        }
     }
     
     func handleEnterBackground() {
@@ -126,7 +137,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     func handleEnterForeground() {
         defer {
-            self.backgroundDate = nil
+            backgroundDate = nil
+            handleLinkActionIfNeeded()
         }
         
         // Если последняя дата зафиксированна и таймер в состоянии .running
@@ -147,26 +159,32 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             timerService.stop()
             pomodoroService.moveForward()
         } else {
-            timerService.start(waitingTime: currentWaitingTime)
+            timerService.reset(waitingTime: currentWaitingTime)
+            timerService.start()
         }
     }
     
     // MARK: - Private Methods
     
     private func addSubsctiptions() {
-//        Publishers.CombineLatest(
-//            pomodoroState,
-//            timerState)
-//        .sink { [weak self] pomodoroState, timerState in
-//            guard let self = self else { return }
-//            self.activityService.update(
-//                pomodoroState: pomodoroState,
-//                timerState: timerState,
-//                stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
-//                filledCount: self.filledCount,
-//                isPomodoroFinished: self.isPomodoroFinished)
-//        }
-//        .store(in: &subscriptions)
+        Publishers.CombineLatest(
+            pomodoroState,
+            timerState)
+        .sink { [weak self] pomodoroState, timerState in
+            guard let self = self else { return }
+            self.activityService.update(
+                pomodoroState: pomodoroState,
+                timerState: timerState,
+                stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
+                filledCount: self.filledCount)
+        }
+        .store(in: &subscriptions)
+    }
+    
+    private func handleLinkActionIfNeeded() {
+        guard let action = enterForegroundAction else { return }
+        handleLinkAction(action)
+        enterForegroundAction = nil
     }
 }
 
@@ -175,8 +193,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
 extension TimedPomodoroWorkerImpl: PomodoroServiceDelegate {
     
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
-        leftTime.send(pomodoroState.value.waitingTime)
         pomodoroState.send(state)
+        timerService.reset(waitingTime: state.waitingTime)
     }
 }
 

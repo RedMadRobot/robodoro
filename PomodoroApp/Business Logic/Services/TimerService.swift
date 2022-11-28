@@ -23,10 +23,10 @@ protocol TimerService {
     var currentWaitingTime: TimeInterval { get }
     var canBeReseted: Bool { get }
     
-    func start(waitingTime: TimeInterval)
+    func start()
     func pause()
     func resume()
-    func reset()
+    func reset(waitingTime: TimeInterval)
     func stop()
     func suspend()
 }
@@ -39,13 +39,13 @@ final class TimerServiceImpl: TimerService {
     
     weak var delegate: TimerServiceDelegate?
     
-    private(set) var currentState: TimerState = .initial {
+    private(set) var currentState: TimerState = .initial(0) {
         didSet {
             delegate?.timerService(self, didChangeStateTo: currentState)
         }
     }
         
-    private(set) var currentWaitingTime: TimeInterval = 0.0 {
+    private(set) var currentWaitingTime: TimeInterval = 0 {
         didSet {
             delegate?.timerService(self, didTickAtInterval: currentWaitingTime)
         }
@@ -66,9 +66,8 @@ final class TimerServiceImpl: TimerService {
     
     // MARK: - Public Methods
     
-    func start(waitingTime: TimeInterval) {
-        clearTimer()
-        runTimer(waitingTime: waitingTime)
+    func start() {
+        runTimer()
     }
     
     func pause() {
@@ -78,11 +77,12 @@ final class TimerServiceImpl: TimerService {
     
     func resume() {
         guard let _ = timer else { return }
-        runTimer(waitingTime: currentWaitingTime)
+        runTimer()
     }
     
-    func reset() {
-        currentState = .initial
+    func reset(waitingTime: TimeInterval) {
+        currentWaitingTime = waitingTime
+        currentState = .initial(currentWaitingTime)
         clearTimer()
     }
     
@@ -97,8 +97,7 @@ final class TimerServiceImpl: TimerService {
     
     // MARK: - Private Methods
     
-    private func runTimer(waitingTime: TimeInterval) {
-        currentWaitingTime = waitingTime
+    private func runTimer() {
         currentState = .running
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }

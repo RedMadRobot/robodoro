@@ -44,21 +44,17 @@ final class PomodoroViewModel: ObservableObject {
     var backgroundColor: UIColor {
         ColorHelper.getBackgroundColor(
             pomodoroState: pomodoroState,
-            timerState: timerState,
-            isPomodoroFihished: timedPomodoroWorker.isPomodoroFinished)
+            timerState: timerState)
     }
     
     var strokeColor: UIColor {
         ColorHelper.getStrokeColor(
             pomodoroState: pomodoroState,
-            timerState: timerState,
-            isPomodoroFihished: timedPomodoroWorker.isPomodoroFinished)
+            timerState: timerState)
     }
     
     var buttonImage: UIImage {
-        ImageHelper.getMainButtonImage(
-            timerState: timerState,
-            isPomodoroFihished: timedPomodoroWorker.isPomodoroFinished)
+        timerState.buttonImage
     }
     
     // MARK: - Private Propeties

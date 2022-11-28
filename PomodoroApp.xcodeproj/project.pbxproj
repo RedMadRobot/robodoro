@@ -66,8 +66,6 @@
 		35D305582924EB530062FDA9 /* LiveActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305572924EB530062FDA9 /* LiveActivityService.swift */; };
 		35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 		35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B52930D00800F47AD7 /* NotificationService.swift */; };
-		35F4A6B82930D64F00F47AD7 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B72930D64F00F47AD7 /* ImageHelper.swift */; };
-		35F4A6B92930D64F00F47AD7 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B72930D64F00F47AD7 /* ImageHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,7 +143,6 @@
 		35D305632924F6BF0062FDA9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		35D305792924F94F0062FDA9 /* PomodoroActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroActivityView.swift; sourceTree = "<group>"; };
 		35F4A6B52930D00800F47AD7 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		35F4A6B72930D64F00F47AD7 /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,7 +347,6 @@
 				352039722923C45B00A4028E /* Font+Extension.swift */,
 				35495776292637C8000C216C /* ColorHelper.swift */,
 				354957A029269EFB000C216C /* LinkManager.swift */,
-				35F4A6B72930D64F00F47AD7 /* ImageHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -583,7 +579,6 @@
 				3549578C2926425E000C216C /* Font+Big.swift in Sources */,
 				3520394129223D8600A4028E /* Colors.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
-				35F4A6B82930D64F00F47AD7 /* ImageHelper.swift in Sources */,
 				3549579F29267836000C216C /* AppWorkers.swift in Sources */,
 				3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */,
 				3549577D29263A0A000C216C /* TimerState.swift in Sources */,
@@ -619,7 +614,6 @@
 				354957852926400D000C216C /* Images.swift in Sources */,
 				3549579129264988000C216C /* StageView.swift in Sources */,
 				354957712926358F000C216C /* Images+Small.swift in Sources */,
-				35F4A6B92930D64F00F47AD7 /* ImageHelper.swift in Sources */,
 				35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */,
 				3549578229263CCF000C216C /* PomodoroState.swift in Sources */,
 				3549579629265BA0000C216C /* FocusedBackground.swift in Sources */,
