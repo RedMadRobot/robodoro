@@ -33,6 +33,9 @@ struct PomodoroApp: App {
         WindowGroup {
             PomodoroView(viewModel: pomodoroViewModel)
                 .preferredColorScheme(.light)
+                .onAppear {
+                    timedPomodoroWorker.requestNotificationPermissionIfNeeded()
+                }
                 .onOpenURL { url in
                     guard let action = LinkManager.manage(url: url) else { return }
                     
@@ -78,6 +81,7 @@ struct PomodoroApp: App {
     
     private func applicationWillTerminate() {
         timedPomodoroWorker.reset()
+        timedPomodoroWorker.cancelNotification()
     }
     
     private func applicationDidEnterBackground() {

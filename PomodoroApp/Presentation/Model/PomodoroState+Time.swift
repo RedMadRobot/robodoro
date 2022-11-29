@@ -14,10 +14,10 @@ extension PomodoroState {
         switch self {
         case .focus, .longBreak:
 //            return 60.0 * 25
-            return 50
+            return 30
         case .break:
 //            return 60.0 * 6
-            return 50
+            return 30
         }
     }
 }

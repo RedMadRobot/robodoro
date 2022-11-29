@@ -26,6 +26,8 @@ protocol TimedPomodoroWorker {
     func handleLinkAction(_ action: LinkManager.Action)
     func handleEnterBackground()
     func handleEnterForeground()
+    func requestNotificationPermissionIfNeeded()
+    func cancelNotification()
 }
 
 // MARK: - TimedPomodoroWorkerImpl
@@ -55,6 +57,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     // MARK: - Private Properties
     
     private let activityService: LiveActivityService
+    private let notificationService: NotificationService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
     
@@ -66,10 +69,12 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     init(
         activityService: LiveActivityService,
+        notificationService: NotificationService,
         pomodoroService: PomodoroService,
         timerService: TimerService
     ) {
         self.activityService = activityService
+        self.notificationService = notificationService
         self.pomodoroService = pomodoroService
         self.timerService = timerService
         
@@ -97,12 +102,15 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 stagesCount: stagesCount,
                 filledCount: filledCount)
             timerService.start()
+            scheduleCurrentStateNotification()
         case .running:
             timerService.pause()
+            cancelNotification()
         case .ended:
             reset()
         case .paused:
             timerService.resume()
+            scheduleCurrentStateNotification()
         }
     }
     
@@ -164,6 +172,14 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         }
     }
     
+    func requestNotificationPermissionIfNeeded() {
+        notificationService.requestPermissionIfNeeded()
+    }
+    
+    func cancelNotification() {
+        notificationService.cancelPendingNotification()
+    }
+    
     // MARK: - Private Methods
     
     private func addSubsctiptions() {
@@ -185,6 +201,13 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         guard let action = enterForegroundAction else { return }
         handleLinkAction(action)
         enterForegroundAction = nil
+    }
+    
+    private func scheduleCurrentStateNotification() {
+        notificationService.scheduleNotification(
+            in: leftTime.value,
+            title: "\(pomodoroState.value.title) stage ended!",
+            body: "Get ready to start new timer")
     }
 }
 
