@@ -13,6 +13,7 @@ final class AppWorkers {
     
     lazy var timedPomodoroWorker: TimedPomodoroWorker = TimedPomodoroWorkerImpl(
         activityService: services.activityService,
+        feedbackService: services.feedbackService,
         notificationService: services.notificationService,
         pomodoroService: services.pomodoroService,
         timerService: services.timerService

@@ -57,6 +57,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     // MARK: - Private Properties
     
     private let activityService: LiveActivityService
+    private let feedbackService: FeedbackService
     private let notificationService: NotificationService
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
@@ -69,11 +70,13 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     init(
         activityService: LiveActivityService,
+        feedbackService: FeedbackService,
         notificationService: NotificationService,
         pomodoroService: PomodoroService,
         timerService: TimerService
     ) {
         self.activityService = activityService
+        self.feedbackService = feedbackService
         self.notificationService = notificationService
         self.pomodoroService = pomodoroService
         self.timerService = timerService
@@ -234,6 +237,7 @@ extension TimedPomodoroWorkerImpl: TimerServiceDelegate {
     }
     
     func timerServiceDidFinish(_ service: TimerService) {
+        feedbackService.playTimerEndSignal()
         pomodoroService.moveForward()
     }
 }
