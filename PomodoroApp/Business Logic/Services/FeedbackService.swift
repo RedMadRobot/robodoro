@@ -5,6 +5,7 @@
 //  Created by Петр Тартынских  on 29.11.2022.
 //
 
+import AVFoundation
 import CoreHaptics
 
 // MARK: - FeedbackService
@@ -13,9 +14,9 @@ protocol FeedbackService {
     func playTimerEndSignal()
 }
 
-// MARK: - FeedbackServiceImpl
+// MARK: - VibrationFeedbackServiceImpl
 
-final class FeedbackServiceImpl: FeedbackService {
+final class VibrationFeedbackServiceImpl: FeedbackService {
     
     // MARK: - Private Properties
     
@@ -71,5 +72,17 @@ final class FeedbackServiceImpl: FeedbackService {
         } catch {
             print("Error: ", error)
         }
+    }
+}
+
+// MARK: - SoundFeedbackServiceImpl
+
+final class SoundFeedbackServiceImpl: FeedbackService {
+        
+    // MARK: - Public Methods
+    
+    func playTimerEndSignal() {
+        let systemSoundID: SystemSoundID = 1304
+        AudioServicesPlayAlertSound(systemSoundID)
     }
 }
