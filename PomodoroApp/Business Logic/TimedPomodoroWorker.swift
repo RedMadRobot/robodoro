@@ -121,6 +121,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         activityService.stop()
         pomodoroService.reset()
         timerService.reset(waitingTime: pomodoroService.currentState.waitingTime)
+        cancelNotification()
     }
     
     func setLinkAction(_ action: LinkManager.Action) {
