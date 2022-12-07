@@ -9,7 +9,7 @@ import Foundation
 
 final class AppServices {
     lazy var activityService: LiveActivityService = LiveActivityServiceImpl()
-    lazy var feedbackService: FeedbackService =  SoundFeedbackServiceImpl() //VibrationFeedbackServiceImpl()
+    lazy var feedbackService: FeedbackService =  FeedbackServiceImpl()
     lazy var notificationService: NotificationService = NotificationServiceImpl()
     lazy var pomodoroService: PomodoroService = PomodoroServiceImpl()
     lazy var timerService: TimerService = TimerServiceImpl()

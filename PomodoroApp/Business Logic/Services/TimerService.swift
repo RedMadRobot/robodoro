@@ -99,7 +99,7 @@ final class TimerServiceImpl: TimerService {
     
     private func runTimer() {
         currentState = .running
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.currentWaitingTime >= 1.0 {
                 self.currentWaitingTime -= 1
@@ -108,6 +108,8 @@ final class TimerServiceImpl: TimerService {
                 self.delegate?.timerServiceDidFinish(self)
             }
         }
+        RunLoop.main.add(timer, forMode: .common)
+        self.timer = timer
     }
     
     private func clearTimer() {
