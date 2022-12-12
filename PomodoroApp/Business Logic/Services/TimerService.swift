@@ -21,7 +21,6 @@ protocol TimerService {
     var delegate: TimerServiceDelegate? { get set }
     var currentState: TimerState { get }
     var currentWaitingTime: TimeInterval { get }
-    var canBeReseted: Bool { get }
     
     func start()
     func pause()
@@ -48,15 +47,6 @@ final class TimerServiceImpl: TimerService {
     private(set) var currentWaitingTime: TimeInterval = 0 {
         didSet {
             delegate?.timerService(self, didTickAtInterval: currentWaitingTime)
-        }
-    }
-    
-    var canBeReseted: Bool {
-        switch currentState {
-        case .initial:
-            return false
-        default:
-            return true
         }
     }
         

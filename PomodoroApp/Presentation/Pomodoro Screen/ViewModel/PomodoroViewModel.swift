@@ -37,10 +37,6 @@ final class PomodoroViewModel: ObservableObject {
         timedPomodoroWorker.filledCount
     }
     
-    var showResetButton: Bool {
-        timedPomodoroWorker.canBeReseted
-    }
-    
     var backgroundColor: UIColor {
         ColorHelper.getBackgroundColor(
             pomodoroState: pomodoroState,
@@ -77,10 +73,6 @@ final class PomodoroViewModel: ObservableObject {
     
     func mainButtonAction() {
         timedPomodoroWorker.mainAction()
-    }
-    
-    func reset() {
-        timedPomodoroWorker.reset()
     }
     
     // MARK: - Private Methods

@@ -17,7 +17,6 @@ protocol TimedPomodoroWorker {
     
     var stagesCount: Int { get }
     var filledCount: Int { get }
-    var canBeReseted: Bool { get }
     var enterForegroundAction: LinkManager.Action? { get }
     
     func mainAction()
@@ -46,10 +45,6 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     var filledCount: Int {
         pomodoroService.completedStages
-    }
-    
-    var canBeReseted: Bool {
-        timerService.canBeReseted || !pomodoroService.atInitialState
     }
     
     var enterForegroundAction: LinkManager.Action?

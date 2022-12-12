@@ -24,6 +24,13 @@
 		352039792923D33400A4028E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039782923D33400A4028E /* AppServices.swift */; };
 		3520397B2923D48000A4028E /* PomodoroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397A2923D48000A4028E /* PomodoroService.swift */; };
 		3520397D2923D61000A4028E /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397C2923D61000A4028E /* TimerService.swift */; };
+		352B6BF629472E6B00B09E51 /* AppStorages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BF529472E6B00B09E51 /* AppStorages.swift */; };
+		352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BF829472ED000B09E51 /* UserDefaultsStorage.swift */; };
+		352B6BFD2947373700B09E51 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BFC2947373700B09E51 /* ResultsView.swift */; };
+		352B6BFF2947377800B09E51 /* NoTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BFE2947377800B09E51 /* NoTasksView.swift */; };
+		352B6C02294756CA00B09E51 /* BigBlackButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */; };
+		352B6C0429477D9400B09E51 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C0329477D9400B09E51 /* ResultsViewModel.swift */; };
+		352B6C0629477F2E00B09E51 /* MainNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C0529477F2E00B09E51 /* MainNavigator.swift */; };
 		354957712926358F000C216C /* Images+Small.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354957702926358F000C216C /* Images+Small.swift */; };
 		35495777292637C8000C216C /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35495776292637C8000C216C /* ColorHelper.swift */; };
 		35495778292637C8000C216C /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35495776292637C8000C216C /* ColorHelper.swift */; };
@@ -113,6 +120,15 @@
 		3520397A2923D48000A4028E /* PomodoroService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroService.swift; sourceTree = "<group>"; };
 		3520397C2923D61000A4028E /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
 		3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponentsFormatter+Extension.swift"; sourceTree = "<group>"; };
+		352B6BF0294359E000B09E51 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		352B6BF329435A6700B09E51 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		352B6BF529472E6B00B09E51 /* AppStorages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorages.swift; sourceTree = "<group>"; };
+		352B6BF829472ED000B09E51 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		352B6BFC2947373700B09E51 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		352B6BFE2947377800B09E51 /* NoTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTasksView.swift; sourceTree = "<group>"; };
+		352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigBlackButtonStyle.swift; sourceTree = "<group>"; };
+		352B6C0329477D9400B09E51 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
+		352B6C0529477F2E00B09E51 /* MainNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigator.swift; sourceTree = "<group>"; };
 		354957702926358F000C216C /* Images+Small.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Small.swift"; sourceTree = "<group>"; };
 		35495776292637C8000C216C /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		3549577C29263A0A000C216C /* TimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerState.swift; sourceTree = "<group>"; };
@@ -170,9 +186,12 @@
 		35203936291EAD5700A4028E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				3520393C291EB47B00A4028E /* ViewModel */,
-				35203939291EB37B00A4028E /* View */,
-				35203938291EB37500A4028E /* Model */,
+				352B6C072947815C00B09E51 /* Navigation */,
+				352B6C00294756AD00B09E51 /* Common */,
+				352B6BF229435A0000B09E51 /* Set Task Screen */,
+				352B6BEF294359C300B09E51 /* Settings Screen */,
+				352B6BEC2943599F00B09E51 /* Results Screen */,
+				352B6BEB294358B000B09E51 /* Pomodoro Screen */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -251,6 +270,7 @@
 		352039742923D29C00A4028E /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
+				352B6BF729472EA300B09E51 /* Storages */,
 				3549579D2926781D000C216C /* Services */,
 				3549579B29266AAC000C216C /* TimedPomodoroWorker.swift */,
 			);
@@ -263,8 +283,85 @@
 				352039762923D31200A4028E /* DI.swift */,
 				352039782923D33400A4028E /* AppServices.swift */,
 				3549579E29267836000C216C /* AppWorkers.swift */,
+				352B6BF529472E6B00B09E51 /* AppStorages.swift */,
 			);
 			path = "Dependency Injection";
+			sourceTree = "<group>";
+		};
+		352B6BEB294358B000B09E51 /* Pomodoro Screen */ = {
+			isa = PBXGroup;
+			children = (
+				3520393C291EB47B00A4028E /* ViewModel */,
+				35203939291EB37B00A4028E /* View */,
+				35203938291EB37500A4028E /* Model */,
+			);
+			path = "Pomodoro Screen";
+			sourceTree = "<group>";
+		};
+		352B6BEC2943599F00B09E51 /* Results Screen */ = {
+			isa = PBXGroup;
+			children = (
+				352B6BFB2947371300B09E51 /* ViewModel */,
+				352B6BFA2947370C00B09E51 /* View */,
+			);
+			path = "Results Screen";
+			sourceTree = "<group>";
+		};
+		352B6BEF294359C300B09E51 /* Settings Screen */ = {
+			isa = PBXGroup;
+			children = (
+				352B6BF0294359E000B09E51 /* .gitkeep */,
+			);
+			path = "Settings Screen";
+			sourceTree = "<group>";
+		};
+		352B6BF229435A0000B09E51 /* Set Task Screen */ = {
+			isa = PBXGroup;
+			children = (
+				352B6BF329435A6700B09E51 /* .gitkeep */,
+			);
+			path = "Set Task Screen";
+			sourceTree = "<group>";
+		};
+		352B6BF729472EA300B09E51 /* Storages */ = {
+			isa = PBXGroup;
+			children = (
+				352B6BF829472ED000B09E51 /* UserDefaultsStorage.swift */,
+			);
+			path = Storages;
+			sourceTree = "<group>";
+		};
+		352B6BFA2947370C00B09E51 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				352B6BFC2947373700B09E51 /* ResultsView.swift */,
+				352B6BFE2947377800B09E51 /* NoTasksView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		352B6BFB2947371300B09E51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				352B6C0329477D9400B09E51 /* ResultsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		352B6C00294756AD00B09E51 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		352B6C072947815C00B09E51 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				352B6C0529477F2E00B09E51 /* MainNavigator.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		3549576B292539C4000C216C /* App */ = {
@@ -575,19 +672,25 @@
 				3520396E2923BD5300A4028E /* StageView.swift in Sources */,
 				3520394A2922532700A4028E /* BackgroundView.swift in Sources */,
 				35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */,
+				352B6C02294756CA00B09E51 /* BigBlackButtonStyle.swift in Sources */,
 				35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */,
 				3520397B2923D48000A4028E /* PomodoroService.swift in Sources */,
+				352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */,
 				35D305582924EB530062FDA9 /* LiveActivityService.swift in Sources */,
 				35495787292640D7000C216C /* Images+Big.swift in Sources */,
 				35495777292637C8000C216C /* ColorHelper.swift in Sources */,
 				3549578C2926425E000C216C /* Font+Big.swift in Sources */,
+				352B6BFD2947373700B09E51 /* ResultsView.swift in Sources */,
 				3520394129223D8600A4028E /* Colors.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
 				3549579F29267836000C216C /* AppWorkers.swift in Sources */,
 				3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */,
+				352B6C0629477F2E00B09E51 /* MainNavigator.swift in Sources */,
 				3549577D29263A0A000C216C /* TimerState.swift in Sources */,
 				3549578129263CCF000C216C /* PomodoroState.swift in Sources */,
+				352B6BFF2947377800B09E51 /* NoTasksView.swift in Sources */,
 				352039712923BE0100A4028E /* StageElementView.swift in Sources */,
+				352B6BF629472E6B00B09E51 /* AppStorages.swift in Sources */,
 				3549579C29266AAC000C216C /* TimedPomodoroWorker.swift in Sources */,
 				35203953292270B600A4028E /* LongBreakBackground.swift in Sources */,
 				352039452922424500A4028E /* UIColor+Hex.swift in Sources */,
@@ -598,6 +701,7 @@
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
 				3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */,
 				352039792923D33400A4028E /* AppServices.swift in Sources */,
+				352B6C0429477D9400B09E51 /* ResultsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

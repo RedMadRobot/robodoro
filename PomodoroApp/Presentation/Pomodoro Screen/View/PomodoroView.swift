@@ -9,21 +9,22 @@ import SwiftUI
 
 struct PomodoroView: View {
     
-    // MARK: - Constants
-    
-    private enum Constants {
-        
-    }
-    
     // MARK: - Private Properties
     
     @ObservedObject
     private var viewModel: PomodoroViewModel
     
+    @ObservedObject
+    private var navigator: MainNavigator
+    
     // MARK: - Init
     
-    init(viewModel: PomodoroViewModel) {
+    init(
+        viewModel: PomodoroViewModel,
+        navigator: MainNavigator
+    ) {
         self.viewModel = viewModel
+        self.navigator = navigator
     }
     
     // MARK: - View
@@ -35,23 +36,20 @@ struct PomodoroView: View {
                 frontView
             }
             .toolbar {
-                if viewModel.showResetButton {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            viewModel.reset()
-                        } label: {
-                            Image(uiImage: Images.restart)
-                        }
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Text(viewModel.pomodoroState.title)
                         .font(.stageLabel)
-                        .foregroundColor(Color(uiColor: Colors.element))
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        // TODO: - Добавить попап
+                        navigator.hidePomodoro()
+                    } label: {
+                        Image(uiImage: Images.logout)
+                    }
                 }
             }
-            // TODO: - Разобраться почему не работает
-            //.animation(.easeInOut, value: viewModel.pomodoroState)
+            .animation(.easeInOut, value: viewModel.pomodoroState)
         }
     }
     
@@ -78,16 +76,14 @@ struct PomodoroView: View {
             Text(viewModel.minutes)
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .font(.time)
-                .foregroundColor(Color(uiColor: Colors.element))
-//                .animation(.easeInOut, value: viewModel.leftTime)
+                .foregroundColor(Color(uiColor: Colors.black))
             Text(":")
                 .font(.time)
-                .foregroundColor(Color(uiColor: Colors.element))
+                .foregroundColor(Color(uiColor: Colors.black))
             Text(viewModel.seconds)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.time)
-                .foregroundColor(Color(uiColor: Colors.element))
-//                .animation(.easeInOut, value: viewModel.leftTime)
+                .foregroundColor(Color(uiColor: Colors.black))
         }
     }
 }
@@ -96,6 +92,9 @@ struct PomodoroView: View {
 
 struct PomodoroView_Previews: PreviewProvider {
     static var previews: some View {
-        PomodoroView(viewModel: PomodoroViewModel())
+        PomodoroView(
+            viewModel: PomodoroViewModel(),
+            navigator: MainNavigator()
+        )
     }
 }

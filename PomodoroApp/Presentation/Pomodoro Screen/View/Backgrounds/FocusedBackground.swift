@@ -71,7 +71,7 @@ struct FocusedBackground: View {
 struct FocusedBackground_Previews: PreviewProvider {
     static var previews: some View {
         FocusedBackground(
-            backgroundColor: Colors.focusBackground,
+            backgroundColor: Colors.focusRed,
             strokeColor: Colors.focusLine)
     }
 }

@@ -12,4 +12,6 @@ extension Images {
     static let play = UIImage(named: "play.pdf")!
     static let restart = UIImage(named: "restart.pdf")!
     static let stop = UIImage(named: "stop.pdf")!
+    static let settings = UIImage(named: "settings.pdf")!
+    static let logout = UIImage(named: "logout.pdf")!
 }

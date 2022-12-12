@@ -52,7 +52,7 @@ struct PomodoroActivityView: View {
                         }
                     }
                     .font(.time)
-                    .foregroundColor(Color(uiColor: Colors.element))
+                    .foregroundColor(Color(uiColor: Colors.black))
                     
                     Spacer()
                     Link(destination: LinkManager.buttonActionURL(action: state.actionLink)) {
@@ -66,7 +66,7 @@ struct PomodoroActivityView: View {
                             filledCount: state.filledCount)
                         Text(state.pomodoroState.title)
                             .font(.stageLabel)
-                            .foregroundColor(Color(uiColor: Colors.element))
+                            .foregroundColor(Color(uiColor: Colors.black))
                     }
                     Spacer()
                 }

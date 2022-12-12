@@ -59,7 +59,7 @@ struct BreakBackground: View {
 struct BreakBackground_Previews: PreviewProvider {
     static var previews: some View {
         BreakBackground(
-            backgroundColor: Colors.breakBackground,
+            backgroundColor: Colors.breakPurple,
             strokeColor: Colors.breakLine)
     }
 }

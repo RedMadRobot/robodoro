@@ -64,7 +64,7 @@ struct LongBreakBackground: View {
 struct LongBreakBackground_Previews: PreviewProvider {
     static var previews: some View {
         LongBreakBackground(
-            backgroundColor: Colors.longBreakBackground,
+            backgroundColor: Colors.longBreakGreen,
             strokeColor: Colors.longBreakLine)
     }
 }

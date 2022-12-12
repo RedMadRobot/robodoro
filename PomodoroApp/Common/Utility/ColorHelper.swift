@@ -15,7 +15,7 @@ final class ColorHelper {
     ) -> UIColor {
         switch timerState {
         case .initial, .paused:
-            return Colors.pauseBackground
+            return Colors.defaultGray
         case .running, .ended:
             return pomodoroState.backgroundColor
         }
@@ -27,7 +27,7 @@ final class ColorHelper {
     ) -> UIColor {
         switch timerState {
         case .initial, .paused:
-            return Colors.pauseLine
+            return Colors.defaultLine
         case .running, .ended:
             return pomodoroState.strokeColor
         }

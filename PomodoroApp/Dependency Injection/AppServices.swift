@@ -8,9 +8,20 @@
 import Foundation
 
 final class AppServices {
+    
     lazy var activityService: LiveActivityService = LiveActivityServiceImpl()
     lazy var feedbackService: FeedbackService =  FeedbackServiceImpl()
     lazy var notificationService: NotificationService = NotificationServiceImpl()
     lazy var pomodoroService: PomodoroService = PomodoroServiceImpl()
     lazy var timerService: TimerService = TimerServiceImpl()
+    
+    // MARK: - Private Properties
+
+    private let storages: AppStorages
+    
+    // MARK: - Initialisers
+    
+    init(storages: AppStorages) {
+        self.storages = storages
+    }
 }

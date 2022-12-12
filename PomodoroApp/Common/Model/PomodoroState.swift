@@ -36,11 +36,11 @@ extension PomodoroState {
     var backgroundColor: UIColor {
         switch self {
         case .focus:
-            return Colors.focusBackground
+            return Colors.focusRed
         case .break:
-            return Colors.breakBackground
+            return Colors.breakPurple
         case .longBreak:
-            return Colors.longBreakBackground
+            return Colors.longBreakGreen
         }
     }
     
