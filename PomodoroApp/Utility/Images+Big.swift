@@ -14,4 +14,5 @@ extension Images {
     static let stop = UIImage(named: "stop.pdf")!
     static let settings = UIImage(named: "settings.pdf")!
     static let logout = UIImage(named: "logout.pdf")!
+    static let arrowLeft = UIImage(named: "arrowLeft.pdf")!
 }

@@ -47,7 +47,7 @@ struct PomodoroApp: App {
                 .navigationDestination(for: Screen.self) { screen in
                     switch screen {
                     case .settings:
-                        Text("Settings")
+                        SettingsView(navigator: navigator)
                     }
                 }
                 .fullScreenCover(isPresented: $navigator.showPomodoroCover) {
