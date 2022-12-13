@@ -9,15 +9,12 @@ import UIKit
 
 extension PomodoroState {
     
-    // TODO: - Вернуть нормальное время
-    var waitingTime: TimeInterval {
+    var defaultWaitingTime: TimeInterval {
         switch self {
         case .focus, .longBreak:
-//            return 60.0 * 25
-            return 10
+            return 60.0 * 25
         case .break:
-//            return 60.0 * 6
-            return 10
+            return 60.0 * 6
         }
     }
 }

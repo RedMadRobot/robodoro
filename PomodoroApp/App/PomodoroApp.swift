@@ -29,7 +29,7 @@ struct PomodoroApp: App {
     // MARK: - Init
     
     init() {
-        self.timedPomodoroWorker = DI.workers.timedPomodoroWorker
+        self.timedPomodoroWorker = DI.workers.`timedPomodoroWorker`
     }
     
     // MARK: - App

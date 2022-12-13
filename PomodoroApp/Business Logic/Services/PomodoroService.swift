@@ -18,11 +18,11 @@ protocol PomodoroServiceDelegate: AnyObject {
 protocol PomodoroService {
     var delegate: PomodoroServiceDelegate? { get set }
     var currentState: PomodoroState { get }
-    var atInitialState: Bool { get }
     var stagesCount: Int { get }
     var completedStages: Int { get }
-    var leftIntervals: [TimeInterval] { get }
+    var atLastStateOfCurrentStage: Bool { get }
     
+    func setup(stages: Int)
     func moveForward()
     func reset()
 }
@@ -39,42 +39,31 @@ final class PomodoroServiceImpl: PomodoroService {
         pomodoroCycle[outerIndex][innerIndex]
     }
     
-    var atInitialState: Bool {
-        innerIndex == 0 && outerIndex == 0
-    }
-    
     var stagesCount: Int {
-        pomodoroCycle.count - 1
+        pomodoroCycle.count
     }
     
     var completedStages: Int {
         outerIndex
     }
-    
-    var leftIntervals: [TimeInterval] {
-        var intervals: [TimeInterval] = []
-        for inner in innerIndex..<pomodoroCycle[outerIndex].count {
-            intervals.append(pomodoroCycle[outerIndex][inner].waitingTime)
-        }
-        
-        for outer in (outerIndex + 1)..<pomodoroCycle.count {
-            for inner in 0..<pomodoroCycle[outer].count {
-                intervals.append(pomodoroCycle[outer][inner].waitingTime)
-            }
-        }
-        
-        return intervals
+     
+    var atLastStateOfCurrentStage: Bool {
+        innerIndex == pomodoroCycle[outerIndex].count - 1
     }
-        
+    
     // MARK: - Private Properties
     
-    private let pomodoroCycle: [[PomodoroState]] = [
+    private var pomodoroCycle: [[PomodoroState]] = [
         [.focus, .break],
         [.focus, .break],
         [.focus, .break],
-        [.focus],
-        [.longBreak]
-    ]
+        [.focus, .longBreak]
+    ] {
+        didSet {
+            reset()
+        }
+    }
+    
     private var innerIndex: Int = 0 {
         didSet {
             delegate?.pomododoService(self, didChangeStateTo: currentState)
@@ -87,6 +76,15 @@ final class PomodoroServiceImpl: PomodoroService {
     }
     
     // MARK: - Public Methods
+    
+    func setup(stages: Int) {
+        var newPomodoroCycle: [[PomodoroState]] = []
+        for _ in 0..<(stages - 1) {
+            newPomodoroCycle.append([.focus, .break])
+        }
+        newPomodoroCycle.append([.focus, .longBreak])
+        pomodoroCycle = newPomodoroCycle
+    }
     
     func moveForward() {
         if innerIndex < pomodoroCycle[outerIndex].count - 1 {

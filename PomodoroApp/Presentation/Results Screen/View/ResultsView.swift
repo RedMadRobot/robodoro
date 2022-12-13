@@ -58,6 +58,7 @@ struct ResultsView: View {
             Spacer()
             Button("LET’S GO") {
                 // TODO: - Добавить экран с параметрами
+                viewModel.prepareToStartPomodoro()
                 navigator.showPomodoro()
             }
             .buttonStyle(BigBlackButtonStyle())

@@ -29,12 +29,16 @@ final class PomodoroViewModel: ObservableObject {
         formattedTimeComponent(leftTime.seconds)
     }
     
-    var stagesCount: Int {
-        timedPomodoroWorker.stagesCount
+    var maxStagesCount: Int {
+        timedPomodoroWorker.maxStagesCount
     }
     
-    var filledCount: Int {
-        timedPomodoroWorker.filledCount
+    var activeStagesCount: Int {
+        timedPomodoroWorker.activeStagesCount
+    }
+    
+    var lastStageState: StageElementViewState {
+        timedPomodoroWorker.lastStageState
     }
     
     var backgroundColor: UIColor {

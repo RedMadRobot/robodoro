@@ -62,8 +62,9 @@ struct PomodoroActivityView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: Constants.stageViewSpacing) {
                         StageView(
-                            stagesCount: attribute.stagesCount,
-                            filledCount: state.filledCount)
+                            maxStagesCount: attribute.maxStagesCount,
+                            activeStagesCount: state.activeStagesCount,
+                            lastStageState: state.lastStageState)
                         Text(state.pomodoroState.title)
                             .font(.stageLabel)
                             .foregroundColor(Color(uiColor: Colors.black))

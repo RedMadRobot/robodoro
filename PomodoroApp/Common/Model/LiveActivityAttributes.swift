@@ -14,7 +14,8 @@ struct LiveActivityAttributes: ActivityAttributes {
         var pomodoroState: PomodoroState
         var timerState: TimerState
         var stageEndDate: Date
-        var filledCount: Int
+        var activeStagesCount: Int
+        var lastStageState: StageElementViewState
         
         var backgroundColor: UIColor {
             ColorHelper.getBackgroundColor(
@@ -37,5 +38,5 @@ struct LiveActivityAttributes: ActivityAttributes {
         }
     }
     
-    var stagesCount: Int
+    var maxStagesCount: Int
 }

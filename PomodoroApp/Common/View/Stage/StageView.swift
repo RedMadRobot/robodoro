@@ -17,25 +17,35 @@ struct StageView: View {
     
     // MARK: - Private Properties
     
-    private let stagesCount: Int
-    private let filledCount: Int
+    private let maxStagesCount: Int
+    private let activeStagesCount: Int
+    private let lastStageState: StageElementViewState
     
     // MARK: - Init
     
     init(
-        stagesCount: Int,
-        filledCount: Int
+        maxStagesCount: Int,
+        activeStagesCount: Int,
+        lastStageState: StageElementViewState
     ) {
-        self.stagesCount = stagesCount
-        self.filledCount = filledCount
+        self.maxStagesCount = maxStagesCount
+        self.activeStagesCount = activeStagesCount
+        self.lastStageState = lastStageState
     }
     
     // MARK: - View
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            ForEach(0..<stagesCount, id: \.self) { stage in
-                StageElementView(isFilled: stage < filledCount)
+            ForEach(0..<maxStagesCount, id: \.self) { stage in
+                switch stage {
+                case 0..<activeStagesCount:
+                    StageElementView(state: .filled)
+                case activeStagesCount:
+                    StageElementView(state: lastStageState)
+                default:
+                    StageElementView(state: .empty)
+                }
             }
         }
         .fixedSize()
@@ -46,6 +56,9 @@ struct StageView: View {
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(stagesCount: 4, filledCount: 3)
+        StageView(
+            maxStagesCount: 8,
+            activeStagesCount: 4,
+            lastStageState: .half)
     }
 }

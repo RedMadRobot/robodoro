@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum StageElementViewState: Codable, Hashable {
+    case empty
+    case half
+    case filled
+}
+
 struct StageElementView: View {
     
     // MARK: - Constants
@@ -18,12 +24,12 @@ struct StageElementView: View {
     
     // MARK: - Private Properties
     
-    private var isFilled: Bool
+    private var state: StageElementViewState
     
     // MARK: - Init
     
-    init(isFilled: Bool) {
-        self.isFilled = isFilled
+    init(state: StageElementViewState) {
+        self.state = state
     }
     
     // MARK: - View
@@ -33,13 +39,22 @@ struct StageElementView: View {
             Circle()
                 .stroke(Color(uiColor: Colors.black), lineWidth: Constants.lineWidth)
                 .frame(width: Constants.frameSize)
-            if isFilled {
+            switch state {
+            case .empty:
+                EmptyView()
+            case .half:
+                Circle()
+                    .trim(from: 0, to: 0.5)
+                    .fill(Color(uiColor: Colors.black))
+                    .frame(width: Constants.frameSize, height: Constants.frameSize)
+                    .rotationEffect(.degrees(90))
+            case .filled:
                 Circle()
                     .fill(Color(uiColor: Colors.black))
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
             }
         }
-        .animation(.easeInOut, value: isFilled)
+        .animation(.easeInOut, value: state)
     }
 }
 
@@ -47,6 +62,6 @@ struct StageElementView: View {
 
 struct StageElementView_Previews: PreviewProvider {
     static var previews: some View {
-        StageElementView(isFilled: false)
+        StageElementView(state: .half)
     }
 }

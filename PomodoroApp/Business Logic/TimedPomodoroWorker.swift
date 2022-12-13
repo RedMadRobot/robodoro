@@ -15,10 +15,12 @@ protocol TimedPomodoroWorker {
     var timerState: CurrentValueSubject<TimerState, Never> { get }
     var leftTime: CurrentValueSubject<TimeInterval, Never> { get }
     
-    var stagesCount: Int { get }
-    var filledCount: Int { get }
+    var maxStagesCount: Int { get }
+    var activeStagesCount: Int { get }
+    var lastStageState: StageElementViewState { get }
     var enterForegroundAction: LinkManager.Action? { get }
     
+    func setup(stages: Int, intervals: @escaping (PomodoroState) -> TimeInterval)
     func mainAction()
     func reset()
     func setLinkAction(_ action: LinkManager.Action)
@@ -39,12 +41,24 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private(set) var timerState: CurrentValueSubject<TimerState, Never>
     private(set) var leftTime: CurrentValueSubject<TimeInterval, Never>
     
-    var stagesCount: Int {
+    var maxStagesCount: Int {
         pomodoroService.stagesCount
     }
     
-    var filledCount: Int {
+    var activeStagesCount: Int {
         pomodoroService.completedStages
+    }
+    
+    var lastStageState: StageElementViewState {
+        if pomodoroService.atLastStateOfCurrentStage {
+            return .filled
+        }
+        if case .initial = timerState.value {
+            return .empty
+        }
+        else {
+            return .half
+        }
     }
     
     var enterForegroundAction: LinkManager.Action?
@@ -60,6 +74,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private var subscriptions = Set<AnyCancellable>()
     
     private var backgroundDate: Date?
+    
+    private var customIntervals: ((PomodoroState) -> TimeInterval)?
     
     // MARK: - Init
     
@@ -78,17 +94,24 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         
         self.pomodoroState = CurrentValueSubject<PomodoroState, Never>(pomodoroService.currentState)
         self.timerState = CurrentValueSubject<TimerState, Never>(timerService.currentState)
-        self.leftTime = CurrentValueSubject<TimeInterval, Never>(pomodoroService.currentState.waitingTime)
+        self.leftTime = CurrentValueSubject<TimeInterval, Never>(pomodoroService.currentState.defaultWaitingTime)
         
         self.pomodoroService.delegate = self
         self.timerService.delegate = self
         
-        timerService.reset(waitingTime: pomodoroService.currentState.waitingTime)
+        timerService.reset(waitingTime: pomodoroService.currentState.defaultWaitingTime)
         
         addSubsctiptions()
     }
     
     // MARK: - Public Methods
+    
+    func setup(stages: Int, intervals: @escaping (PomodoroState) -> TimeInterval) {
+        pomodoroService.setup(stages: stages)
+        self.customIntervals = intervals
+        
+        timerService.reset(waitingTime: interval(for: pomodoroService.currentState))
+    }
     
     func mainAction() {
         switch timerState.value {
@@ -97,8 +120,9 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 pomodoroState: pomodoroState.value,
                 timerState: timerState.value,
                 stageEndDate: Date.now.addingTimeInterval(leftTime.value),
-                stagesCount: stagesCount,
-                filledCount: filledCount)
+                maxStagesCount: maxStagesCount,
+                activeStagesCount: activeStagesCount,
+                lastStageState: lastStageState)
             timerService.start()
             scheduleCurrentStateNotification()
         case .running:
@@ -115,7 +139,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     func reset() {
         activityService.stop()
         pomodoroService.reset()
-        timerService.reset(waitingTime: pomodoroService.currentState.waitingTime)
+        timerService.reset(waitingTime: interval(for: pomodoroService.currentState))
         cancelNotification()
     }
     
@@ -152,7 +176,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         guard let backgroundDate = backgroundDate,
               timerState.value == .running else { return }
         
-        let currentInterval = pomodoroState.value.waitingTime
+        let currentInterval = interval(for: pomodoroState.value)
         
         // Посчитать количество секунд между текущей датой и последней зафиксированной
         // Прибавляем к этому числу число уже пройденное время текущего этапа
@@ -191,7 +215,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 pomodoroState: pomodoroState,
                 timerState: timerState,
                 stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
-                filledCount: self.filledCount)
+                activeStagesCount: self.activeStagesCount,
+                lastStageState: self.lastStageState)
         }
         .store(in: &subscriptions)
     }
@@ -208,6 +233,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             title: "\(pomodoroState.value.title) stage ended!",
             body: "Get ready to start new timer")
     }
+    
+    private func interval(for state: PomodoroState) -> TimeInterval {
+        customIntervals?(state) ?? state.defaultWaitingTime
+    }
 }
 
 // MARK: - PomodoroServiceDelegate
@@ -216,7 +245,7 @@ extension TimedPomodoroWorkerImpl: PomodoroServiceDelegate {
     
     func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
         pomodoroState.send(state)
-        timerService.reset(waitingTime: state.waitingTime)
+        timerService.reset(waitingTime: interval(for: state))
     }
 }
 

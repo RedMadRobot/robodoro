@@ -14,14 +14,30 @@ final class ResultsViewModel: ObservableObject {
     
     // MARK: - Private Properties
     
+    private let timedPomodoroWorker: TimedPomodoroWorker
+    
     // MARK: - Init
     
-    init() {
-        
+    init(timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker) {
+        self.timedPomodoroWorker = timedPomodoroWorker
     }
     
     // MARK: - Public Methods
     
+    func prepareToStartPomodoro() {
+        timedPomodoroWorker.setup(
+            stages: 10,
+            intervals: { stage in
+                switch stage {
+                case .focus:
+                    return 10
+                case .break:
+                    return 5
+                case .longBreak:
+                    return 10
+                }
+            })
+    }
     
     // MARK: - Private Methods
     

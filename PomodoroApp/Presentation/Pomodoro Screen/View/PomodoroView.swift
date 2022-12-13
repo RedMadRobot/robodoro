@@ -60,8 +60,9 @@ struct PomodoroView: View {
             Spacer()
             timeSection
             StageView(
-                stagesCount: viewModel.stagesCount,
-                filledCount: viewModel.filledCount)
+                maxStagesCount: viewModel.maxStagesCount,
+                activeStagesCount: viewModel.activeStagesCount,
+                lastStageState: viewModel.lastStageState)
             Spacer()
             Button {
                 viewModel.mainButtonAction()

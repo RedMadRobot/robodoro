@@ -15,14 +15,16 @@ protocol LiveActivityService {
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        stagesCount: Int,
-        filledCount: Int
+        maxStagesCount: Int,
+        activeStagesCount: Int,
+        lastStageState: StageElementViewState
     )
     func update(
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        filledCount: Int
+        activeStagesCount: Int,
+        lastStageState: StageElementViewState
     )
     func stop()
 }
@@ -43,8 +45,9 @@ final class LiveActivityServiceImpl: LiveActivityService {
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        stagesCount: Int,
-        filledCount: Int
+        maxStagesCount: Int,
+        activeStagesCount: Int,
+        lastStageState: StageElementViewState
     ) {
         // Попытаться обновить существующую активити
         if let _ = activity {
@@ -52,16 +55,18 @@ final class LiveActivityServiceImpl: LiveActivityService {
                 pomodoroState: pomodoroState,
                 timerState: timerState,
                 stageEndDate: stageEndDate,
-                filledCount: filledCount)
+                activeStagesCount: activeStagesCount,
+                lastStageState: lastStageState)
         }
         
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
-        let attributes = LiveActivityAttributes(stagesCount: stagesCount)
+        let attributes = LiveActivityAttributes(maxStagesCount: maxStagesCount)
         let state = LiveActivityAttributes.ContentState(
             pomodoroState: pomodoroState,
             timerState: timerState,
             stageEndDate: stageEndDate,
-            filledCount: filledCount)
+            activeStagesCount: activeStagesCount,
+            lastStageState: lastStageState)
 
         _ = try? Activity<LiveActivityAttributes>.request(
             attributes: attributes,
@@ -73,7 +78,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
         pomodoroState: PomodoroState,
         timerState: TimerState,
         stageEndDate: Date,
-        filledCount: Int
+        activeStagesCount: Int,
+        lastStageState: StageElementViewState
     ) {
         guard let activity = activity else { return }
         Task {
@@ -81,7 +87,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
                 pomodoroState: pomodoroState,
                 timerState: timerState,
                 stageEndDate: stageEndDate,
-                filledCount: filledCount)
+                activeStagesCount: activeStagesCount,
+                lastStageState: lastStageState)
             await activity.update(using: newState)
         }
     }
