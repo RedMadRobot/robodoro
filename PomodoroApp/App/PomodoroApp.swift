@@ -29,7 +29,7 @@ struct PomodoroApp: App {
     // MARK: - Init
     
     init() {
-        self.timedPomodoroWorker = DI.workers.`timedPomodoroWorker`
+        self.timedPomodoroWorker = DI.workers.timedPomodoroWorker
     }
     
     // MARK: - App
@@ -37,27 +37,37 @@ struct PomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navigator.navigationPath) {
-                ResultsView(
-                    viewModel: resultsViewModel,
-                    navigator: navigator)
-                .preferredColorScheme(.light)
-                .onAppear {
-                    timedPomodoroWorker.requestNotificationPermissionIfNeeded()
-                }
-                .navigationDestination(for: Screen.self) { screen in
-                    switch screen {
-                    case .settings:
-                        SettingsView(navigator: navigator)
+                resultsView
+                    .navigationDestination(for: Screen.self) { screen in
+                        switch screen {
+                        case .settings:
+                            SettingsView(navigator: navigator)
+                        }
                     }
-                }
-                .fullScreenCover(isPresented: $navigator.showPomodoroCover) {
-                    pomodoroView
-                }
+                    .fullScreenCover(isPresented: $navigator.showPomodoroCover) {
+                        pomodoroView
+                    }
             }
         }
     }
     
     // MARK: - Private Properties
+    
+    private var resultsView: some View {
+        ResultsView(
+            viewModel: resultsViewModel,
+            navigator: navigator)
+        .preferredColorScheme(.light)
+        .onAppear {
+            timedPomodoroWorker.requestNotificationPermissionIfNeeded()
+        }
+        .navigationDestination(for: Screen.self) { screen in
+            switch screen {
+            case .settings:
+                SettingsView(navigator: navigator)
+            }
+        }
+    }
     
     private var pomodoroView: some View {
         PomodoroView(

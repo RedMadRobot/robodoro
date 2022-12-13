@@ -65,7 +65,11 @@ struct PomodoroView: View {
                 lastStageState: viewModel.lastStageState)
             Spacer()
             Button {
-                viewModel.mainButtonAction()
+                if viewModel.timerState == .ended {
+                    navigator.hidePomodoro()
+                } else {
+                    viewModel.mainButtonAction()
+                }
             } label: {
                 Image(uiImage: viewModel.buttonImage)
             }

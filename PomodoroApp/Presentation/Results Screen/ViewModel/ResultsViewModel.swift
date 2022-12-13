@@ -26,7 +26,7 @@ final class ResultsViewModel: ObservableObject {
     
     func prepareToStartPomodoro() {
         timedPomodoroWorker.setup(
-            stages: 10,
+            stages: 1,
             intervals: { stage in
                 switch stage {
                 case .focus:
