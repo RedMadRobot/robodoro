@@ -28,7 +28,7 @@
 		352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BF829472ED000B09E51 /* UserDefaultsStorage.swift */; };
 		352B6BFD2947373700B09E51 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BFC2947373700B09E51 /* ResultsView.swift */; };
 		352B6BFF2947377800B09E51 /* NoTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6BFE2947377800B09E51 /* NoTasksView.swift */; };
-		352B6C02294756CA00B09E51 /* BigBlackButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */; };
+		352B6C02294756CA00B09E51 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C01294756CA00B09E51 /* ButtonStyles.swift */; };
 		352B6C0429477D9400B09E51 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C0329477D9400B09E51 /* ResultsViewModel.swift */; };
 		352B6C0629477F2E00B09E51 /* MainNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C0529477F2E00B09E51 /* MainNavigator.swift */; };
 		352B6C0A2947BE0100B09E51 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6C092947BE0100B09E51 /* SettingsView.swift */; };
@@ -126,7 +126,7 @@
 		352B6BF829472ED000B09E51 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		352B6BFC2947373700B09E51 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		352B6BFE2947377800B09E51 /* NoTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTasksView.swift; sourceTree = "<group>"; };
-		352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigBlackButtonStyle.swift; sourceTree = "<group>"; };
+		352B6C01294756CA00B09E51 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		352B6C0329477D9400B09E51 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
 		352B6C0529477F2E00B09E51 /* MainNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigator.swift; sourceTree = "<group>"; };
 		352B6C092947BE0100B09E51 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -352,7 +352,7 @@
 		352B6C00294756AD00B09E51 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				352B6C01294756CA00B09E51 /* BigBlackButtonStyle.swift */,
+				352B6C01294756CA00B09E51 /* ButtonStyles.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -681,7 +681,7 @@
 				3520396E2923BD5300A4028E /* StageView.swift in Sources */,
 				3520394A2922532700A4028E /* BackgroundView.swift in Sources */,
 				35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */,
-				352B6C02294756CA00B09E51 /* BigBlackButtonStyle.swift in Sources */,
+				352B6C02294756CA00B09E51 /* ButtonStyles.swift in Sources */,
 				35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */,
 				3520397B2923D48000A4028E /* PomodoroService.swift in Sources */,
 				352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */,
