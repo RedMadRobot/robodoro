@@ -16,4 +16,8 @@ extension Font {
     static var customTitle: Font {
         unbounded(size: 16)
     }
+    
+    static var miniTitle: Font {
+        unbounded(size: 15)
+    }
 }
