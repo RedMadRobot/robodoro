@@ -11,19 +11,15 @@ struct PomodoroView: View {
     
     // MARK: - Private Properties
     
-    @ObservedObject
-    private var viewModel: PomodoroViewModel
+    @StateObject
+    private var viewModel = PomodoroViewModel()
     
     @ObservedObject
     private var navigator: MainNavigator
     
     // MARK: - Init
     
-    init(
-        viewModel: PomodoroViewModel,
-        navigator: MainNavigator
-    ) {
-        self.viewModel = viewModel
+    init(navigator: MainNavigator) {
         self.navigator = navigator
     }
     
@@ -34,6 +30,9 @@ struct PomodoroView: View {
             ZStack {
                 BackgroundView(viewModel: viewModel)
                 frontView
+                if viewModel.showingAlert {
+                    alert
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -42,11 +41,11 @@ struct PomodoroView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        // TODO: - Добавить попап
-                        navigator.hidePomodoro()
+                        viewModel.showAlert()
                     } label: {
                         Image(uiImage: Images.logout)
                     }
+                    .disabled(viewModel.showingAlert)
                 }
             }
             .animation(.easeInOut, value: viewModel.pomodoroState)
@@ -91,15 +90,22 @@ struct PomodoroView: View {
                 .foregroundColor(Color(uiColor: Colors.black))
         }
     }
+    
+    private var alert: some View {
+        AlertView(cancelAction: {
+            viewModel.hideAlert()
+        }, endAction: {
+            navigator.hidePomodoro()
+        })
+        .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
+        .zIndex(1) // Без этого анимация не работает
+    }
 }
 
 // MARK: - PreviewProvider
 
 struct PomodoroView_Previews: PreviewProvider {
     static var previews: some View {
-        PomodoroView(
-            viewModel: PomodoroViewModel(),
-            navigator: MainNavigator()
-        )
+        PomodoroView(navigator: MainNavigator())
     }
 }

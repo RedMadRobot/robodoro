@@ -11,19 +11,15 @@ struct ResultsView: View {
     
     // MARK: - Private Properties
     
-    @ObservedObject
-    private var viewModel: ResultsViewModel
+    @StateObject
+    private var viewModel = ResultsViewModel()
     
     @ObservedObject
     private var navigator: MainNavigator
     
     // MARK: - Init
     
-    init(
-        viewModel: ResultsViewModel,
-        navigator: MainNavigator
-    ) {
-        self.viewModel = viewModel
+    init(navigator: MainNavigator) {
         self.navigator = navigator
     }
     
@@ -72,9 +68,6 @@ struct ResultsView: View {
 
 struct ResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultsView(
-            viewModel: ResultsViewModel(),
-            navigator: MainNavigator()
-        )
+        ResultsView(navigator: MainNavigator())
     }
 }

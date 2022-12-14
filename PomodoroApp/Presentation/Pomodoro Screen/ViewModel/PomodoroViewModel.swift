@@ -21,6 +21,9 @@ final class PomodoroViewModel: ObservableObject {
     @Published
     private(set) var leftTime: TimeInterval
     
+    @Published
+    private(set) var showingAlert: Bool = false
+    
     var minutes: String {
         formattedTimeComponent(leftTime.minutes)
     }
@@ -77,6 +80,14 @@ final class PomodoroViewModel: ObservableObject {
     
     func mainButtonAction() {
         timedPomodoroWorker.mainAction()
+    }
+    
+    func showAlert() {
+        showingAlert = true
+    }
+    
+    func hideAlert() {
+        showingAlert = false
     }
     
     // MARK: - Private Methods

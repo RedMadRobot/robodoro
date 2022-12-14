@@ -11,13 +11,17 @@ struct AlertView: View {
     
     // MARK: - Private Properties
     
-    @ObservedObject
-    private var navigator: MainNavigator
+    private var cancelAction: () -> Void
+    private var endAction: () -> Void
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(
+        cancelAction: @escaping () -> Void,
+        endAction: @escaping () -> Void
+    ) {
+        self.cancelAction = cancelAction
+        self.endAction = endAction
     }
     
     // MARK: - View
@@ -27,6 +31,7 @@ struct AlertView: View {
             Color(Colors.black).opacity(0.6)
             alertBanner
         }
+        .ignoresSafeArea()
     }
     
     // MARK: - Private Properties
@@ -38,13 +43,11 @@ struct AlertView: View {
                 .padding(.top, 24)
             HStack(spacing: 12) {
                 Button("CANCEL") {
-                    // TODO: - Методы навигатора
-                    print("Cancel")
+                    cancelAction()
                 }
                 .buttonStyle(SecondaryButtonStyle())
                 Button("END") {
-                    // TODO: - Методы навигатора
-                    print("End")
+                    endAction()
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
@@ -62,10 +65,7 @@ struct AlertView: View {
 
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Color(Colors.focusRed)
-            AlertView(navigator: MainNavigator())
-        }
-        .ignoresSafeArea()
+        AlertView(cancelAction: {}, endAction: {})
+            .background(Color(Colors.focusRed))
     }
 }

@@ -15,12 +15,6 @@ struct PomodoroApp: App {
     @StateObject
     private var navigator = MainNavigator()
     
-    @StateObject
-    private var resultsViewModel = ResultsViewModel()
-    
-    @StateObject
-    private var pomodoroViewModel = PomodoroViewModel()
-    
     @Environment(\.scenePhase)
     private var scenePhase: ScenePhase
     
@@ -54,43 +48,39 @@ struct PomodoroApp: App {
     // MARK: - Private Properties
     
     private var resultsView: some View {
-        ResultsView(
-            viewModel: resultsViewModel,
-            navigator: navigator)
-        .preferredColorScheme(.light)
-        .onAppear {
-            timedPomodoroWorker.requestNotificationPermissionIfNeeded()
-        }
-        .navigationDestination(for: Screen.self) { screen in
-            switch screen {
-            case .settings:
-                SettingsView(navigator: navigator)
+        ResultsView(navigator: navigator)
+            .preferredColorScheme(.light)
+            .onAppear {
+                timedPomodoroWorker.requestNotificationPermissionIfNeeded()
             }
-        }
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .settings:
+                    SettingsView(navigator: navigator)
+                }
+            }
     }
     
     private var pomodoroView: some View {
-        PomodoroView(
-            viewModel: pomodoroViewModel,
-            navigator: navigator)
-        .onAppear {
-            addObservers()
-        }
-        .onDisappear {
-            removeObservers()
-            resetPomodoroWorker()
-        }
-        .onOpenURL { url in
-            guard let action = LinkManager.manage(url: url) else { return }
-            switch scenePhase {
-            case .background:
-                timedPomodoroWorker.setLinkAction(action)
-            case .inactive:
-                timedPomodoroWorker.handleLinkAction(action)
-            default:
-                break
+        PomodoroView(navigator: navigator)
+            .onAppear {
+                addObservers()
             }
-        }
+            .onDisappear {
+                removeObservers()
+                resetPomodoroWorker()
+            }
+            .onOpenURL { url in
+                guard let action = LinkManager.manage(url: url) else { return }
+                switch scenePhase {
+                case .background:
+                    timedPomodoroWorker.setLinkAction(action)
+                case .inactive:
+                    timedPomodoroWorker.handleLinkAction(action)
+                default:
+                    break
+                }
+            }
     }
     
     // MARK: - Private Methods

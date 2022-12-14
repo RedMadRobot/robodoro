@@ -210,9 +210,9 @@
 		35203939291EB37B00A4028E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				352B6C0D2948DB1300B09E51 /* Alert */,
 				3520394B2922704A00A4028E /* Backgrounds */,
 				3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */,
+				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -374,14 +374,6 @@
 				352B6C092947BE0100B09E51 /* SettingsView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		352B6C0D2948DB1300B09E51 /* Alert */ = {
-			isa = PBXGroup;
-			children = (
-				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
-			);
-			path = Alert;
 			sourceTree = "<group>";
 		};
 		3549576B292539C4000C216C /* App */ = {
