@@ -58,7 +58,7 @@ struct ResultsView: View {
                 navigator.showPomodoro()
             }
             .buttonStyle(PrimaryButtonStyle())
-            .padding([.leading, .trailing], 16)
+            .padding(.horizontal, 16)
         }
     }
     

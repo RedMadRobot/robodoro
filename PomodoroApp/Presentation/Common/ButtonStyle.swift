@@ -1,5 +1,5 @@
 //
-//  ButtonStyles.swift
+//  ButtonStyle.swift
 //  PomodoroApp
 //
 //  Created by Петр Тартынских  on 12.12.2022.

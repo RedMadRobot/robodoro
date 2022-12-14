@@ -18,6 +18,6 @@ extension Font {
     }
     
     static var miniTitle: Font {
-        unbounded(size: 15)
+        cofoSans(size: 15)
     }
 }

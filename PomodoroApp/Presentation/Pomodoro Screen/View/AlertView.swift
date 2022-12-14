@@ -51,7 +51,7 @@ struct AlertView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
-            .padding([.leading, .trailing], 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
         .frame(maxWidth: .infinity)

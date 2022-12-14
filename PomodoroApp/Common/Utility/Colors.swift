@@ -20,4 +20,5 @@ enum Colors {
     static let white = UIColor ("#FFFFFF")
     static let gray = UIColor("#F3F3F3")
     static let textGray = UIColor("#A4A4A4")
+    static let toggleGreen = UIColor("#82C762")
 }

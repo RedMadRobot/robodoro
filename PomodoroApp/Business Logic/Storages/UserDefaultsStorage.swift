@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SettingsStorage {
-    var enableSound: Bool { get set }
-    var enableHaptic: Bool { get set }
+    var soundEnabled: Bool { get set }
+    var hapticEnabled: Bool { get set }
 }
 
 private protocol AnyOptional {
@@ -105,36 +105,36 @@ final class UserDefaultsStorage: SettingsStorage {
     // MARK: - Keys
     
     enum Keys: String, CaseIterable {
-        case enableSound = "com.redmadrobot.PomodoroApp.enableSound"
-        case enableHaptic = "com.redmadrobot.PomodoroApp.enableHaptic"
+        case soundEnabled = "com.redmadrobot.PomodoroApp.soundEnabled"
+        case hapticEnabled = "com.redmadrobot.PomodoroApp.hapticEnabled"
     }
     
     // MARK: - Private Properties
     
-    private let userDefaultsStorage: UserDefaults
+    private let storage: UserDefaults
     
     // MARK: - Initializers
     
     init(storage: UserDefaults) {
-        self.userDefaultsStorage = storage
+        self.storage = storage
         
         // SettingsStorage
-        _enableSound = UserDefault(
-            wrappedValue: false,
-            key: Keys.enableSound.rawValue,
-            storage: userDefaultsStorage
+        _soundEnabled = UserDefault(
+            wrappedValue: true,
+            key: Keys.soundEnabled.rawValue,
+            storage: storage
         )
-        _enableHaptic = UserDefault(
-            wrappedValue: false,
-            key: Keys.enableHaptic.rawValue,
-            storage: userDefaultsStorage
+        _hapticEnabled = UserDefault(
+            wrappedValue: true,
+            key: Keys.hapticEnabled.rawValue,
+            storage: storage
         )
     }
     
     // MARK: - SettingsStorage
     
     @UserDefault
-    var enableSound: Bool
+    var soundEnabled: Bool
     @UserDefault
-    var enableHaptic: Bool
+    var hapticEnabled: Bool
 }

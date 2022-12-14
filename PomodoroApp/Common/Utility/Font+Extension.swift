@@ -13,6 +13,7 @@ extension Font {
     
     private enum Constants {
         static let unbounded = "Unbounded-Blond"
+        static let cofoSans = "CoFoSans-Regular"
     }
     
     // MARK: - Public Properties
@@ -25,5 +26,9 @@ extension Font {
     
     static func unbounded(size: CGFloat) -> Font {
         .custom(Constants.unbounded, size: size)
+    }
+    
+    static func cofoSans(size: CGFloat) -> Font {
+        .custom(Constants.cofoSans, size: size)
     }
 }

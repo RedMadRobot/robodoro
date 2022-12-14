@@ -11,35 +11,53 @@ struct SettingsView: View {
     
     // MARK: - Private Properties
     
+    @StateObject
+    private var viewModel = SettingsViewModel()
+    
     @ObservedObject
     private var navigator: MainNavigator
     
     // MARK: - Init
     
-    init(
-        navigator: MainNavigator
-    ) {
+    init(navigator: MainNavigator) {
         self.navigator = navigator
     }
     
     // MARK: - View
     
     var body: some View {
-        Text("Settings")
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        navigator.pop()
-                    } label: {
-                        Image(uiImage: Images.arrowLeft)
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    Text("SETTINGS")
-                        .font(.customTitle)
+        ZStack {
+            Color(Colors.white)
+            frontView
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    navigator.pop()
+                } label: {
+                    Image(uiImage: Images.arrowLeft)
                 }
             }
+            ToolbarItem(placement: .principal) {
+                Text("SETTINGS")
+                    .font(.customTitle)
+            }
+        }
+    }
+    
+    // MARK: - Private Properties
+    
+    private var frontView: some View {
+        VStack(spacing: 24) {
+            Toggle("Alarm sound", isOn: $viewModel.soundEnabled)
+                .toggleStyle(SettingsToggleStyle())
+            Toggle("Haptic", isOn: $viewModel.hapticEnabled)
+                .toggleStyle(SettingsToggleStyle())
+            Spacer()
+        }
+        .padding(.top, 30)
+        .padding(.horizontal, 20)
     }
 }
 
@@ -47,8 +65,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(
-            navigator: MainNavigator()
-        )
+        SettingsView(navigator: MainNavigator())
     }
 }

@@ -9,4 +9,5 @@ import Foundation
 
 final class AppStorages {
     
+    lazy var userDefaultsStorage = UserDefaultsStorage(storage: .standard)
 }
