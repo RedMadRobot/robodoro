@@ -13,6 +13,10 @@ extension Font {
         unbounded(size: 64)
     }
     
+    static var miniTime: Font {
+        unbounded(size: 36)
+    }
+    
     static var customTitle: Font {
         unbounded(size: 16)
     }

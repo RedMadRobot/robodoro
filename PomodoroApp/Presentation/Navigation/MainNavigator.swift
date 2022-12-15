@@ -70,7 +70,7 @@ final class MainNavigator: ObservableObject {
         setTaskSheetPresented = false
     }
     
-    func resolveNavigation() {
+    func resolveDelayedNavigation() {
         switch modalToPresent {
         case .pomodoro:
             showPomodoroModal()

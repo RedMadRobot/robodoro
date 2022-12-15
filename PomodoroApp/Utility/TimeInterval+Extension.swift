@@ -13,6 +13,11 @@ extension TimeInterval {
         (Int(self) / 60) % 60
     }
     
+    // Включает значения больше 60:00
+    var minutesIgnoringHours: Int {
+        Int(self) / 60
+    }
+    
     var seconds: Int {
         Int(self) % 60
     }

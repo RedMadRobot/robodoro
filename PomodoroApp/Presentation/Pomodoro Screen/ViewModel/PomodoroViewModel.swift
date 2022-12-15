@@ -25,7 +25,7 @@ final class PomodoroViewModel: ViewModel {
     private(set) var showingAlert: Bool = false
     
     var minutes: String {
-        formattedTimeComponent(leftTime.minutes)
+        formattedTimeComponent(leftTime.minutesIgnoringHours)
     }
     
     var seconds: String {

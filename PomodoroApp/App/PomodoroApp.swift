@@ -41,7 +41,7 @@ struct PomodoroApp: App {
                     .sheet(
                         isPresented: $navigator.setTaskSheetPresented,
                         onDismiss: {
-                            navigator.resolveNavigation()
+                            navigator.resolveDelayedNavigation()
                         }
                     ) {
                         setTaskView

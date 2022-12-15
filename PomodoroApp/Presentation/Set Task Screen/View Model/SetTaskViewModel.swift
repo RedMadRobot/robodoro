@@ -12,6 +12,15 @@ final class SetTaskViewModel: ViewModel {
     
     // MARK: - Public Properties
     
+    @Published
+    var focusTimeValue: TimeInterval = 5 * 60
+    
+    @Published
+    var breakTimeValue: TimeInterval = 6 * 60
+    
+    @Published
+    var longBreakTimeValue: TimeInterval = 7 * 60
+    
     private(set) var feedbackService: FeedbackService
     
     // MARK: - Private Properties
@@ -32,15 +41,16 @@ final class SetTaskViewModel: ViewModel {
     
     func applyParameters() {
         timedPomodoroWorker.setup(
-            stages: 1,
-            intervals: { stage in
+            stages: 2,
+            intervals: { [weak self] stage in
+                guard let self = self else { return stage.defaultWaitingTime }
                 switch stage {
                 case .focus:
-                    return 10
+                    return self.focusTimeValue
                 case .break:
-                    return 5
+                    return self.breakTimeValue
                 case .longBreak:
-                    return 10
+                    return self.longBreakTimeValue
                 }
             })
     }

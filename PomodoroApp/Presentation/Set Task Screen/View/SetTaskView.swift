@@ -38,16 +38,36 @@ struct SetTaskView: View {
         VStack {
             Text("SET YOUR TASK")
                 .font(.customTitle)
-            Spacer()
-            Button("START TIMER") {
-                viewModel.applyParameters()
-                navigator.hideSetTaskSheet()
-                navigator.showPomodoroModal(delayed: true)
+                .padding(.vertical, 32)
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack {
+                        TimePickerView(
+                            value: $viewModel.focusTimeValue,
+                            title: PomodoroState.focus.miniTitle,
+                            color: Colors.focusRed)
+                        TimePickerView(
+                            value: $viewModel.breakTimeValue,
+                            title: PomodoroState.break.miniTitle,
+                            color: Colors.breakPurple)
+                        TimePickerView(
+                            value: $viewModel.longBreakTimeValue,
+                            title: PomodoroState.longBreak.miniTitle,
+                            color: Colors.longBreakGreen)
+                        Spacer()
+                        Button("START TIMER") {
+                            viewModel.applyParameters()
+                            navigator.hideSetTaskSheet()
+                            navigator.showPomodoroModal(delayed: true)
+                        }
+                        .buttonStyle(PrimaryButtonStyle())
+                        .padding(.horizontal, 16)
+                    }
+                    .frame(minHeight: geometry.size.height)
+                }
+                .frame(width: geometry.size.width)
             }
-            .buttonStyle(PrimaryButtonStyle())
-            .padding(.horizontal, 16)
         }
-        .padding(.top, 32)
     }
 }
 

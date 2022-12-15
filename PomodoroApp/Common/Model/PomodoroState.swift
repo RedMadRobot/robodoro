@@ -27,6 +27,17 @@ extension PomodoroState {
             return "LONG BREAK"
         }
     }
+    
+    var miniTitle: String {
+        switch self {
+        case .focus:
+            return "Focus"
+        case .break:
+            return "Break"
+        case .longBreak:
+            return "Long Bread"
+        }
+    }
 }
 
 // MARK: - Color
