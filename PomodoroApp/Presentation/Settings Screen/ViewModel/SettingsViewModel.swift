@@ -31,12 +31,12 @@ final class SettingsViewModel: ViewModel {
     
     // MARK: - Private Properties
     
-    private let userDefaultsStorage: UserDefaultsStorage
+    private var userDefaultsStorage: SettingsStorage
         
     // MARK: - Init
     
     init(
-        userDefaultsStorage: UserDefaultsStorage = DI.storages.userDefaultsStorage,
+        userDefaultsStorage: SettingsStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
         self.userDefaultsStorage = userDefaultsStorage

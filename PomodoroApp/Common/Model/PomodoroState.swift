@@ -35,7 +35,7 @@ extension PomodoroState {
         case .break:
             return "Break"
         case .longBreak:
-            return "Long Bread"
+            return "Long Break"
         }
     }
 }
