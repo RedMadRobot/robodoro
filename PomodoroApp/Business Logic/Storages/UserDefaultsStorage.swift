@@ -34,6 +34,7 @@ final class UserDefaultsStorage: SettingsStorage,
         case lastFocusTime = "com.redmadrobot.PomodoroApp.lastFocusTime"
         case lastBreakTime = "com.redmadrobot.PomodoroApp.lastBreakTime"
         case lastLongBreakTime = "com.redmadrobot.PomodoroApp.lastLongBreakTime"
+        case lastStagesCount = "com.redmadrobot.PomodoroApp.lastStagesCount"
     }
     
     // MARK: - Private Properties
@@ -75,7 +76,7 @@ final class UserDefaultsStorage: SettingsStorage,
         )
         _lastStagesCount = UserDefault(
             wrappedValue: 4,
-            key: Keys.lastLongBreakTime.rawValue,
+            key: Keys.lastStagesCount.rawValue,
             storage: storage
         )
     }

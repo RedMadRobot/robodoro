@@ -76,5 +76,6 @@ final class SetTaskViewModel: ViewModel {
         userDefaultsStorage.lastFocusTime = focusTimeValue
         userDefaultsStorage.lastBreakTime = breakTimeValue
         userDefaultsStorage.lastLongBreakTime = longBreakTimeValue
+        userDefaultsStorage.lastStagesCount = stagesCount
     }
 }
