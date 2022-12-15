@@ -65,7 +65,7 @@ struct PomodoroView: View {
             Spacer()
             Button {
                 if viewModel.timerState == .ended {
-                    navigator.hidePomodoro()
+                    navigator.hidePomodoroModal()
                 } else {
                     viewModel.mainButtonAction()
                 }
@@ -95,7 +95,7 @@ struct PomodoroView: View {
         AlertView(cancelAction: {
             viewModel.hideAlert()
         }, endAction: {
-            navigator.hidePomodoro()
+            navigator.hidePomodoroModal()
         })
         .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
         .zIndex(1) // Без этого анимация не работает

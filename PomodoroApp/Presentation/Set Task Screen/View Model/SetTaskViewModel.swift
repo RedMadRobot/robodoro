@@ -1,14 +1,14 @@
 //
-//  ResultsViewModel.swift
+//  SetTaskViewModel.swift
 //  PomodoroApp
 //
-//  Created by Петр Тартынских  on 12.12.2022.
+//  Created by Петр Тартынских  on 15.12.2022.
 //
 
 import Combine
 import SwiftUI
 
-final class ResultsViewModel: ViewModel {
+final class SetTaskViewModel: ViewModel {
     
     // MARK: - Public Properties
     
@@ -29,6 +29,21 @@ final class ResultsViewModel: ViewModel {
     }
     
     // MARK: - Public Methods
+    
+    func applyParameters() {
+        timedPomodoroWorker.setup(
+            stages: 1,
+            intervals: { stage in
+                switch stage {
+                case .focus:
+                    return 10
+                case .break:
+                    return 5
+                case .longBreak:
+                    return 10
+                }
+            })
+    }
     
     // MARK: - Private Methods
     

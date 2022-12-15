@@ -53,15 +53,12 @@ struct ResultsView: View {
         VStack {
             Spacer()
             Button("LET’S GO") {
-                // TODO: - Добавить экран с параметрами
-                viewModel.prepareToStartPomodoro()
-                navigator.showPomodoro()
+                navigator.showSetTaskSheet()
             }
             .buttonStyle(PrimaryButtonStyle())
             .padding(.horizontal, 16)
         }
     }
-    
 }
 
 // MARK: - PreviewProvider

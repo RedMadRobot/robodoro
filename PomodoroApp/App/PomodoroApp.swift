@@ -32,13 +32,21 @@ struct PomodoroApp: App {
         WindowGroup {
             NavigationStack(path: $navigator.navigationPath) {
                 resultsView
-                    .navigationDestination(for: Screen.self) { screen in
+                    .navigationDestination(for: StackScreen.self) { screen in
                         switch screen {
                         case .settings:
                             SettingsView(navigator: navigator)
                         }
                     }
-                    .fullScreenCover(isPresented: $navigator.showPomodoroCover) {
+                    .sheet(
+                        isPresented: $navigator.setTaskSheetPresented,
+                        onDismiss: {
+                            navigator.resolveNavigation()
+                        }
+                    ) {
+                        setTaskView
+                    }
+                    .fullScreenCover(isPresented: $navigator.pomodoroModalPresented) {
                         pomodoroView
                     }
             }
@@ -52,12 +60,6 @@ struct PomodoroApp: App {
             .preferredColorScheme(.light)
             .onAppear {
                 timedPomodoroWorker.requestNotificationPermissionIfNeeded()
-            }
-            .navigationDestination(for: Screen.self) { screen in
-                switch screen {
-                case .settings:
-                    SettingsView(navigator: navigator)
-                }
             }
     }
     
@@ -81,6 +83,10 @@ struct PomodoroApp: App {
                     break
                 }
             }
+    }
+    
+    private var setTaskView: some View {
+        SetTaskView(navigator: navigator)
     }
     
     // MARK: - Private Methods

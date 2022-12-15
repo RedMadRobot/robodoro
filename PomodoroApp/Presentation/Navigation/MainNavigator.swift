@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-enum Screen: Hashable {
+enum StackScreen: Hashable {
     case settings
+}
+
+enum ModalScreen {
+    case pomodoro
 }
 
 final class MainNavigator: ObservableObject {
@@ -19,8 +23,15 @@ final class MainNavigator: ObservableObject {
     var navigationPath = NavigationPath()
     
     @Published
-    var showPomodoroCover = false
+    var pomodoroModalPresented = false
     
+    @Published
+    var setTaskSheetPresented = false
+    
+    // MARK: - Private Properties
+    
+    private var modalToPresent: ModalScreen?
+        
     // MARK: - Public Methods
     
     func pop() {
@@ -32,14 +43,40 @@ final class MainNavigator: ObservableObject {
     }
     
     func pushSettings() {
-        navigationPath.append(Screen.settings)
+        navigationPath.append(StackScreen.settings)
     }
     
-    func showPomodoro() {
-        showPomodoroCover = true
+    func prepareShowModal() {
+        
     }
     
-    func hidePomodoro() {
-        showPomodoroCover = false
+    func showPomodoroModal(delayed: Bool = false) {
+        if delayed {
+            modalToPresent = .pomodoro
+        } else {
+            pomodoroModalPresented = true
+        }
+    }
+    
+    func hidePomodoroModal() {
+        pomodoroModalPresented = false
+    }
+    
+    func showSetTaskSheet() {
+        setTaskSheetPresented = true
+    }
+    
+    func hideSetTaskSheet() {
+        setTaskSheetPresented = false
+    }
+    
+    func resolveNavigation() {
+        switch modalToPresent {
+        case .pomodoro:
+            showPomodoroModal()
+        default:
+            break
+        }
+        modalToPresent = nil
     }
 }
