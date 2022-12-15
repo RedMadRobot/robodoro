@@ -8,9 +8,11 @@
 import Combine
 import SwiftUI
 
-final class ResultsViewModel: ObservableObject {
+final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Properties
+    
+    private(set) var feedbackService: FeedbackService
     
     // MARK: - Private Properties
     
@@ -18,8 +20,12 @@ final class ResultsViewModel: ObservableObject {
     
     // MARK: - Init
     
-    init(timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker) {
+    init(
+        timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
+        feedbackService: FeedbackService = DI.services.feedbackService
+    ) {
         self.timedPomodoroWorker = timedPomodoroWorker
+        self.feedbackService = feedbackService
     }
     
     // MARK: - Public Methods

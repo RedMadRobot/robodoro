@@ -8,7 +8,7 @@
 import Combine
 import SwiftUI
 
-final class PomodoroViewModel: ObservableObject {
+final class PomodoroViewModel: ViewModel {
 
     // MARK: - Public Properties
     
@@ -60,6 +60,8 @@ final class PomodoroViewModel: ObservableObject {
         timerState.buttonImage
     }
     
+    private(set) var feedbackService: FeedbackService
+    
     // MARK: - Private Propeties
     
     private let timedPomodoroWorker: TimedPomodoroWorker
@@ -68,8 +70,12 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Init
   
-    init(timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker) {
+    init(
+        timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
+        feedbackService: FeedbackService = DI.services.feedbackService
+    ) {
         self.timedPomodoroWorker = timedPomodoroWorker
+        self.feedbackService = feedbackService
         self.pomodoroState = timedPomodoroWorker.pomodoroState.value
         self.timerState = timedPomodoroWorker.timerState.value
         self.leftTime = timedPomodoroWorker.leftTime.value
@@ -79,6 +85,7 @@ final class PomodoroViewModel: ObservableObject {
     // MARK: - Public Methods
     
     func mainButtonAction() {
+        performImpact()
         timedPomodoroWorker.mainAction()
     }
     

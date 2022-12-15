@@ -6,11 +6,13 @@
 //
 
 import AVFoundation
+import UIKit
 
 // MARK: - FeedbackService
 
 protocol FeedbackService {
     func playTimerEndSignal()
+    func performImpact()
 }
 
 // MARK: - FeedbackServiceImpl
@@ -28,6 +30,8 @@ final class FeedbackServiceImpl: FeedbackService {
     // MARK: - Private Properties
     
     private let userDefaultsStorage: UserDefaultsStorage
+    
+    private let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     // MARK: - Init
     
@@ -47,6 +51,12 @@ final class FeedbackServiceImpl: FeedbackService {
         
         if userDefaultsStorage.hapticEnabled {
             AudioServicesPlaySystemSound(Constants.vibrationId)
+        }
+    }
+    
+    func performImpact() {
+        if userDefaultsStorage.hapticEnabled {
+            impactFeedbackGenerator.impactOccurred()
         }
     }
 }
