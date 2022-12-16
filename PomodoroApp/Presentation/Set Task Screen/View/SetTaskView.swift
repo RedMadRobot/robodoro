@@ -42,6 +42,9 @@ struct SetTaskView: View {
                 .padding(.vertical, 32)
             parameters
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
     }
     
     @ViewBuilder
