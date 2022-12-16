@@ -34,39 +34,47 @@ struct SetTaskView: View {
         
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var frontView: some View {
         VStack {
             Text("SET YOUR TASK")
                 .font(.customTitle)
                 .padding(.vertical, 32)
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack {
-                        TimePickerView(
-                            value: $viewModel.focusTimeValue,
-                            title: PomodoroState.focus.miniTitle,
-                            color: Colors.focusRed)
-                        TimePickerView(
-                            value: $viewModel.breakTimeValue,
-                            title: PomodoroState.break.miniTitle,
-                            color: Colors.breakPurple)
-                        TimePickerView(
-                            value: $viewModel.longBreakTimeValue,
-                            title: PomodoroState.longBreak.miniTitle,
-                            color: Colors.longBreakGreen)
-                        Spacer()
-                        Button("START TIMER") {
-                            viewModel.applyParameters()
-                            navigator.hideSetTaskSheet()
-                            navigator.showPomodoroModal(delayed: true)
-                        }
-                        .buttonStyle(PrimaryButtonStyle())
-                        .padding(.horizontal, 16)
+            parameters
+        }
+    }
+    
+    @ViewBuilder
+    private var parameters: some View {
+        GeometryReader { geometry in
+            ScrollView {
+                VStack {
+                    TimePickerView(
+                        value: $viewModel.focusTimeValue,
+                        title: PomodoroState.focus.miniTitle,
+                        color: Colors.focusRed)
+                    TimePickerView(
+                        value: $viewModel.breakTimeValue,
+                        title: PomodoroState.break.miniTitle,
+                        color: Colors.breakPurple)
+                    TimePickerView(
+                        value: $viewModel.longBreakTimeValue,
+                        title: PomodoroState.longBreak.miniTitle,
+                        color: Colors.longBreakGreen)
+                    SessionStepperView(value: $viewModel.stagesCount)
+                    TaskTitleFieldView(value: $viewModel.taskTitle)
+                    Spacer()
+                    Button("START TIMER") {
+                        viewModel.applyParameters()
+                        navigator.hideSetTaskSheet()
+                        navigator.showPomodoroModal(delayed: true)
                     }
-                    .frame(minHeight: geometry.size.height)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(16)
                 }
-                .frame(width: geometry.size.width)
+                .frame(minHeight: geometry.size.height)
             }
+            .frame(width: geometry.size.width)
         }
     }
 }

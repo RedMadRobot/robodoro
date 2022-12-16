@@ -54,6 +54,7 @@ struct PomodoroView: View {
     
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var frontView: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -75,6 +76,7 @@ struct PomodoroView: View {
         }
     }
     
+    @ViewBuilder
     private var timeSection: some View {
         HStack(alignment: .center, spacing: 0) {
             Text(viewModel.minutes)
@@ -91,6 +93,7 @@ struct PomodoroView: View {
         }
     }
     
+    @ViewBuilder
     private var alert: some View {
         AlertView(cancelAction: {
             viewModel.hideAlert()

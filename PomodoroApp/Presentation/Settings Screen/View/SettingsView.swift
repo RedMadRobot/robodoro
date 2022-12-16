@@ -48,6 +48,7 @@ struct SettingsView: View {
     
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var frontView: some View {
         VStack(spacing: 24) {
             Toggle("Alarm sound", isOn: $viewModel.soundEnabled)

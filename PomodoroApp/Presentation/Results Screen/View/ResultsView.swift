@@ -49,6 +49,7 @@ struct ResultsView: View {
     
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var frontView: some View {
         VStack {
             Spacer()
@@ -56,7 +57,7 @@ struct ResultsView: View {
                 navigator.showSetTaskSheet()
             }
             .buttonStyle(PrimaryButtonStyle())
-            .padding(.horizontal, 16)
+            .padding(16)
         }
     }
 }

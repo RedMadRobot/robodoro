@@ -36,6 +36,7 @@ struct AlertView: View {
     
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var alertBanner: some View {
         VStack(spacing: 40) {
             Text("Do you want to end this task?")

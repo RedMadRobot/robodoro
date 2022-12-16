@@ -44,7 +44,7 @@ struct PomodoroApp: App {
                             navigator.resolveDelayedNavigation()
                         }
                     ) {
-                        setTaskView
+                        SetTaskView(navigator: navigator)
                     }
                     .fullScreenCover(isPresented: $navigator.pomodoroModalPresented) {
                         pomodoroView
@@ -55,6 +55,7 @@ struct PomodoroApp: App {
     
     // MARK: - Private Properties
     
+    @ViewBuilder
     private var resultsView: some View {
         ResultsView(navigator: navigator)
             .preferredColorScheme(.light)
@@ -63,6 +64,7 @@ struct PomodoroApp: App {
             }
     }
     
+    @ViewBuilder
     private var pomodoroView: some View {
         PomodoroView(navigator: navigator)
             .onAppear {
@@ -83,10 +85,6 @@ struct PomodoroApp: App {
                     break
                 }
             }
-    }
-    
-    private var setTaskView: some View {
-        SetTaskView(navigator: navigator)
     }
     
     // MARK: - Private Methods
