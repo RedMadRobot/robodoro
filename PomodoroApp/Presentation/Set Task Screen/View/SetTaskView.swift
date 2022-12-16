@@ -5,6 +5,7 @@
 //  Created by Петр Тартынских  on 15.12.2022.
 //
 
+import Combine
 import SwiftUI
 
 struct SetTaskView: View {
@@ -50,35 +51,52 @@ struct SetTaskView: View {
     @ViewBuilder
     private var parameters: some View {
         GeometryReader { geometry in
-            ScrollView {
-                VStack {
-                    TimePickerView(
-                        value: $viewModel.focusTimeValue,
-                        title: PomodoroState.focus.miniTitle,
-                        color: Colors.focusRed)
-                    TimePickerView(
-                        value: $viewModel.breakTimeValue,
-                        title: PomodoroState.break.miniTitle,
-                        color: Colors.breakPurple)
-                    TimePickerView(
-                        value: $viewModel.longBreakTimeValue,
-                        title: PomodoroState.longBreak.miniTitle,
-                        color: Colors.longBreakGreen)
-                    SessionStepperView(value: $viewModel.stagesCount)
-                    TaskTitleFieldView(value: $viewModel.taskTitle)
-                    Spacer()
-                    Button("START TIMER") {
-                        viewModel.applyParameters()
-                        navigator.hideSetTaskSheet()
-                        navigator.showPomodoroModal(delayed: true)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack {
+                        TimePickerView(
+                            value: $viewModel.focusTimeValue,
+                            title: PomodoroState.focus.miniTitle,
+                            color: Colors.focusRed)
+                        TimePickerView(
+                            value: $viewModel.breakTimeValue,
+                            title: PomodoroState.break.miniTitle,
+                            color: Colors.breakPurple)
+                        TimePickerView(
+                            value: $viewModel.longBreakTimeValue,
+                            title: PomodoroState.longBreak.miniTitle,
+                            color: Colors.longBreakGreen)
+                        SessionStepperView(value: $viewModel.stagesCount)
+                        taskTitleFieldView(proxy: proxy)
+                        Spacer()
+                        Button("START TIMER") {
+                            viewModel.applyParameters()
+                            navigator.hideSetTaskSheet()
+                            navigator.showPomodoroModal(delayed: true)
+                        }
+                        .buttonStyle(PrimaryButtonStyle())
+                        .padding(16)
                     }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .padding(16)
+                    .frame(minHeight: geometry.size.height)
                 }
-                .frame(minHeight: geometry.size.height)
+                .frame(width: geometry.size.width)
             }
-            .frame(width: geometry.size.width)
         }
+    }
+    
+    // MARK: - Private Methods
+    
+    @ViewBuilder
+    private func taskTitleFieldView(proxy: ScrollViewProxy) -> some View {
+        TaskTitleFieldView(value: $viewModel.taskTitle)
+            .id(1)
+            .onReceive(keyboardPublisher) { value in
+                if value {
+                    withAnimation(.linear(duration: 0.1)) {
+                        proxy.scrollTo(1)
+                    }
+                }
+            }
     }
 }
 

@@ -31,6 +31,7 @@ struct TaskTitleFieldView: View {
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color(Colors.gray)))
             .padding(.horizontal, 16)
+            .padding(.bottom, 20)
     }
 }
 
