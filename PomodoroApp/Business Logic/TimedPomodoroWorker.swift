@@ -20,7 +20,10 @@ protocol TimedPomodoroWorker {
     var lastStageState: StageElementViewState { get }
     var enterForegroundAction: LinkManager.Action? { get }
     
-    func setup(stages: Int, intervals: @escaping (PomodoroState) -> TimeInterval)
+    func setup(
+        taskName: String?,
+        stages: Int,
+        intervals: @escaping (PomodoroState) -> TimeInterval)
     func mainAction()
     func reset()
     func setLinkAction(_ action: LinkManager.Action)
@@ -106,7 +109,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     // MARK: - Public Methods
     
-    func setup(stages: Int, intervals: @escaping (PomodoroState) -> TimeInterval) {
+    func setup(
+        taskName: String?,
+        stages: Int,
+        intervals: @escaping (PomodoroState) -> TimeInterval) {
         pomodoroService.setup(stages: stages)
         self.customIntervals = intervals
         

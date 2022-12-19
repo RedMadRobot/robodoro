@@ -27,8 +27,7 @@ struct ResultsView: View {
     
     var body: some View {
         ZStack {
-            // TODO: - Показывать только если нет сохраненных задач
-            NoTasksView()
+            backView
             frontView
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -48,6 +47,32 @@ struct ResultsView: View {
     }
     
     // MARK: - Private Properties
+    
+    @ViewBuilder
+    private var backView: some View {
+        if viewModel.tasks.isEmpty {
+            NoTasksView()
+        } else {
+            tasksView
+        }
+    }
+    
+    @ViewBuilder
+    private var tasksView: some View {
+        ZStack {
+            Color(Colors.defaultGray)
+                .ignoresSafeArea()
+            ScrollView {
+                VStack(spacing: 8) {
+                    SpendedMinutesView(
+                        dailyAverageFocusValue: viewModel.dailyAverageFocusValue,
+                        totalFocusValue: viewModel.totalFocusValue)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 30)
+                }
+            }
+        }
+    }
     
     @ViewBuilder
     private var frontView: some View {

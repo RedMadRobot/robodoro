@@ -34,6 +34,14 @@ final class SetTaskViewModel: ViewModel {
     private let timedPomodoroWorker: TimedPomodoroWorker
     private var userDefaultsStorage: LastUsedValuesStorage
     
+    private var trimmedTaskTitle: String {
+        taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private var isTaskTitleEmptry: Bool {
+        trimmedTaskTitle == ""
+    }
+    
     // MARK: - Init
     
     init(
@@ -56,6 +64,7 @@ final class SetTaskViewModel: ViewModel {
     func applyParameters() {
         saveLastValues()
         timedPomodoroWorker.setup(
+            taskName: isTaskTitleEmptry ? nil : trimmedTaskTitle,
             stages: stagesCount,
             intervals: { [weak self] stage in
                 guard let self = self else { return stage.defaultWaitingTime }
