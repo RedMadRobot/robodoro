@@ -73,6 +73,9 @@
 		3582D24B29509BC800AC0127 /* SpendedMinutesElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D24A29509BC800AC0127 /* SpendedMinutesElementView.swift */; };
 		3582D24D2950A20900AC0127 /* SpendedMinutesRedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D24C2950A20900AC0127 /* SpendedMinutesRedBackground.swift */; };
 		3582D24F2950A21E00AC0127 /* SpendedMinutesBlueBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D24E2950A21E00AC0127 /* SpendedMinutesBlueBackground.swift */; };
+		3582D2522951BE0700AC0127 /* TasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2512951BE0700AC0127 /* TasksListView.swift */; };
+		3582D2542951E38100AC0127 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2532951E38100AC0127 /* TaskView.swift */; };
+		3582D2562951EB3900AC0127 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2552951EB3900AC0127 /* DateFormatter+Extension.swift */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
 		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
@@ -180,6 +183,9 @@
 		3582D24A29509BC800AC0127 /* SpendedMinutesElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendedMinutesElementView.swift; sourceTree = "<group>"; };
 		3582D24C2950A20900AC0127 /* SpendedMinutesRedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendedMinutesRedBackground.swift; sourceTree = "<group>"; };
 		3582D24E2950A21E00AC0127 /* SpendedMinutesBlueBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendedMinutesBlueBackground.swift; sourceTree = "<group>"; };
+		3582D2512951BE0700AC0127 /* TasksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
+		3582D2532951E38100AC0127 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		3582D2552951EB3900AC0127 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
@@ -266,6 +272,7 @@
 				354957A62927C511000C216C /* TimeInterval+Extension.swift */,
 				35495786292640D7000C216C /* Images+Big.swift */,
 				3549578B2926425E000C216C /* Font+Big.swift */,
+				3582D2552951EB3900AC0127 /* DateFormatter+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -359,7 +366,7 @@
 		352B6BF229435A0000B09E51 /* Set Task Screen */ = {
 			isa = PBXGroup;
 			children = (
-				3570EE4C294B54860039A1D2 /* View Model */,
+				3570EE4C294B54860039A1D2 /* ViewModel */,
 				3570EE47294B31080039A1D2 /* View */,
 			);
 			path = "Set Task Screen";
@@ -377,7 +384,8 @@
 		352B6BFA2947370C00B09E51 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3582D24929509BAB00AC0127 /* SpendedMinutes */,
+				3582D2502951B51900AC0127 /* Tasks List */,
+				3582D24929509BAB00AC0127 /* Spended Minutes */,
 				352B6BFC2947373700B09E51 /* ResultsView.swift */,
 				352B6BFE2947377800B09E51 /* NoTasksView.swift */,
 			);
@@ -564,12 +572,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		3570EE4C294B54860039A1D2 /* View Model */ = {
+		3570EE4C294B54860039A1D2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				3570EE4D294B54940039A1D2 /* SetTaskViewModel.swift */,
 			);
-			path = "View Model";
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		3582D24329506FA400AC0127 /* Model */ = {
@@ -580,7 +588,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		3582D24929509BAB00AC0127 /* SpendedMinutes */ = {
+		3582D24929509BAB00AC0127 /* Spended Minutes */ = {
 			isa = PBXGroup;
 			children = (
 				3582D247295096FD00AC0127 /* SpendedMinutesView.swift */,
@@ -588,7 +596,16 @@
 				3582D24C2950A20900AC0127 /* SpendedMinutesRedBackground.swift */,
 				3582D24E2950A21E00AC0127 /* SpendedMinutesBlueBackground.swift */,
 			);
-			path = SpendedMinutes;
+			path = "Spended Minutes";
+			sourceTree = "<group>";
+		};
+		3582D2502951B51900AC0127 /* Tasks List */ = {
+			isa = PBXGroup;
+			children = (
+				3582D2512951BE0700AC0127 /* TasksListView.swift */,
+				3582D2532951E38100AC0127 /* TaskView.swift */,
+			);
+			path = "Tasks List";
 			sourceTree = "<group>";
 		};
 		3585B8DC291EA7B2007B01B1 = {
@@ -795,6 +812,7 @@
 				3570EE3F294B1D850039A1D2 /* ViewModel.swift in Sources */,
 				3570EE4B294B32130039A1D2 /* SetTaskView.swift in Sources */,
 				352B6C112949DC9F00B09E51 /* SettingsViewModel.swift in Sources */,
+				3582D2542951E38100AC0127 /* TaskView.swift in Sources */,
 				352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */,
 				352B6C0A2947BE0100B09E51 /* SettingsView.swift in Sources */,
 				35D305582924EB530062FDA9 /* LiveActivityService.swift in Sources */,
@@ -807,6 +825,7 @@
 				3582D23B294C7EC900AC0127 /* TaskTitleFieldView.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
 				3549579F29267836000C216C /* AppWorkers.swift in Sources */,
+				3582D2522951BE0700AC0127 /* TasksListView.swift in Sources */,
 				3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */,
 				352B6C0629477F2E00B09E51 /* MainNavigator.swift in Sources */,
 				3549577D29263A0A000C216C /* TimerState.swift in Sources */,
@@ -820,6 +839,7 @@
 				35203953292270B600A4028E /* LongBreakBackground.swift in Sources */,
 				352039452922424500A4028E /* UIColor+Hex.swift in Sources */,
 				352039732923C45B00A4028E /* Font+Extension.swift in Sources */,
+				3582D2562951EB3900AC0127 /* DateFormatter+Extension.swift in Sources */,
 				35C69BEC29251A0C004D176C /* PomodoroState+Time.swift in Sources */,
 				352039502922709E00A4028E /* BreakBackground.swift in Sources */,
 				354957A129269EFB000C216C /* LinkManager.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PomodoroTask {
+struct PomodoroTask: Equatable {
     let id: UUID
     let title: String?
     let date: Date

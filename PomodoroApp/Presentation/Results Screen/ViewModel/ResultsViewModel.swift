@@ -13,7 +13,7 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Properties
     
     @Published
-    private(set) var tasks: [PomodoroTask]
+    var tasks: [PomodoroTask]
     
     @Published
     private(set) var dailyAverageFocusValue: Int
@@ -36,15 +36,17 @@ final class ResultsViewModel: ViewModel {
         self.timedPomodoroWorker = timedPomodoroWorker
         self.feedbackService = feedbackService
         
-        self.tasks = [
-            PomodoroTask(
-                id: UUID(),
-                title: "Some task",
-                date: Date(),
-                completedInterval: 60 * 5)
-        ]
+        self.tasks = []
         self.dailyAverageFocusValue = 30
         self.totalFocusValue = 210
+        
+        for i in 1...10 {
+            self.tasks.append(.init(
+                id: UUID(),
+                title: "Task № \(i)",
+                date: Date(),
+                completedInterval: 60 * 5))
+        }
     }
     
     // MARK: - Public Methods

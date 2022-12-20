@@ -69,6 +69,12 @@ struct ResultsView: View {
                         totalFocusValue: viewModel.totalFocusValue)
                     .padding(.horizontal, 16)
                     .padding(.top, 30)
+                    TasksListView(
+                        tasks: $viewModel.tasks,
+                        onDelete: { task in
+                            print("Delete \(task.id)")
+                        })
+                    Spacer(minLength: 80)
                 }
             }
         }

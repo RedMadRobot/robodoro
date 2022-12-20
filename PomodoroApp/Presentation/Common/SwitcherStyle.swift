@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsToggleStyle: ToggleStyle {
     
     private let onColor = Color(Colors.toggleGreen)
-    private let offColor = Color(Colors.textGray)
+    private let offColor = Color(Colors.textGray1)
     private let thumbColor = Color(Colors.white)
     
     func makeBody(configuration: Self.Configuration) -> some View {

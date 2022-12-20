@@ -44,7 +44,7 @@ struct NoTasksView: View {
             }
             Text("NO TASKS YET")
                 .font(.stageLabel)
-                .foregroundColor(Color(Colors.textGray))
+                .foregroundColor(Color(Colors.textGray1))
         }
         .ignoresSafeArea()
     }
