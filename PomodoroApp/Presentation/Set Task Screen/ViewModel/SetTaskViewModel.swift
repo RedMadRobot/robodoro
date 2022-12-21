@@ -13,16 +13,32 @@ final class SetTaskViewModel: ViewModel {
     // MARK: - Public Properties
     
     @Published
-    var focusTimeValue: TimeInterval
+    var focusTimeValue: TimeInterval {
+        didSet {
+            performImpactIfNeeded(oldValue: oldValue, newValue: focusTimeValue)
+        }
+    }
     
     @Published
-    var breakTimeValue: TimeInterval
+    var breakTimeValue: TimeInterval {
+        didSet {
+            performImpactIfNeeded(oldValue: oldValue, newValue: breakTimeValue)
+        }
+    }
     
     @Published
-    var longBreakTimeValue: TimeInterval
+    var longBreakTimeValue: TimeInterval {
+        didSet {
+            performImpactIfNeeded(oldValue: oldValue, newValue: longBreakTimeValue)
+        }
+    }
     
     @Published
-    var stagesCount: Int
+    var stagesCount: Int {
+        didSet {
+            performImpactIfNeeded(oldValue: oldValue, newValue: stagesCount)
+        }
+    }
     
     @Published
     var taskTitle: String = ""

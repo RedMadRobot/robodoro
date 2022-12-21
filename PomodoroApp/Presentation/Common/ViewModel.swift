@@ -19,4 +19,12 @@ extension ViewModel {
     func performImpact() {
         feedbackService.performImpact()
     }
+    
+    func performImpactIfNeeded<Value: Equatable>(
+        oldValue: Value,
+        newValue: Value) {
+            if oldValue != newValue {
+                performImpact()
+            }
+        }
 }

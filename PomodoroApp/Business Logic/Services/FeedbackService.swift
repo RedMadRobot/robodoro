@@ -31,7 +31,7 @@ final class FeedbackServiceImpl: FeedbackService {
     
     private let userDefaultsStorage: UserDefaultsStorage
     
-    private let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    private let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     // MARK: - Init
     
