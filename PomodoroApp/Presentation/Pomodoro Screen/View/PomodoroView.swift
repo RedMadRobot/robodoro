@@ -30,9 +30,6 @@ struct PomodoroView: View {
             ZStack {
                 BackgroundView(viewModel: viewModel)
                 frontView
-                if viewModel.showingAlert {
-                    alert
-                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -41,11 +38,10 @@ struct PomodoroView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.showAlert()
+                        showAlert()
                     } label: {
                         Image(uiImage: Images.logout)
                     }
-                    .disabled(viewModel.showingAlert)
                 }
             }
             .animation(.easeInOut, value: viewModel.pomodoroState)
@@ -93,14 +89,15 @@ struct PomodoroView: View {
         }
     }
     
-    @ViewBuilder
-    private var alert: some View {
-        AlertView(
+    // MARK: - Private Methods
+    
+    private func showAlert() {
+        navigator.showAlert(
             title: "Do you want to end this task?",
             primaryButtonTitle: "END",
             secondaryButtonTitle: "CANCEL",
             primaryAction: { navigator.hidePomodoroModal() },
-            secondaryAction: { viewModel.hideAlert() })
+            commonCompletion: { navigator.hideAlert() })
     }
 }
 

@@ -76,6 +76,7 @@
 		3582D2522951BE0700AC0127 /* TasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2512951BE0700AC0127 /* TasksListView.swift */; };
 		3582D2542951E38100AC0127 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2532951E38100AC0127 /* TaskView.swift */; };
 		3582D2562951EB3900AC0127 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2552951EB3900AC0127 /* DateFormatter+Extension.swift */; };
+		3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D25A2953254E00AC0127 /* AlertViewModel.swift */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
 		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
@@ -186,6 +187,7 @@
 		3582D2512951BE0700AC0127 /* TasksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListView.swift; sourceTree = "<group>"; };
 		3582D2532951E38100AC0127 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		3582D2552951EB3900AC0127 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
+		3582D25A2953254E00AC0127 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
@@ -402,7 +404,7 @@
 		352B6C00294756AD00B09E51 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
+				3582D2592953252D00AC0127 /* Alert */,
 				352B6C01294756CA00B09E51 /* ButtonStyle.swift */,
 				352B6C12294A067B00B09E51 /* SwitcherStyle.swift */,
 				3570EE3E294B1D850039A1D2 /* ViewModel.swift */,
@@ -608,6 +610,15 @@
 			path = "Tasks List";
 			sourceTree = "<group>";
 		};
+		3582D2592953252D00AC0127 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
+				3582D25A2953254E00AC0127 /* AlertViewModel.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		3585B8DC291EA7B2007B01B1 = {
 			isa = PBXGroup;
 			children = (
@@ -794,6 +805,7 @@
 				3520397D2923D61000A4028E /* TimerService.swift in Sources */,
 				352039772923D31200A4028E /* DI.swift in Sources */,
 				352039472922486F00A4028E /* Images.swift in Sources */,
+				3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */,
 				3582D248295096FD00AC0127 /* SpendedMinutesView.swift in Sources */,
 				354957A72927C511000C216C /* TimeInterval+Extension.swift in Sources */,
 				35C69BEA29251989004D176C /* LiveActivityAttributes.swift in Sources */,

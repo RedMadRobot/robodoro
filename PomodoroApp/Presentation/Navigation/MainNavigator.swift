@@ -28,6 +28,14 @@ final class MainNavigator: ObservableObject {
     @Published
     var setTaskSheetPresented = false
     
+    @Published
+    var alertPresented = false
+    private(set) var alertViewModel = AlertViewModel()
+        
+    var rootIsVisible: Bool {
+        !pomodoroModalPresented && !setTaskSheetPresented
+    }
+    
     // MARK: - Private Properties
     
     private var modalToPresent: ModalScreen?
@@ -38,16 +46,8 @@ final class MainNavigator: ObservableObject {
         navigationPath.removeLast()
     }
     
-    func popToRoot() {
-        navigationPath.removeLast(navigationPath.count)
-    }
-    
     func pushSettings() {
         navigationPath.append(StackScreen.settings)
-    }
-    
-    func prepareShowModal() {
-        
     }
     
     func showPomodoroModal(delayed: Bool = false) {
@@ -68,6 +68,28 @@ final class MainNavigator: ObservableObject {
     
     func hideSetTaskSheet() {
         setTaskSheetPresented = false
+    }
+    
+    func showAlert(
+        title: String,
+        primaryButtonTitle: String,
+        secondaryButtonTitle: String,
+        primaryAction: (() -> Void)? = nil,
+        secondaryAction: (() -> Void)? = nil,
+        commonCompletion: (() -> Void)? = nil
+    ) {
+        alertViewModel.setup(
+            title: title,
+            primaryButtonTitle: primaryButtonTitle,
+            secondaryButtonTitle: secondaryButtonTitle,
+            primaryAction: primaryAction,
+            secondaryAction: secondaryAction,
+            commonCompletion: commonCompletion)
+        alertPresented = true
+    }
+    
+    func hideAlert() {
+        alertPresented = false
     }
     
     func resolveDelayedNavigation() {

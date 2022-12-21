@@ -29,9 +29,6 @@ struct ResultsView: View {
         ZStack {
             backView
             frontView
-            if viewModel.showingAlert {
-                alert
-            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -75,7 +72,7 @@ struct ResultsView: View {
                     TasksListView(
                         tasks: viewModel.tasks,
                         onDelete: { task in
-                            viewModel.showAlert(taskToDelete: task)
+                            showAlert(taskToDelete: task)
                         })
                     Spacer(minLength: 80)
                 }
@@ -95,14 +92,16 @@ struct ResultsView: View {
         }
     }
     
-    @ViewBuilder
-    private var alert: some View {
-        AlertView(
+    // MARK: - Private Methods
+    
+    private func showAlert(taskToDelete: PomodoroTask) {
+        viewModel.prepareToDeleteTask(task: taskToDelete)
+        navigator.showAlert(
             title: "Do you want to delete this task?",
             primaryButtonTitle: "DELETE",
             secondaryButtonTitle: "CANCEL",
             primaryAction: { viewModel.deleteSelectedTask() },
-            secondaryAction: { viewModel.hideAlert() })
+            commonCompletion: { navigator.hideAlert() })
     }
 }
 

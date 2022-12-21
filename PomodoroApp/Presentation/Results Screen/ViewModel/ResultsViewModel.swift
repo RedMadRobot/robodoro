@@ -16,9 +16,6 @@ final class ResultsViewModel: ViewModel {
     var tasks: [PomodoroTask]
     
     @Published
-    private(set) var showingAlert: Bool = false
-    
-    @Published
     private(set) var dailyAverageFocusValue: Int
     
     @Published
@@ -54,19 +51,13 @@ final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Methods
     
+    func prepareToDeleteTask(task: PomodoroTask) {
+        taskToDelete = task
+    }
+    
     func deleteSelectedTask() {
         tasks.removeAll { $0 == taskToDelete }
-        hideAlert()
-    }
-    
-    func showAlert(taskToDelete: PomodoroTask) {
-        self.taskToDelete = taskToDelete
-        showingAlert = true
-    }
-    
-    func hideAlert() {
-        self.taskToDelete = nil
-        showingAlert = false
+        taskToDelete = nil
     }
     
     // MARK: - Private Methods

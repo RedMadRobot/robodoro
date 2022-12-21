@@ -11,27 +11,17 @@ struct AlertView: View {
     
     // MARK: - Private Properties
     
-    private let title: String
-    private let primaryButtonTitle: String
-    private let secondaryButtonTitle: String
+    @ObservedObject
+    private var viewModel: AlertViewModel
     
-    private var primaryAction: () -> Void
-    private var secondaryAction: () -> Void
+    @ObservedObject
+    private var navigator: MainNavigator
     
     // MARK: - Init
     
-    init(
-        title: String,
-        primaryButtonTitle: String,
-        secondaryButtonTitle: String,
-        primaryAction: @escaping () -> Void,
-        secondaryAction: @escaping () -> Void
-    ) {
-        self.title = title
-        self.primaryButtonTitle = primaryButtonTitle
-        self.secondaryButtonTitle = secondaryButtonTitle
-        self.primaryAction = primaryAction
-        self.secondaryAction = secondaryAction
+    init(navigator: MainNavigator) {
+        self.navigator = navigator
+        self.viewModel = navigator.alertViewModel
     }
     
     // MARK: - View
@@ -51,16 +41,18 @@ struct AlertView: View {
     @ViewBuilder
     private var alertBanner: some View {
         VStack(spacing: 40) {
-            Text(title)
+            Text(viewModel.title)
                 .font(.miniTitle)
                 .padding(.top, 24)
             HStack(spacing: 12) {
-                Button(secondaryButtonTitle) {
-                    secondaryAction()
+                Button(viewModel.secondaryButtonTitle) {
+                    viewModel.secondaryAction?()
+                    viewModel.commonCompletion?()
                 }
                 .buttonStyle(SecondaryButtonStyle())
-                Button(primaryButtonTitle) {
-                    primaryAction()
+                Button(viewModel.primaryButtonTitle) {
+                    viewModel.primaryAction?()
+                    viewModel.commonCompletion?()
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
@@ -78,12 +70,7 @@ struct AlertView: View {
 
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
-        AlertView(
-            title: "Do you want to end this task?",
-            primaryButtonTitle: "CANCEL",
-            secondaryButtonTitle: "END",
-            primaryAction: {},
-            secondaryAction: {})
-        .background(Color(Colors.focusRed))
+        AlertView(navigator: MainNavigator())
+            .background(Color(Colors.focusRed))
     }
 }

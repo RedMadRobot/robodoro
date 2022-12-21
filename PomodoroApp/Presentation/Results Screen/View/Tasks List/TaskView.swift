@@ -67,9 +67,10 @@ struct TaskView: View {
                     .foregroundColor(Color(Colors.textGray2))
             }
             .font(.miniTitle)
-            Spacer()
             Text("\(task.completedInterval.minutesIgnoringHours)")
                 .font(.miniTime)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .contentShape(Rectangle())
                 .background(GeometryReader { geometry in
                     Button {
                         onDelete()
@@ -81,7 +82,6 @@ struct TaskView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 24)
-        .background(Color(Colors.white))
     }
 }
 

@@ -48,8 +48,12 @@ struct PomodoroApp: App {
                     }
                     .fullScreenCover(isPresented: $navigator.pomodoroModalPresented) {
                         pomodoroView
+                            .overlay(navigator.alertPresented ? AlertView(navigator: navigator) : nil)
                     }
             }
+            .overlay(
+                navigator.alertPresented && navigator.rootIsVisible ?
+                AlertView(navigator: navigator) : nil)
         }
     }
     
