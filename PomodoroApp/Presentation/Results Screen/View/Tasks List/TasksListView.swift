@@ -11,7 +11,9 @@ struct TasksListView: View {
     
     // MARK: - Private Properties
     
-    @Binding
+    @State
+    private var editingTask: PomodoroTask?
+    
     private var tasks: [PomodoroTask]
     
     private var onDelete: (PomodoroTask) -> Void
@@ -19,10 +21,10 @@ struct TasksListView: View {
     // MARK: - Init
     
     init(
-        tasks: Binding<[PomodoroTask]>,
+        tasks: [PomodoroTask],
         onDelete: @escaping (PomodoroTask) -> Void
     ) {
-        self._tasks = tasks
+        self.tasks = tasks
         self.onDelete = onDelete
     }
     
@@ -36,6 +38,7 @@ struct TasksListView: View {
         .background(
             RoundedRectangle(cornerRadius: 32)
                 .fill(Color(Colors.white)))
+        .animation(.easeInOut, value: tasks)
     }
     
     // MARK: - Private Properties
@@ -58,10 +61,14 @@ struct TasksListView: View {
         ForEach(tasks, id: \.id) { task in
             TaskView(
                 task: task,
+                isEditing: task == editingTask,
+                onTap: {
+                    onRowTapped(task: task)
+                },
                 onDelete: {
+                    editingTask = nil
                     onDelete(task)
-                }
-            )
+                })
             if task != tasks.last {
                 divider
             }
@@ -74,35 +81,36 @@ struct TasksListView: View {
             .overlay(Color(Colors.textGray2))
             .padding(.horizontal, 16)
     }
+    
+    // MARK: - Private Methods
+    
+    private func onRowTapped(task: PomodoroTask) {
+        if task == editingTask {
+            editingTask = nil
+        } else {
+            editingTask = task
+        }
+    }
 }
 
 // MARK: - PreviewProvider
 
 struct TasksListView_Previews: PreviewProvider {
     
-    struct BindingValueHolder: View {
-        
-        @State var tasks: [PomodoroTask] = Array(1...10).map {
-            PomodoroTask(
-                id: UUID(),
-                title: "Task № \($0)",
-                date: Date(),
-                completedInterval: 60 * 5)
-        }
-        
-        var body: some View {
-            TasksListView(
-                tasks: $tasks,
-                onDelete: { _ in })
-        }
-    }
-    
     static var previews: some View {
         ZStack {
             Color(Colors.gray)
                 .ignoresSafeArea()
             ScrollView {
-                BindingValueHolder()
+                TasksListView(
+                    tasks: Array(1...10).map {
+                        PomodoroTask(
+                            id: UUID(),
+                            title: "Task № \($0)",
+                            date: Date(),
+                            completedInterval: 60 * 5)
+                    },
+                    onDelete: { _ in })
             }
         }
     }

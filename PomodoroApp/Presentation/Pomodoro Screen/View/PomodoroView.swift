@@ -95,13 +95,12 @@ struct PomodoroView: View {
     
     @ViewBuilder
     private var alert: some View {
-        AlertView(cancelAction: {
-            viewModel.hideAlert()
-        }, endAction: {
-            navigator.hidePomodoroModal()
-        })
-        .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
-        .zIndex(1) // Без этого анимация не работает
+        AlertView(
+            title: "Do you want to end this task?",
+            primaryButtonTitle: "END",
+            secondaryButtonTitle: "CANCEL",
+            primaryAction: { navigator.hidePomodoroModal() },
+            secondaryAction: { viewModel.hideAlert() })
     }
 }
 

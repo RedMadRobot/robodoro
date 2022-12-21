@@ -29,6 +29,9 @@ struct ResultsView: View {
         ZStack {
             backView
             frontView
+            if viewModel.showingAlert {
+                alert
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -70,9 +73,9 @@ struct ResultsView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 30)
                     TasksListView(
-                        tasks: $viewModel.tasks,
+                        tasks: viewModel.tasks,
                         onDelete: { task in
-                            print("Delete \(task.id)")
+                            viewModel.showAlert(taskToDelete: task)
                         })
                     Spacer(minLength: 80)
                 }
@@ -90,6 +93,16 @@ struct ResultsView: View {
             .buttonStyle(PrimaryButtonStyle())
             .padding(16)
         }
+    }
+    
+    @ViewBuilder
+    private var alert: some View {
+        AlertView(
+            title: "Do you want to delete this task?",
+            primaryButtonTitle: "DELETE",
+            secondaryButtonTitle: "CANCEL",
+            primaryAction: { viewModel.deleteSelectedTask() },
+            secondaryAction: { viewModel.hideAlert() })
     }
 }
 

@@ -11,7 +11,7 @@ extension DateFormatter {
     
     static var onlyDateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
+        formatter.dateFormat = "dd.MM.yyyy"
         return formatter
     }
 }

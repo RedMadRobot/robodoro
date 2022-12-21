@@ -16,6 +16,9 @@ final class ResultsViewModel: ViewModel {
     var tasks: [PomodoroTask]
     
     @Published
+    private(set) var showingAlert: Bool = false
+    
+    @Published
     private(set) var dailyAverageFocusValue: Int
     
     @Published
@@ -24,6 +27,8 @@ final class ResultsViewModel: ViewModel {
     private(set) var feedbackService: FeedbackService
     
     // MARK: - Private Properties
+    
+    private var taskToDelete: PomodoroTask?
     
     private let timedPomodoroWorker: TimedPomodoroWorker
     
@@ -36,21 +41,33 @@ final class ResultsViewModel: ViewModel {
         self.timedPomodoroWorker = timedPomodoroWorker
         self.feedbackService = feedbackService
         
-        self.tasks = []
+        self.tasks = Array(1...10).map {
+            PomodoroTask(
+                id: UUID(),
+                title: "Task № \($0)",
+                date: Date(),
+                completedInterval: 60 * 5)
+        }
         self.dailyAverageFocusValue = 30
         self.totalFocusValue = 210
-        
-        for i in 1...10 {
-            self.tasks.append(.init(
-                id: UUID(),
-                title: "Task № \(i)",
-                date: Date(),
-                completedInterval: 60 * 5))
-        }
     }
     
     // MARK: - Public Methods
     
-    // MARK: - Private Methods
+    func deleteSelectedTask() {
+        tasks.removeAll { $0 == taskToDelete }
+        hideAlert()
+    }
     
+    func showAlert(taskToDelete: PomodoroTask) {
+        self.taskToDelete = taskToDelete
+        showingAlert = true
+    }
+    
+    func hideAlert() {
+        self.taskToDelete = nil
+        showingAlert = false
+    }
+    
+    // MARK: - Private Methods
 }

@@ -253,7 +253,6 @@
 			children = (
 				3520394B2922704A00A4028E /* Backgrounds */,
 				3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */,
-				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,6 +402,7 @@
 		352B6C00294756AD00B09E51 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				352B6C0B2948DB0900B09E51 /* AlertView.swift */,
 				352B6C01294756CA00B09E51 /* ButtonStyle.swift */,
 				352B6C12294A067B00B09E51 /* SwitcherStyle.swift */,
 				3570EE3E294B1D850039A1D2 /* ViewModel.swift */,
