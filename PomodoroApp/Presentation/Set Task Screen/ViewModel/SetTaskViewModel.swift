@@ -10,6 +10,12 @@ import SwiftUI
 
 final class SetTaskViewModel: ViewModel {
     
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let maxTitleLength = 50
+    }
+    
     // MARK: - Public Properties
     
     @Published
@@ -95,6 +101,13 @@ final class SetTaskViewModel: ViewModel {
             })
     }
     
+    func shouldChangeText(range: NSRange, replacementText: String) -> Bool {
+        let currentText = taskTitle
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: replacementText)
+        return isValidTitle(title: updatedText)
+    }
+    
     // MARK: - Private Methods
     
     private func saveLastValues() {
@@ -102,5 +115,9 @@ final class SetTaskViewModel: ViewModel {
         userDefaultsStorage.lastBreakTime = breakTimeValue
         userDefaultsStorage.lastLongBreakTime = longBreakTimeValue
         userDefaultsStorage.lastStagesCount = stagesCount
+    }
+    
+    private func isValidTitle(title: String) -> Bool {
+        !title.contains(where: \.isNewline) && title.count <= Constants.maxTitleLength
     }
 }

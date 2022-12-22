@@ -88,21 +88,23 @@ struct SetTaskView: View {
     
     @ViewBuilder
     private func taskTitleFieldView(proxy: ScrollViewProxy) -> some View {
-        TaskTitleFieldView(value: $viewModel.taskTitle)
-            .id(1)
-            .onReceive(keyboardPublisher) { value in
-                if value {
-                    scrollToTextField(proxy: proxy)
-                }
+        TaskTitleFieldView(
+            value: $viewModel.taskTitle,
+            onShouldChangeText: viewModel.shouldChangeText)
+        .id(1)
+        .onReceive(keyboardPublisher) { value in
+            if value {
+                scrollToTextField(proxy: proxy)
             }
-            .background(
-                GeometryReader { geometry in
-                    Color(.clear)
-                        .onChange(of: geometry.size) { _ in
-                            scrollToTextField(proxy: proxy)
-                        }
-                }
-            )
+        }
+        .background(
+            GeometryReader { geometry in
+                Color(.clear)
+                    .onChange(of: geometry.size) { _ in
+                        scrollToTextField(proxy: proxy)
+                    }
+            }
+        )
     }
     
     // MARK: - Private Methods
