@@ -92,11 +92,25 @@ struct SetTaskView: View {
             .id(1)
             .onReceive(keyboardPublisher) { value in
                 if value {
-                    withAnimation(.linear(duration: 0.1)) {
-                        proxy.scrollTo(1)
-                    }
+                    scrollToTextField(proxy: proxy)
                 }
             }
+            .background(
+                GeometryReader { geometry in
+                    Color(.clear)
+                        .onChange(of: geometry.size) { _ in
+                            scrollToTextField(proxy: proxy)
+                        }
+                }
+            )
+    }
+    
+    // MARK: - Private Methods
+    
+    private func scrollToTextField(proxy: ScrollViewProxy) {
+        withAnimation(.linear(duration: 0.1)) {
+            proxy.scrollTo(1, anchor: .bottom)
+        }
     }
 }
 
