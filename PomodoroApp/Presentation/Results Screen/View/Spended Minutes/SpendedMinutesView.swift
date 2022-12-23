@@ -11,14 +11,14 @@ struct SpendedMinutesView: View {
     
     // MARK: - Private Properties
     
-    private let dailyAverageFocusValue: Int
-    private let totalFocusValue: Int
+    private let dailyAverageFocusValue: Double
+    private let totalFocusValue: Double
     
     // MARK: - Init
     
     init(
-        dailyAverageFocusValue: Int,
-        totalFocusValue: Int
+        dailyAverageFocusValue: Double,
+        totalFocusValue: Double
     ) {
         self.dailyAverageFocusValue = dailyAverageFocusValue
         self.totalFocusValue = totalFocusValue
@@ -32,10 +32,12 @@ struct SpendedMinutesView: View {
                 value: dailyAverageFocusValue,
                 title: "Daily average\nfocus, min",
                 style: .blue)
+            .animation(.easeInOut, value: dailyAverageFocusValue)
             SpendedMinutesElementView(
                 value: totalFocusValue,
                 title: "Total focus,\n min",
                 style: .red)
+            .animation(.easeInOut, value: totalFocusValue)
         }
     }
     

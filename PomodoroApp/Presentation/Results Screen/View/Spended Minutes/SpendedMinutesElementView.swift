@@ -16,14 +16,16 @@ struct SpendedMinutesElementView: View {
     
     // MARK: - Private Properties
     
-    private let value: Int
+    private let value: Double
     private let title: String
     private let style: SpendedMinutesElementViewStyle
+    
+    private let numberFormatter: NumberFormatter = .oneSignificantDigitFormatter
     
     // MARK: - Init
     
     init(
-        value: Int,
+        value: Double,
         title: String,
         style: SpendedMinutesElementViewStyle
     ) {
@@ -37,7 +39,7 @@ struct SpendedMinutesElementView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("\(value)")
+                Text(numberFormatter.getValue(double: value))
                     .font(.miniTime)
                 Spacer()
                 Text(title)

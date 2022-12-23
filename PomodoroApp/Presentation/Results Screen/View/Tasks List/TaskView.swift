@@ -62,7 +62,7 @@ struct TaskView: View {
     private var frontView: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(task.title ?? "Untitled")
+                Text(task.title ?? "Noname Task")
                 Text(formatter.string(from: task.date))
                     .foregroundColor(Color(Colors.textGray2))
             }
