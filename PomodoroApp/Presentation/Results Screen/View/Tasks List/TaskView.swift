@@ -46,14 +46,15 @@ struct TaskView: View {
     var body: some View {
         frontView
             .offset(x: isEditing ? -Constants.offset : .zero)
-        .mask(LinearGradient(gradient: Gradient(stops: [
-            .init(color: .clear, location: 0),
-            .init(color: .black, location: 0.05),
-        ]), startPoint: .leading, endPoint: .trailing))
-        .onTapGesture {
-            onTap()
-        }
-        .animation(.interactiveSpring(), value: isEditing)
+            .mask(LinearGradient(gradient: Gradient(stops: [
+                .init(color: .clear, location: 0),
+                .init(color: .black, location: 0.05),
+            ]), startPoint: .leading, endPoint: .trailing))
+            .animation(.interactiveSpring(), value: isEditing)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                onTap()
+            }
     }
     
     // MARK: - Private Properties
@@ -67,9 +68,9 @@ struct TaskView: View {
                     .foregroundColor(Color(Colors.textGray2))
             }
             .font(.miniTitle)
+            Spacer()
             Text("\(task.completedInterval.minutesIgnoringHours)")
                 .font(.miniTime)
-                .frame(maxWidth: .infinity, alignment: .trailing)
                 .contentShape(Rectangle())
                 .background(GeometryReader { geometry in
                     Button {

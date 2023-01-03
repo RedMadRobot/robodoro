@@ -81,7 +81,13 @@ final class ResultsViewModel: ViewModel {
             title: "Задача в пятницу этой недели2",
             date: calendar.makeDate(year: 2022, month: 12, day: 23),
             completedInterval: 60 * 60 * 10)
-        let tasks = [task0, task1, task2, task3, task4]
+        let longNameTask = PomodoroTask(
+            id: UUID(),
+            title: "Равным образом укрепление и развитие структуры спо",
+            date: calendar.makeDate(year: 2022, month: 12, day: 23),
+            completedInterval: 32)
+        
+        let tasks = [task0, task1, task2, task3, task4, longNameTask]
         
         self.tasks = tasks
         self.dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)
