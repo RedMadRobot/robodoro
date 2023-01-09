@@ -10,7 +10,6 @@ import Foundation
 // MARK: - FocusedTimeCalculatorService
 
 protocol FocusedTimeCalculatorService {
-    
     func calculateWeekDailyAverageFocusValue(tasks: [PomodoroTask]) -> Double
     func calculateWeekTotalFocusValue(tasks: [PomodoroTask]) -> Double
 }

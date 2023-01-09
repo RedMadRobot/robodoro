@@ -16,16 +16,22 @@ final class AppWorkers {
         feedbackService: services.feedbackService,
         notificationService: services.notificationService,
         pomodoroService: services.pomodoroService,
-        timerService: services.timerService
+        timerService: services.timerService,
+        tasksStorage: storages.taskStorage
     )
     
     // MARK: - Private Properties
     
     private let services: AppServices
+    private let storages: AppStorages
     
     // MARK: - Init
     
-    init(services: AppServices) {
+    init(
+        services: AppServices,
+        storages: AppStorages
+    ) {
         self.services = services
+        self.storages = storages
     }
 }

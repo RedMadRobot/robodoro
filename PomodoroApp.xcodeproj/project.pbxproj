@@ -82,6 +82,7 @@
 		3582D2622955B13E00AC0127 /* FocusedTimeCalculatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2612955B13E00AC0127 /* FocusedTimeCalculatorService.swift */; };
 		3582D2642955B70B00AC0127 /* NumberFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2632955B70B00AC0127 /* NumberFormatter+Extension.swift */; };
 		3582D2662955BDB900AC0127 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2652955BDB900AC0127 /* Date+Extension.swift */; };
+		3582D269296C14E500AC0127 /* PomodoroModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3582D267296C14E500AC0127 /* PomodoroModel.xcdatamodeld */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
 		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
@@ -198,6 +199,7 @@
 		3582D2612955B13E00AC0127 /* FocusedTimeCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedTimeCalculatorService.swift; sourceTree = "<group>"; };
 		3582D2632955B70B00AC0127 /* NumberFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extension.swift"; sourceTree = "<group>"; };
 		3582D2652955BDB900AC0127 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		3582D268296C14E500AC0127 /* PomodoroModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PomodoroModel.xcdatamodel; sourceTree = "<group>"; };
 		3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoroApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 			isa = PBXGroup;
 			children = (
 				3582D24429506FB300AC0127 /* PomodoroTask.swift */,
+				3582D267296C14E500AC0127 /* PomodoroModel.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -666,8 +669,8 @@
 			children = (
 				3585B8F6291EA9A9007B01B1 /* App */,
 				352039742923D29C00A4028E /* Business Logic */,
-				35203936291EAD5700A4028E /* Presentation */,
 				352039752923D2E300A4028E /* Dependency Injection */,
+				35203936291EAD5700A4028E /* Presentation */,
 				3520393F29223D6D00A4028E /* Utility */,
 				3549577A292639EB000C216C /* Common */,
 				3520394829224A3200A4028E /* Resources */,
@@ -875,6 +878,7 @@
 				35203953292270B600A4028E /* LongBreakBackground.swift in Sources */,
 				352039452922424500A4028E /* UIColor+Hex.swift in Sources */,
 				352039732923C45B00A4028E /* Font+Extension.swift in Sources */,
+				3582D269296C14E500AC0127 /* PomodoroModel.xcdatamodeld in Sources */,
 				3582D2562951EB3900AC0127 /* DateFormatter+Extension.swift in Sources */,
 				3582D25D2954A20900AC0127 /* UIFont+Extension.swift in Sources */,
 				35C69BEC29251A0C004D176C /* PomodoroState+Time.swift in Sources */,
@@ -1220,6 +1224,19 @@
 			productName = Sliders;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		3582D267296C14E500AC0127 /* PomodoroModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3582D268296C14E500AC0127 /* PomodoroModel.xcdatamodel */,
+			);
+			currentVersion = 3582D268296C14E500AC0127 /* PomodoroModel.xcdatamodel */;
+			path = PomodoroModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3585B8DD291EA7B2007B01B1 /* Project object */;
 }

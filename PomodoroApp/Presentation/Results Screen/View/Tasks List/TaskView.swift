@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: - Добавить удаление по свайпу
+
 struct TaskView: View {
     
     // MARK: - Constants

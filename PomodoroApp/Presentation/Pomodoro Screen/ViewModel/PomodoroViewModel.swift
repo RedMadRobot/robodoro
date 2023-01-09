@@ -76,7 +76,7 @@ final class PomodoroViewModel: ViewModel {
         self.pomodoroState = timedPomodoroWorker.pomodoroState.value
         self.timerState = timedPomodoroWorker.timerState.value
         self.leftTime = timedPomodoroWorker.leftTime.value
-        addSubsctiptions()
+        addSubscriptions()
     }
     
     // MARK: - Public Methods
@@ -88,7 +88,7 @@ final class PomodoroViewModel: ViewModel {
     
     // MARK: - Private Methods
     
-    private func addSubsctiptions() {
+    private func addSubscriptions() {
         Publishers.CombineLatest3(
             timedPomodoroWorker.pomodoroState,
             timedPomodoroWorker.timerState,

@@ -30,68 +30,30 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Private Properties
     
     private var taskToDelete: PomodoroTask?
-    
-    private let timedPomodoroWorker: TimedPomodoroWorker
-    
+        
     private let focusedTimeCalculatorService: FocusedTimeCalculatorService
+    
+    private let tasksStorage: TasksStorage
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Init
     
     init(
-        timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
         focusedTimeCalculatorService: FocusedTimeCalculatorService = DI.services.focusedTimeCalculatorService,
+        tasksStorage: TasksStorage = DI.storages.taskStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
-        self.timedPomodoroWorker = timedPomodoroWorker
         self.focusedTimeCalculatorService = focusedTimeCalculatorService
+        self.tasksStorage = tasksStorage
         self.feedbackService = feedbackService
         
-//        let tasks = Array(1...10).map {
-//            PomodoroTask(
-//                id: UUID(),
-//                title: "Task № \($0)",
-//                date: Date(),
-//                completedInterval: 60 * 5)
-//        }
+        let allTasks = tasksStorage.tasks.value
         
-        let calendar = Calendar.current
-        
-        let task0 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в прошлое воскресенье",
-            date: calendar.makeDate(year: 2022, month: 12, day: 18),
-            completedInterval: 60 * 13)
-        let task1 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в понедельник этой недели",
-            date: calendar.makeDate(year: 2022, month: 12, day: 19),
-            completedInterval: 60 * 10 + 30)
-        let task2 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в среду этой недели",
-            date: calendar.makeDate(year: 2022, month: 12, day: 21),
-            completedInterval: 60 * 6 + 59)
-        let task3 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в пятницу этой недели1",
-            date: calendar.makeDate(year: 2022, month: 12, day: 23),
-            completedInterval: 60 * 10 + 30)
-        let task4 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в пятницу этой недели2",
-            date: calendar.makeDate(year: 2022, month: 12, day: 23),
-            completedInterval: 60 * 60 * 10)
-        let longNameTask = PomodoroTask(
-            id: UUID(),
-            title: "Равным образом укрепление и развитие структуры спо",
-            date: calendar.makeDate(year: 2022, month: 12, day: 23),
-            completedInterval: 32)
-        
-        let tasks = [task0, task1, task2, task3, task4, longNameTask]
-        
-        self.tasks = tasks
-        self.dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)
-        self.totalFocusValue = focusedTimeCalculatorService.calculateWeekTotalFocusValue(tasks: tasks)
+        self.tasks = allTasks
+        self.dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: allTasks)
+        self.totalFocusValue = focusedTimeCalculatorService.calculateWeekTotalFocusValue(tasks: allTasks)
+        addSubscriptions()
     }
     
     // MARK: - Public Methods
@@ -101,11 +63,19 @@ final class ResultsViewModel: ViewModel {
     }
     
     func deleteSelectedTask() {
-        tasks.removeAll { $0 == taskToDelete }
-        taskToDelete = nil
+        guard let taskToDelete = taskToDelete else { return }
+        tasksStorage.deleteTask(withId: taskToDelete.id)
+        self.taskToDelete = nil
     }
     
     // MARK: - Private Methods
+    
+    private func addSubscriptions() {
+        tasksStorage.tasks.sink { [weak self] tasks in
+            self?.tasks = tasks
+        }
+        .store(in: &subscriptions)
+    }
     
     private func recalculateTime() {
         dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)

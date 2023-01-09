@@ -10,5 +10,5 @@ import Foundation
 final class DI {
     static var services = AppServices(storages: storages)
     static var storages = AppStorages()
-    static var workers = AppWorkers(services: services)
+    static var workers = AppWorkers(services: services, storages: storages)
 }

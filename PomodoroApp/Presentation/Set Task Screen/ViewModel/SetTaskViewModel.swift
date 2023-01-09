@@ -85,18 +85,22 @@ final class SetTaskViewModel: ViewModel {
     
     func applyParameters() {
         saveLastValues()
+        
+        let focusTimeValue = focusTimeValue
+        let breakTimeValue = breakTimeValue
+        let longBreakTimeValue = longBreakTimeValue
+        
         timedPomodoroWorker.setup(
             taskName: isTaskTitleEmptry ? nil : trimmedTaskTitle,
             stages: stagesCount,
-            intervals: { [weak self] stage in
-                guard let self = self else { return stage.defaultWaitingTime }
+            intervals: { stage in
                 switch stage {
                 case .focus:
-                    return self.focusTimeValue
+                    return focusTimeValue
                 case .break:
-                    return self.breakTimeValue
+                    return breakTimeValue
                 case .longBreak:
-                    return self.longBreakTimeValue
+                    return longBreakTimeValue
                 }
             })
     }

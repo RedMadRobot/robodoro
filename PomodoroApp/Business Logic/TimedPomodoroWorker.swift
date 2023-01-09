@@ -74,11 +74,16 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private var pomodoroService: PomodoroService
     private var timerService: TimerService
     
+    private let tasksStorage: TasksStorage
+    
     private var subscriptions = Set<AnyCancellable>()
     
     private var backgroundDate: Date?
     
     private var customIntervals: ((PomodoroState) -> TimeInterval)?
+    
+    private var currentTaskId: UUID?
+    private var currentTaskCompletedTime: TimeInterval?
     
     // MARK: - Init
     
@@ -87,13 +92,15 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         feedbackService: FeedbackService,
         notificationService: NotificationService,
         pomodoroService: PomodoroService,
-        timerService: TimerService
+        timerService: TimerService,
+        tasksStorage: TasksStorage
     ) {
         self.activityService = activityService
         self.feedbackService = feedbackService
         self.notificationService = notificationService
         self.pomodoroService = pomodoroService
         self.timerService = timerService
+        self.tasksStorage = tasksStorage
         
         self.pomodoroState = CurrentValueSubject<PomodoroState, Never>(pomodoroService.currentState)
         self.timerState = CurrentValueSubject<TimerState, Never>(timerService.currentState)
@@ -104,7 +111,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         
         timerService.reset(waitingTime: pomodoroService.currentState.defaultWaitingTime)
         
-        addSubsctiptions()
+        addSubscriptions()
     }
     
     // MARK: - Public Methods
@@ -112,11 +119,14 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     func setup(
         taskName: String?,
         stages: Int,
-        intervals: @escaping (PomodoroState) -> TimeInterval) {
+        intervals: @escaping (PomodoroState) -> TimeInterval
+    ) {
         pomodoroService.setup(stages: stages)
         self.customIntervals = intervals
-        
         timerService.reset(waitingTime: interval(for: pomodoroService.currentState))
+        
+        currentTaskId = tasksStorage.createTask(withTitle: taskName).id
+        currentTaskCompletedTime = 0
     }
     
     func mainAction() {
@@ -147,6 +157,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         pomodoroService.reset()
         timerService.reset(waitingTime: interval(for: pomodoroService.currentState))
         cancelNotification()
+        currentTaskId = nil
+        currentTaskCompletedTime = nil
     }
     
     func setLinkAction(_ action: LinkManager.Action) {
@@ -193,6 +205,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         let currentWaitingTime: TimeInterval = currentInterval - seconds
         
         if currentWaitingTime < 0 {
+            leftTime.send(0)
             timerService.stop()
             pomodoroService.moveForward()
         } else {
@@ -211,7 +224,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     // MARK: - Private Methods
     
-    private func addSubsctiptions() {
+    private func addSubscriptions() {
         Publishers.CombineLatest(
             pomodoroState,
             timerState)
@@ -223,6 +236,12 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 stageEndDate: Date.now.addingTimeInterval(self.leftTime.value),
                 activeStagesCount: self.activeStagesCount,
                 lastStageState: self.lastStageState)
+        }
+        .store(in: &subscriptions)
+        
+        leftTime.sink { [weak self] value in
+            guard let self = self else { return }
+            self.updateManagingTaskIntervalIfNeeded()
         }
         .store(in: &subscriptions)
     }
@@ -242,6 +261,19 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     private func interval(for state: PomodoroState) -> TimeInterval {
         customIntervals?(state) ?? state.defaultWaitingTime
+    }
+    
+    private func updateManagingTaskIntervalIfNeeded() {
+        guard let currentTaskId = currentTaskId,
+              let currentTaskCompletedTime = currentTaskCompletedTime,
+              pomodoroState.value == .focus else { return }
+        
+        let passedInterval = (interval(for: pomodoroState.value) - leftTime.value)
+                
+        if currentTaskCompletedTime.minutesIgnoringHours < passedInterval.minutesIgnoringHours {
+            tasksStorage.updateTime(ofTaskWithId: currentTaskId, newTime: passedInterval)
+            self.currentTaskCompletedTime = passedInterval
+        }
     }
 }
 
