@@ -11,7 +11,6 @@ import Foundation
 
 protocol TasksStorage {
     var tasks: CurrentValueSubject<[PomodoroTask], Never> { get }
-    func getAllTasks() -> [PomodoroTask]
     func createTask(withTitle title: String?) -> PomodoroTask
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval)
     func deleteTask(withId id: UUID)
@@ -21,90 +20,125 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
     
     // MARK: - Public Properties
     
-    private(set) var tasks: CurrentValueSubject<[PomodoroTask], Never>
+    private(set) var tasks: CurrentValueSubject<[PomodoroTask], Never> = .init([])
     
     // MARK: - Private Properties
     
+    private var managedObjectContext: NSManagedObjectContext
+    private var backgroundContext: NSManagedObjectContext
+    
+    private var fetchedResultsController: NSFetchedResultsController<PomodoroTaskObject>
     
     // MARK: - Init
     
     override init() {
-        let calendar = Calendar.current
+        let persistentStore = PersistentStore()
+        self.managedObjectContext = persistentStore.context
+        self.backgroundContext = persistentStore.backgroundContext
         
-        let task0 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в прошлое воскресенье",
-            date: calendar.makeDate(year: 2023, month: 1, day: 8),
-            completedInterval: 60 * 13)
-        let task1 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в понедельник этой недели",
-            date: calendar.makeDate(year: 2023, month: 1, day: 9),
-            completedInterval: 60 * 10 + 30)
-        let task2 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в среду этой недели",
-            date: calendar.makeDate(year: 2023, month: 1, day: 11),
-            completedInterval: 60 * 6 + 59)
-        let task3 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в пятницу этой недели1",
-            date: calendar.makeDate(year: 2023, month: 1, day: 13),
-            completedInterval: 60 * 10 + 30)
-        let task4 = PomodoroTask(
-            id: UUID(),
-            title: "Задача в пятницу этой недели2",
-            date: calendar.makeDate(year: 2023, month: 1, day: 13),
-            completedInterval: 60 * 60 * 10)
-        let longNameTask = PomodoroTask(
-            id: UUID(),
-            title: "Равным образом укрепление и развитие структуры спо",
-            date: calendar.makeDate(year: 2023, month: 1, day: 13),
-            completedInterval: 32)
-        
-        let tasks = [task0, task1, task2, task3, task4, longNameTask]
-        
-        self.tasks = CurrentValueSubject<[PomodoroTask], Never>(tasks)
+        let request: NSFetchRequest<PomodoroTaskObject> = PomodoroTaskObject.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \PomodoroTaskObject.date, ascending: false)]
+        self.fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
         
         super.init()
+        
+        self.fetchedResultsController.delegate = self
+        try? fetchedResultsController.performFetch()
+        
+        if let tasksObjects = fetchedResultsController.fetchedObjects {
+            self.tasks.value = tasksObjects.compactMap {
+                PomodoroTask(coreDataObject: $0)
+            }
+        }
     }
     
     // MARK: - Public Methods
     
-    func getAllTasks() -> [PomodoroTask] {
-        // TODO: - Implement
-        return tasks.value
-    }
-    
     @discardableResult
     func createTask(withTitle title: String?) -> PomodoroTask {
-        // TODO: - Implement
         let task = PomodoroTask(
             id: UUID(),
             title: title,
             date: Date.now,
             completedInterval: 0)
-        print("Task created")
+        
+        let taskObject = PomodoroTaskObject(context: managedObjectContext)
+        taskObject.id = task.id
+        taskObject.title = task.title
+        taskObject.date = task.date
+        taskObject.completedInterval = task.completedInterval
+        saveData(context: managedObjectContext)
         return task
     }
     
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval) {
-        // TODO: - Implement
-        print("Task updated")
+        let predicate = NSPredicate(format: "id = %@", id as CVarArg)
+        let result = fetchFirst(PomodoroTaskObject.self, predicate: predicate, context: backgroundContext)
+        switch result {
+        case .success(let managedObject):
+            if let taskObject = managedObject {
+                taskObject.completedInterval = newTime
+            }
+        case .failure(_):
+            print("Couldn't fetch PomodoroTaskObject to save")
+        }
+        saveData(context: backgroundContext)
     }
     
     func deleteTask(withId id: UUID) {
-        // TODO: - Implement
-        tasks.value.removeAll { $0.id == id }
-        print("Task deleted")
+        let predicate = NSPredicate(format: "id = %@", id as CVarArg)
+        let result = fetchFirst(PomodoroTaskObject.self, predicate: predicate, context: backgroundContext)
+        switch result {
+        case .success(let managedObject):
+            if let taskObject = managedObject {
+                backgroundContext.delete(taskObject)
+            }
+        case .failure(_):
+            print("Couldn't fetch PomodoroTaskObject to save")
+        }
+        saveData(context: backgroundContext)
     }
     
     // MARK: - Private Methods
+    
+    private func saveData(context: NSManagedObjectContext) {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch let error as NSError {
+                NSLog("Unresolved error saving context: \(error), \(error.userInfo)")
+            }
+        }
+    }
 }
 
 extension TasksStorageCoreDataImpl: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
+        if let tasksObjects = controller.fetchedObjects as? [PomodoroTaskObject] {
+            self.tasks.value = tasksObjects.compactMap {
+                PomodoroTask(coreDataObject: $0)
+            }
+        }
+    }
+    
+    private func fetchFirst<T: NSManagedObject>(
+        _ objectType: T.Type,
+        predicate: NSPredicate?,
+        context: NSManagedObjectContext
+    ) -> Result<T?, Error> {
+        let request = objectType.fetchRequest()
+        request.predicate = predicate
+        request.fetchLimit = 1
+        do {
+            let result = try context.fetch(request) as? [T]
+            return .success(result?.first)
+        } catch {
+            return .failure(error)
+        }
     }
 }

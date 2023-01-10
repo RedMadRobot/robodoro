@@ -40,8 +40,11 @@ final class FocusedTimeCalculatorServiceImpl: FocusedTimeCalculatorService {
     private func currentWeekTasks(tasks: [PomodoroTask]) -> [PomodoroTask] {
         guard let startOfWeek = Date().startOfWeek(calendar: calendar),
               let endOfWeek = Date().endOfWeek(calendar: calendar) else { return [] }
-        return tasks.filter { task in
+        
+        let filteredTasks = tasks.filter { task in
             task.date >= startOfWeek && task.date <= endOfWeek
         }
+        
+        return filteredTasks
     }
 }

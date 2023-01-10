@@ -15,9 +15,9 @@ extension Date {
     
     func startOfWeek(calendar: Calendar, _ firstWeekday: Weekday = .monday) -> Date? {
         var cal = calendar
+        cal.firstWeekday = firstWeekday.rawValue
         var dateComponents = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
         dateComponents.setTimeComponentsToNoon()
-        cal.firstWeekday = firstWeekday.rawValue
         return cal.date(from: dateComponents)
     }
     

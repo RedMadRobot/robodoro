@@ -11,5 +11,18 @@ struct PomodoroTask: Equatable {
     let id: UUID
     let title: String?
     let date: Date
-    let completedInterval: TimeInterval
+    var completedInterval: TimeInterval
+}
+
+extension PomodoroTask {
+    
+    init?(coreDataObject: PomodoroTaskObject) {
+        guard let id = coreDataObject.id,
+              let date = coreDataObject.date else { return nil }
+        
+        self.id = id
+        self.title = coreDataObject.title
+        self.date = date
+        self.completedInterval = coreDataObject.completedInterval
+    }
 }
