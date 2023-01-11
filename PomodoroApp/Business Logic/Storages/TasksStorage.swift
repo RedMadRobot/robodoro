@@ -9,12 +9,16 @@ import Combine
 import CoreData
 import Foundation
 
+// MARK: - TasksStorage
+
 protocol TasksStorage {
     var tasks: CurrentValueSubject<[PomodoroTask], Never> { get }
     func createTask(withTitle title: String?) -> PomodoroTask
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval)
     func deleteTask(withId id: UUID)
 }
+
+// MARK: - TasksStorageCoreDataImpl
 
 final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
     
@@ -71,13 +75,13 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
         taskObject.title = task.title
         taskObject.date = task.date
         taskObject.completedInterval = task.completedInterval
-        saveData(context: managedObjectContext)
+        managedObjectContext.saveIfNeeded()
         return task
     }
     
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval) {
         let predicate = NSPredicate(format: "id = %@", id as CVarArg)
-        let result = fetchFirst(PomodoroTaskObject.self, predicate: predicate, context: backgroundContext)
+        let result = backgroundContext.fetchFirst(PomodoroTaskObject.self, predicate: predicate)
         switch result {
         case .success(let managedObject):
             if let taskObject = managedObject {
@@ -86,12 +90,12 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
         case .failure(_):
             print("Couldn't fetch PomodoroTaskObject to save")
         }
-        saveData(context: backgroundContext)
+        backgroundContext.saveIfNeeded()
     }
     
     func deleteTask(withId id: UUID) {
         let predicate = NSPredicate(format: "id = %@", id as CVarArg)
-        let result = fetchFirst(PomodoroTaskObject.self, predicate: predicate, context: backgroundContext)
+        let result = backgroundContext.fetchFirst(PomodoroTaskObject.self, predicate: predicate)
         switch result {
         case .success(let managedObject):
             if let taskObject = managedObject {
@@ -100,21 +104,11 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
         case .failure(_):
             print("Couldn't fetch PomodoroTaskObject to save")
         }
-        saveData(context: backgroundContext)
-    }
-    
-    // MARK: - Private Methods
-    
-    private func saveData(context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error as NSError {
-                NSLog("Unresolved error saving context: \(error), \(error.userInfo)")
-            }
-        }
+        backgroundContext.saveIfNeeded()
     }
 }
+
+// MARK: - NSFetchedResultsControllerDelegate
 
 extension TasksStorageCoreDataImpl: NSFetchedResultsControllerDelegate {
     
@@ -123,22 +117,6 @@ extension TasksStorageCoreDataImpl: NSFetchedResultsControllerDelegate {
             self.tasks.value = tasksObjects.compactMap {
                 PomodoroTask(coreDataObject: $0)
             }
-        }
-    }
-    
-    private func fetchFirst<T: NSManagedObject>(
-        _ objectType: T.Type,
-        predicate: NSPredicate?,
-        context: NSManagedObjectContext
-    ) -> Result<T?, Error> {
-        let request = objectType.fetchRequest()
-        request.predicate = predicate
-        request.fetchLimit = 1
-        do {
-            let result = try context.fetch(request) as? [T]
-            return .success(result?.first)
-        } catch {
-            return .failure(error)
         }
     }
 }
