@@ -13,11 +13,7 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Properties
     
     @Published
-    var tasks: [PomodoroTask] {
-        didSet {
-            recalculateTime()
-        }
-    }
+    private(set) var tasks: [PomodoroTask]
     
     @Published
     private(set) var dailyAverageFocusValue: Double
@@ -28,14 +24,14 @@ final class ResultsViewModel: ViewModel {
     private(set) var feedbackService: FeedbackService
     
     // MARK: - Private Properties
-    
-    private var taskToDelete: PomodoroTask?
         
     private let focusedTimeCalculatorService: FocusedTimeCalculatorService
     
     private let tasksStorage: TasksStorage
     
     private var subscriptions = Set<AnyCancellable>()
+    
+    private var taskToDelete: PomodoroTask?
     
     // MARK: - Init
     
@@ -73,6 +69,7 @@ final class ResultsViewModel: ViewModel {
     private func addSubscriptions() {
         tasksStorage.tasks.sink { [weak self] tasks in
             self?.tasks = tasks
+            self?.recalculateTime()
         }
         .store(in: &subscriptions)
     }
