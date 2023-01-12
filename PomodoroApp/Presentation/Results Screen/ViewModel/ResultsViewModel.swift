@@ -7,6 +7,7 @@
 
 import Combine
 import SwiftUI
+import SwipeActions
 
 final class ResultsViewModel: ViewModel {
     
@@ -20,6 +21,9 @@ final class ResultsViewModel: ViewModel {
     
     @Published
     private(set) var totalFocusValue: Double
+    
+    @Published
+    var swipeState: SwipeState = .untouched
     
     private(set) var feedbackService: FeedbackService
     
@@ -62,6 +66,10 @@ final class ResultsViewModel: ViewModel {
         guard let taskToDelete = taskToDelete else { return }
         tasksStorage.deleteTask(withId: taskToDelete.id)
         self.taskToDelete = nil
+    }
+    
+    func resetSwipeState() {
+        swipeState = .swiped(UUID())
     }
     
     // MARK: - Private Methods

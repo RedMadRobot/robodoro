@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SwipeActions
 
 struct TasksListView: View {
     
     // MARK: - Private Properties
     
-    @State
-    private var editingTask: PomodoroTask?
+    @Binding
+    private var swipeState: SwipeState
     
     private var tasks: [PomodoroTask]
     
@@ -21,9 +22,11 @@ struct TasksListView: View {
     // MARK: - Init
     
     init(
+        swipeState: Binding<SwipeState>,
         tasks: [PomodoroTask],
         onDelete: @escaping (PomodoroTask) -> Void
     ) {
+        self._swipeState = swipeState
         self.tasks = tasks
         self.onDelete = onDelete
     }
@@ -61,12 +64,8 @@ struct TasksListView: View {
         ForEach(tasks, id: \.id) { task in
             TaskView(
                 task: task,
-                isEditing: task == editingTask,
-                onTap: {
-                    onRowTapped(task: task)
-                },
+                swipeState: $swipeState,
                 onDelete: {
-                    editingTask = nil
                     onDelete(task)
                 })
             if task != tasks.last {
@@ -81,37 +80,37 @@ struct TasksListView: View {
             .overlay(Color(Colors.textGray2))
             .padding(.horizontal, 16)
     }
-    
-    // MARK: - Private Methods
-    
-    private func onRowTapped(task: PomodoroTask) {
-        if task == editingTask {
-            editingTask = nil
-        } else {
-            editingTask = task
-        }
-    }
 }
 
 // MARK: - PreviewProvider
 
 struct TasksListView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        ZStack {
-            Color(Colors.gray)
-                .ignoresSafeArea()
-            ScrollView {
-                TasksListView(
-                    tasks: Array(1...10).map {
-                        PomodoroTask(
-                            id: UUID(),
-                            title: "Task № \($0)",
-                            date: Date(),
-                            completedInterval: 60 * 5)
-                    },
-                    onDelete: { _ in })
+
+    struct BindingValueHolder: View {
+        
+        @State var value: SwipeState = .untouched
+        
+        var body: some View {
+            ZStack {
+                Color(Colors.gray)
+                    .ignoresSafeArea()
+                ScrollView {
+                    TasksListView(
+                        swipeState: $value,
+                        tasks: Array(1...10).map {
+                            PomodoroTask(
+                                id: UUID(),
+                                title: "Task № \($0)",
+                                date: Date(),
+                                completedInterval: 60 * 5)
+                        },
+                        onDelete: { _ in })
+                }
             }
         }
+    }
+    
+    static var previews: some View {
+        BindingValueHolder()
     }
 }
