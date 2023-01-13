@@ -104,7 +104,6 @@
 		35C69BFA29252365004D176C /* PomodoroActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305792924F94F0062FDA9 /* PomodoroActivityView.swift */; };
 		35D305582924EB530062FDA9 /* LiveActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D305572924EB530062FDA9 /* LiveActivityService.swift */; };
 		35F2BA10296EA8250047E890 /* NSManagedObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F2BA0F296EA8250047E890 /* NSManagedObject+Extension.swift */; };
-		35F2BA2F297033500047E890 /* SwipeActions in Frameworks */ = {isa = PBXBuildFile; productRef = 35F2BA2E297033500047E890 /* SwipeActions */; };
 		35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 		35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B52930D00800F47AD7 /* NotificationService.swift */; };
 		35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6BA2936242300F47AD7 /* FeedbackService.swift */; };
@@ -231,7 +230,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				35C1C479294B97210005D72C /* Sliders in Frameworks */,
-				35F2BA2F297033500047E890 /* SwipeActions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,7 +751,6 @@
 			name = PomodoroApp;
 			packageProductDependencies = (
 				35C1C478294B97210005D72C /* Sliders */,
-				35F2BA2E297033500047E890 /* SwipeActions */,
 			);
 			productName = PomodoroApp;
 			productReference = 3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */;
@@ -805,7 +802,6 @@
 			mainGroup = 3585B8DC291EA7B2007B01B1;
 			packageReferences = (
 				35C1C477294B97210005D72C /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
-				35F2BA2D297033500047E890 /* XCRemoteSwiftPackageReference "SwipeActions" */,
 			);
 			productRefGroup = 3585B8E6291EA7B2007B01B1 /* Products */;
 			projectDirPath = "";
@@ -1235,14 +1231,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		35F2BA2D297033500047E890 /* XCRemoteSwiftPackageReference "SwipeActions" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/c-villain/SwipeActions";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1250,11 +1238,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35C1C477294B97210005D72C /* XCRemoteSwiftPackageReference "swiftui-sliders" */;
 			productName = Sliders;
-		};
-		35F2BA2E297033500047E890 /* SwipeActions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35F2BA2D297033500047E890 /* XCRemoteSwiftPackageReference "SwipeActions" */;
-			productName = SwipeActions;
 		};
 /* End XCSwiftPackageProductDependency section */
 

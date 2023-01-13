@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import SwipeActions
 
 struct TasksListView: View {
     
     // MARK: - Private Properties
     
-    @Binding
-    private var swipeState: SwipeState
+    @State
+    private var editingTask: PomodoroTask?
     
     private var tasks: [PomodoroTask]
     
@@ -22,11 +21,9 @@ struct TasksListView: View {
     // MARK: - Init
     
     init(
-        swipeState: Binding<SwipeState>,
         tasks: [PomodoroTask],
         onDelete: @escaping (PomodoroTask) -> Void
     ) {
-        self._swipeState = swipeState
         self.tasks = tasks
         self.onDelete = onDelete
     }
@@ -64,8 +61,12 @@ struct TasksListView: View {
         ForEach(tasks, id: \.id) { task in
             TaskView(
                 task: task,
-                swipeState: $swipeState,
+                isEditing: task == editingTask,
+                onTap: {
+                    onRowTapped(task: task)
+                },
                 onDelete: {
+                    editingTask = nil
                     onDelete(task)
                 })
             if task != tasks.last {
@@ -80,37 +81,37 @@ struct TasksListView: View {
             .overlay(Color(Colors.textGray2))
             .padding(.horizontal, 16)
     }
+    
+    // MARK: - Private Methods
+    
+    private func onRowTapped(task: PomodoroTask) {
+        if task == editingTask {
+            editingTask = nil
+        } else {
+            editingTask = task
+        }
+    }
 }
 
 // MARK: - PreviewProvider
 
 struct TasksListView_Previews: PreviewProvider {
-
-    struct BindingValueHolder: View {
-        
-        @State var value: SwipeState = .untouched
-        
-        var body: some View {
-            ZStack {
-                Color(Colors.gray)
-                    .ignoresSafeArea()
-                ScrollView {
-                    TasksListView(
-                        swipeState: $value,
-                        tasks: Array(1...10).map {
-                            PomodoroTask(
-                                id: UUID(),
-                                title: "Task № \($0)",
-                                date: Date(),
-                                completedInterval: 60 * 5)
-                        },
-                        onDelete: { _ in })
-                }
-            }
-        }
-    }
     
     static var previews: some View {
-        BindingValueHolder()
+        ZStack {
+            Color(Colors.gray)
+                .ignoresSafeArea()
+            ScrollView {
+                TasksListView(
+                    tasks: Array(1...10).map {
+                        PomodoroTask(
+                            id: UUID(),
+                            title: "Task № \($0)",
+                            date: Date(),
+                            completedInterval: 60 * 5)
+                    },
+                    onDelete: { _ in })
+            }
+        }
     }
 }

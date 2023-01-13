@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwipeActions
 
 struct ResultsView: View {
     
@@ -39,7 +38,6 @@ struct ResultsView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    viewModel.resetSwipeState()
                     navigator.pushSettings()
                 } label: {
                     Image(uiImage: Images.settings)
@@ -72,7 +70,6 @@ struct ResultsView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 30)
                     TasksListView(
-                        swipeState: $viewModel.swipeState,
                         tasks: viewModel.tasks,
                         onDelete: { task in
                             showAlert(taskToDelete: task)
@@ -88,7 +85,6 @@ struct ResultsView: View {
         VStack {
             Spacer()
             Button("LET’S GO") {
-                viewModel.resetSwipeState()
                 navigator.showSetTaskSheet()
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -105,7 +101,6 @@ struct ResultsView: View {
             primaryButtonTitle: "DELETE",
             secondaryButtonTitle: "CANCEL",
             primaryAction: { viewModel.deleteSelectedTask() },
-            secondaryAction: { viewModel.resetSwipeState() },
             commonCompletion: { navigator.hideAlert() })
     }
 }

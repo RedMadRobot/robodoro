@@ -6,17 +6,25 @@
 //
 
 import SwiftUI
-import SwipeActions
+
+// TODO: - Добавить удаление по свайпу
 
 struct TaskView: View {
     
-    // MARK: - Private Properties
+    // MARK: - Constants
     
-    @Binding
-    private var swipeState: SwipeState
+    private enum Constants {
+        static let offset = CGFloat(56)
+        static let buttonSpacing = CGFloat(32)
+    }
+    
+    // MARK: - Private Properties
     
     private let task: PomodoroTask
     
+    private var isEditing: Bool
+    
+    private var onTap: () -> Void
     private var onDelete: () -> Void
     
     private let formatter: DateFormatter = .onlyDateFormatter
@@ -25,11 +33,13 @@ struct TaskView: View {
     
     init(
         task: PomodoroTask,
-        swipeState: Binding<SwipeState>,
+        isEditing: Bool,
+        onTap: @escaping () -> Void,
         onDelete: @escaping () -> Void
     ) {
         self.task = task
-        self._swipeState = swipeState
+        self.isEditing = isEditing
+        self.onTap = onTap
         self.onDelete = onDelete
     }
     
@@ -37,22 +47,16 @@ struct TaskView: View {
     
     var body: some View {
         frontView
-            .addSwipeAction(edge: .trailing, state: $swipeState) {
-                Button {
-                    onDelete()
-                } label: {
-                    Image(uiImage: Images.trash)
-                }
-                .frame(width: 54, height: 14, alignment: .center)
-            }
-            .onTapGesture {
-                swipeState = .swiped(UUID())
-            }
+            .offset(x: isEditing ? -Constants.offset : .zero)
             .mask(LinearGradient(gradient: Gradient(stops: [
                 .init(color: .clear, location: 0),
                 .init(color: .black, location: 0.05),
             ]), startPoint: .leading, endPoint: .trailing))
+            .animation(.interactiveSpring(), value: isEditing)
             .contentShape(Rectangle())
+            .onTapGesture {
+                onTap()
+            }
     }
     
     // MARK: - Private Properties
@@ -70,6 +74,14 @@ struct TaskView: View {
             Text("\(task.completedInterval.minutesIgnoringHours)")
                 .font(.miniTime)
                 .contentShape(Rectangle())
+                .background(GeometryReader { geometry in
+                    Button {
+                        onDelete()
+                    } label: {
+                        Image(uiImage: Images.trash)
+                    }
+                    .offset(x: geometry.size.width + Constants.buttonSpacing, y: geometry.size.height / 4)
+                })
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 24)
@@ -80,23 +92,15 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     
-    struct BindingValueHolder: View {
-        
-        @State var value: SwipeState = .untouched
-        
-        var body: some View {
-            TaskView(
-                task: .init(
-                    id: UUID(),
-                    title: nil,
-                    date: Date(),
-                    completedInterval: 60 * 60 * 10),
-                swipeState: $value,
-                onDelete: {})
-        }
-    }
-    
     static var previews: some View {
-        BindingValueHolder()
+        TaskView(
+            task: .init(
+                id: UUID(),
+                title: nil,
+                date: Date(),
+                completedInterval: 60 * 60 * 10),
+            isEditing: false,
+            onTap: {},
+            onDelete: {})
     }
 }
