@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350CC3C42975526C00753D84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350CC3C32975526C00753D84 /* LaunchScreen.storyboard */; };
 		35203937291EADAF00A4028E /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */; };
 		3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520393D291EB49400A4028E /* PomodoroViewModel.swift */; };
 		3520394129223D8600A4028E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520394029223D8600A4028E /* Colors.swift */; };
@@ -134,6 +135,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		350CC3C32975526C00753D84 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3520393A291EB3A100A4028E /* PomodoroState+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroState+Time.swift"; sourceTree = "<group>"; };
 		3520393D291EB49400A4028E /* PomodoroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroViewModel.swift; sourceTree = "<group>"; };
 		3520394029223D8600A4028E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				35203967292396B100A4028E /* Info.plist */,
+				350CC3C32975526C00753D84 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -821,6 +824,7 @@
 				3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */,
 				3520396C2923999E00A4028E /* Unbounded-Blond.ttf in Resources */,
 				3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */,
+				350CC3C42975526C00753D84 /* LaunchScreen.storyboard in Resources */,
 				352B6C18294A1EB100B09E51 /* CoFoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1083,6 +1087,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1118,6 +1123,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (

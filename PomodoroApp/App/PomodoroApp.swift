@@ -24,6 +24,7 @@ struct PomodoroApp: App {
     
     init() {
         self.timedPomodoroWorker = DI.workers.timedPomodoroWorker
+        setup()
     }
     
     // MARK: - App
@@ -93,6 +94,16 @@ struct PomodoroApp: App {
     
     // MARK: - Private Methods
     
+    private func setup() {
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didFinishLaunchingNotification,
+            object: nil,
+            queue: .main)
+        { _ in
+            applicationDidFinishLaunching()
+        }
+    }
+    
     private func addObservers() {
         NotificationCenter.default.addObserver(
             forName: UIApplication.willTerminateNotification,
@@ -100,6 +111,7 @@ struct PomodoroApp: App {
             queue: .main
         ) { _ in
             resetPomodoroWorker()
+            // TODO: - Запомнить последнее состояние
         }
 
         NotificationCenter.default.addObserver(
@@ -141,6 +153,11 @@ struct PomodoroApp: App {
         timedPomodoroWorker.cancelNotification()
     }
 
+    private func applicationDidFinishLaunching() {
+        // TODO: - Попытаться восстановить последнее состояние
+        print("App lauhcned!")
+    }
+    
     private func applicationDidEnterBackground() {
         timedPomodoroWorker.handleEnterBackground()
     }
