@@ -16,6 +16,8 @@ protocol TasksStorage {
     func createTask(withTitle title: String?) -> PomodoroTask
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval)
     func deleteTask(withId id: UUID)
+    func deleteTasks(before date: Date)
+    func getTasks(before date: Date) -> [PomodoroTask]
 }
 
 // MARK: - TasksStorageCoreDataImpl
@@ -88,7 +90,7 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
                 taskObject.completedInterval = newTime
             }
         case .failure(_):
-            print("Couldn't fetch PomodoroTaskObject to save")
+            print("Couldn't fetch PomodoroTaskObject")
         }
         backgroundContext.saveIfNeeded()
     }
@@ -102,9 +104,37 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
                 backgroundContext.delete(taskObject)
             }
         case .failure(_):
-            print("Couldn't fetch PomodoroTaskObject to save")
+            print("Couldn't fetch PomodoroTaskObject")
         }
         backgroundContext.saveIfNeeded()
+    }
+    
+    func deleteTasks(before date: Date) {
+        let predicate = NSPredicate(format: "date < %@", date as NSDate)
+        let result = backgroundContext.fetchAll(PomodoroTaskObject.self, predicate: predicate)
+        switch result {
+        case .success(let managedObjects):
+            for managedObject in managedObjects {
+                backgroundContext.delete(managedObject)
+            }
+        case .failure(_):
+            print("Couldn't fetch PomodoroTaskObject")
+        }
+        backgroundContext.saveIfNeeded()
+    }
+    
+    func getTasks(before date: Date) -> [PomodoroTask] {
+        let predicate = NSPredicate(format: "date < %@", date as NSDate)
+        let result = backgroundContext.fetchAll(PomodoroTaskObject.self, predicate: predicate)
+        switch result {
+        case .success(let managedObjects):
+            return managedObjects.compactMap {
+                PomodoroTask(coreDataObject: $0)
+            }
+        case .failure(_):
+            print("Couldn't fetch PomodoroTaskObject")
+            return []
+        }
     }
 }
 

@@ -16,13 +16,13 @@ struct TasksListView: View {
     
     private var tasks: [PomodoroTask]
     
-    private var onDelete: (PomodoroTask) -> Void
+    private var onDelete: ((PomodoroTask) -> Void)?
     
     // MARK: - Init
     
     init(
         tasks: [PomodoroTask],
-        onDelete: @escaping (PomodoroTask) -> Void
+        onDelete: ((PomodoroTask) -> Void)? = nil
     ) {
         self.tasks = tasks
         self.onDelete = onDelete
@@ -67,7 +67,7 @@ struct TasksListView: View {
                 },
                 onDelete: {
                     editingTask = nil
-                    onDelete(task)
+                    onDelete?(task)
                 })
             if task != tasks.last {
                 divider
@@ -85,6 +85,7 @@ struct TasksListView: View {
     // MARK: - Private Methods
     
     private func onRowTapped(task: PomodoroTask) {
+        guard let _ = onDelete else { return }
         if task == editingTask {
             editingTask = nil
         } else {

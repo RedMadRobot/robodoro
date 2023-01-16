@@ -30,4 +30,15 @@ extension NSManagedObjectContext {
             return .failure(error)
         }
     }
+    
+    func fetchAll<T: NSManagedObject>(_ objectType: T.Type, predicate: NSPredicate?) -> Result<[T], Error> {
+        let request = objectType.fetchRequest()
+        request.predicate = predicate
+        do {
+            let result = try fetch(request) as? [T]
+            return .success(result ?? [])
+        } catch {
+            return .failure(error)
+        }
+    }
 }

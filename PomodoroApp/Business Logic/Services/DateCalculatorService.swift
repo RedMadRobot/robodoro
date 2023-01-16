@@ -1,5 +1,5 @@
 //
-//  FocusedTimeCalculatorService.swift
+//  DateCalculatorService.swift
 //  PomodoroApp
 //
 //  Created by Петр Тартынских  on 23.12.2022.
@@ -7,16 +7,23 @@
 
 import Foundation
 
-// MARK: - FocusedTimeCalculatorService
+// MARK: - DateCalculatorService
 
-protocol FocusedTimeCalculatorService {
+protocol DateCalculatorService {
+    var startOfWeek: Date? { get }
     func calculateWeekDailyAverageFocusValue(tasks: [PomodoroTask]) -> Double
     func calculateWeekTotalFocusValue(tasks: [PomodoroTask]) -> Double
 }
 
-// MARK: - FocusedTimeCalculatorServiceImpl
+// MARK: - DateCalculatorServiceImpl
 
-final class FocusedTimeCalculatorServiceImpl: FocusedTimeCalculatorService {
+final class DateCalculatorServiceImpl: DateCalculatorService {
+    
+    // MARK: - Public Properties
+    
+    var startOfWeek: Date? {
+        Date().startOfWeek(calendar: calendar)
+    }
     
     // MARK: - Private Properties
     

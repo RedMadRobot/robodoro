@@ -23,9 +23,15 @@ final class ResultsViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
+    public var shouldShowPreviousResults: Bool {
+        guard let startOfWeek = dateCalculatorService.startOfWeek else { return false }
+        let oldTasks = tasksStorage.getTasks(before: startOfWeek)
+        return !oldTasks.isEmpty
+    }
+    
     // MARK: - Private Properties
         
-    private let focusedTimeCalculatorService: FocusedTimeCalculatorService
+    private let dateCalculatorService: DateCalculatorService
     
     private let tasksStorage: TasksStorage
     
@@ -36,19 +42,19 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Init
     
     init(
-        focusedTimeCalculatorService: FocusedTimeCalculatorService = DI.services.focusedTimeCalculatorService,
+        dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
-        self.focusedTimeCalculatorService = focusedTimeCalculatorService
+        self.dateCalculatorService = dateCalculatorService
         self.tasksStorage = tasksStorage
         self.feedbackService = feedbackService
         
         let allTasks = tasksStorage.tasks.value
         
         self.tasks = allTasks
-        self.dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: allTasks)
-        self.totalFocusValue = focusedTimeCalculatorService.calculateWeekTotalFocusValue(tasks: allTasks)
+        self.dailyAverageFocusValue = dateCalculatorService.calculateWeekDailyAverageFocusValue(tasks: allTasks)
+        self.totalFocusValue = dateCalculatorService.calculateWeekTotalFocusValue(tasks: allTasks)
         addSubscriptions()
     }
     
@@ -75,7 +81,7 @@ final class ResultsViewModel: ViewModel {
     }
     
     private func recalculateTime() {
-        dailyAverageFocusValue = focusedTimeCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)
-        totalFocusValue = focusedTimeCalculatorService.calculateWeekTotalFocusValue(tasks: tasks)
+        dailyAverageFocusValue = dateCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)
+        totalFocusValue = dateCalculatorService.calculateWeekTotalFocusValue(tasks: tasks)
     }
 }

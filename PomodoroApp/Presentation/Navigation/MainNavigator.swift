@@ -29,6 +29,9 @@ final class MainNavigator: ObservableObject {
     var setTaskSheetPresented = false
     
     @Published
+    var previousResultsPresented = false
+    
+    @Published
     var alertPresented = false
     private(set) var alertViewModel = AlertViewModel()
         
@@ -68,6 +71,14 @@ final class MainNavigator: ObservableObject {
     
     func hideSetTaskSheet() {
         setTaskSheetPresented = false
+    }
+    
+    func showPreviousResultsSheet() {
+        previousResultsPresented = true
+    }
+    
+    func hidePreviousResultsSheet() {
+        previousResultsPresented = false
     }
     
     func showAlert(

@@ -39,6 +39,10 @@ struct PomodoroApp: App {
                             SettingsView(navigator: navigator)
                         }
                     }
+                    .sheet(isPresented: $navigator.previousResultsPresented) {
+                        Text("Previous results")
+                            .interactiveDismissDisabled()
+                    }
                     .sheet(
                         isPresented: $navigator.setTaskSheetPresented,
                         onDismiss: {
@@ -55,6 +59,7 @@ struct PomodoroApp: App {
             .overlay(
                 navigator.alertPresented && navigator.rootIsVisible ?
                 AlertView(navigator: navigator) : nil)
+            .preferredColorScheme(.light)
         }
     }
     
@@ -63,7 +68,6 @@ struct PomodoroApp: App {
     @ViewBuilder
     private var resultsView: some View {
         ResultsView(navigator: navigator)
-            .preferredColorScheme(.light)
             .onAppear {
                 timedPomodoroWorker.requestNotificationPermissionIfNeeded()
             }

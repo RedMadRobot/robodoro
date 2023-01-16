@@ -80,7 +80,7 @@
 		3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D25A2953254E00AC0127 /* AlertViewModel.swift */; };
 		3582D25D2954A20900AC0127 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D25C2954A20900AC0127 /* UIFont+Extension.swift */; };
 		3582D25F2954B0A500AC0127 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D25E2954B0A500AC0127 /* CustomTextView.swift */; };
-		3582D2622955B13E00AC0127 /* FocusedTimeCalculatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2612955B13E00AC0127 /* FocusedTimeCalculatorService.swift */; };
+		3582D2622955B13E00AC0127 /* DateCalculatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2612955B13E00AC0127 /* DateCalculatorService.swift */; };
 		3582D2642955B70B00AC0127 /* NumberFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2632955B70B00AC0127 /* NumberFormatter+Extension.swift */; };
 		3582D2662955BDB900AC0127 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3582D2652955BDB900AC0127 /* Date+Extension.swift */; };
 		3582D269296C14E500AC0127 /* PomodoroModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3582D267296C14E500AC0127 /* PomodoroModel.xcdatamodeld */; };
@@ -200,7 +200,7 @@
 		3582D25A2953254E00AC0127 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		3582D25C2954A20900AC0127 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		3582D25E2954B0A500AC0127 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
-		3582D2612955B13E00AC0127 /* FocusedTimeCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedTimeCalculatorService.swift; sourceTree = "<group>"; };
+		3582D2612955B13E00AC0127 /* DateCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculatorService.swift; sourceTree = "<group>"; };
 		3582D2632955B70B00AC0127 /* NumberFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extension.swift"; sourceTree = "<group>"; };
 		3582D2652955BDB900AC0127 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		3582D268296C14E500AC0127 /* PomodoroModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PomodoroModel.xcdatamodel; sourceTree = "<group>"; };
@@ -582,7 +582,7 @@
 				35D305572924EB530062FDA9 /* LiveActivityService.swift */,
 				35F4A6B52930D00800F47AD7 /* NotificationService.swift */,
 				35F4A6BA2936242300F47AD7 /* FeedbackService.swift */,
-				3582D2612955B13E00AC0127 /* FocusedTimeCalculatorService.swift */,
+				3582D2612955B13E00AC0127 /* DateCalculatorService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -904,7 +904,7 @@
 				35C69BEC29251A0C004D176C /* PomodoroState+Time.swift in Sources */,
 				3582D25F2954B0A500AC0127 /* CustomTextView.swift in Sources */,
 				352039502922709E00A4028E /* BreakBackground.swift in Sources */,
-				3582D2622955B13E00AC0127 /* FocusedTimeCalculatorService.swift in Sources */,
+				3582D2622955B13E00AC0127 /* DateCalculatorService.swift in Sources */,
 				354957A129269EFB000C216C /* LinkManager.swift in Sources */,
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
 				3582D24B29509BC800AC0127 /* SpendedMinutesElementView.swift in Sources */,
@@ -1084,6 +1084,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PomodoroApp/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ROBODORO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1121,6 +1122,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PomodoroApp/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ROBODORO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
