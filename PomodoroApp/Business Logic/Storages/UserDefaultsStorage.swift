@@ -21,10 +21,16 @@ protocol LastUsedValuesStorage {
     var lastStagesCount: Int { get set }
 }
 
+protocol OnboardingStorage {
+    var deleteFeatureUsed: Bool { get set }
+    var onboadingShowed: Bool { get set }
+}
+
 // MARK: - UserDefaultsStorage
 
 final class UserDefaultsStorage: SettingsStorage,
-                                 LastUsedValuesStorage {
+                                 LastUsedValuesStorage,
+                                 OnboardingStorage {
     
     // MARK: - Keys
     
@@ -35,6 +41,8 @@ final class UserDefaultsStorage: SettingsStorage,
         case lastBreakTime = "com.redmadrobot.PomodoroApp.lastBreakTime"
         case lastLongBreakTime = "com.redmadrobot.PomodoroApp.lastLongBreakTime"
         case lastStagesCount = "com.redmadrobot.PomodoroApp.lastStagesCount"
+        case deleteFeatureUsed = "com.redmadrobot.PomodoroApp.deleteFeatureUsed"
+        case onboadingShowed = "com.redmadrobot.PomodoroApp.onboadingShowed"
     }
     
     // MARK: - Private Properties
@@ -79,6 +87,18 @@ final class UserDefaultsStorage: SettingsStorage,
             key: Keys.lastStagesCount.rawValue,
             storage: storage
         )
+        
+        // OnboardingStorage
+        _deleteFeatureUsed = UserDefault(
+            wrappedValue: false,
+            key: Keys.deleteFeatureUsed.rawValue,
+            storage: storage
+        )
+        _onboadingShowed = UserDefault(
+            wrappedValue: false,
+            key: Keys.onboadingShowed.rawValue,
+            storage: storage
+        )
     }
     
     // MARK: - SettingsStorage
@@ -98,6 +118,13 @@ final class UserDefaultsStorage: SettingsStorage,
     var lastLongBreakTime: TimeInterval
     @UserDefault
     var lastStagesCount: Int
+    
+    // MARK: - OnboardingStorage
+    
+    @UserDefault
+    var deleteFeatureUsed: Bool
+    @UserDefault
+    var onboadingShowed: Bool
 }
 
 // MARK: - Additional Types

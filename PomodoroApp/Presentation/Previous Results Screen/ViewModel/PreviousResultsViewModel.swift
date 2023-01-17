@@ -22,10 +22,7 @@ final class PreviousResultsViewModel: ViewModel {
     // MARK: - Private Properties
     
     private let dateCalculatorService: DateCalculatorService
-    
     private let tasksStorage: TasksStorage
-        
-    private var taskToDelete: PomodoroTask?
     
     // MARK: - Init
     

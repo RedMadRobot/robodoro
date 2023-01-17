@@ -79,9 +79,23 @@ struct ResultsView: View {
                         onDelete: { task in
                             showAlert(taskToDelete: task)
                         })
+                    deletionOnboarding
                     Spacer(minLength: 80)
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var deletionOnboarding: some View {
+        if viewModel.showDeletionOnboarding {
+            Text("If you want to delete the task, you need to tap on the cell and confirm the action")
+                .font(.miniTitle)
+                .foregroundColor(Color(Colors.textGray1))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 50)
+                .padding(.vertical, 16)
+                .animation(.easeInOut, value: viewModel.showDeletionOnboarding)
         }
     }
     

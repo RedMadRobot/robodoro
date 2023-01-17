@@ -21,6 +21,9 @@ final class ResultsViewModel: ViewModel {
     @Published
     private(set) var totalFocusValue: Double
     
+    @Published
+    private(set) var showDeletionOnboarding: Bool
+    
     private(set) var feedbackService: FeedbackService
     
     public var shouldShowPreviousResults: Bool {
@@ -34,8 +37,8 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Private Properties
         
     private let dateCalculatorService: DateCalculatorService
-    
     private let tasksStorage: TasksStorage
+    private var userDefaultsStorage: OnboardingStorage
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -46,11 +49,14 @@ final class ResultsViewModel: ViewModel {
     init(
         dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
+        userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
         self.dateCalculatorService = dateCalculatorService
         self.tasksStorage = tasksStorage
+        self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
+        self.showDeletionOnboarding = !userDefaultsStorage.deleteFeatureUsed
         
         let allTasks = tasksStorage.tasks.value
         
@@ -70,6 +76,8 @@ final class ResultsViewModel: ViewModel {
         guard let taskToDelete = taskToDelete else { return }
         tasksStorage.deleteTask(withId: taskToDelete.id)
         self.taskToDelete = nil
+        userDefaultsStorage.deleteFeatureUsed = true
+        showDeletionOnboarding = false
     }
     
     // MARK: - Private Methods
