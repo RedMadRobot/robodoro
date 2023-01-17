@@ -18,4 +18,5 @@ extension Images {
     static let minus = UIImage(named: "minus.pdf")!
     static let plus = UIImage(named: "plus.pdf")!
     static let trash = UIImage(named: "trash.pdf")!
+    static let info = UIImage(named: "info.pdf")!
 }

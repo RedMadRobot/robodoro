@@ -28,6 +28,20 @@ extension Date {
         dateComponents.day = -1
         return Calendar.current.date(byAdding: dateComponents, to: startOfWeek)
     }
+    
+    func startOfPreviousWeek(calendar: Calendar, _ firstWeekday: Weekday = .monday) -> Date? {
+        guard let startOfWeek = startOfWeek(calendar: calendar, firstWeekday) else { return nil }
+        var dateComponents = DateComponents()
+        dateComponents.weekOfYear = -1
+        return Calendar.current.date(byAdding: dateComponents, to: startOfWeek)
+    }
+    
+    func endOfPreviousWeek(calendar: Calendar, _ firstWeekday: Weekday = .monday) -> Date? {
+        guard let startOfWeek = endOfWeek(calendar: calendar, firstWeekday) else { return nil }
+        var dateComponents = DateComponents()
+        dateComponents.weekOfYear = -1
+        return Calendar.current.date(byAdding: dateComponents, to: startOfWeek)
+    }
 }
 
 extension Calendar {

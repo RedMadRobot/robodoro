@@ -25,7 +25,9 @@ final class ResultsViewModel: ViewModel {
     
     public var shouldShowPreviousResults: Bool {
         guard let startOfWeek = dateCalculatorService.startOfWeek else { return false }
-        let oldTasks = tasksStorage.getTasks(before: startOfWeek)
+        let oldTasks = tasks.filter { task in
+            task.date < startOfWeek
+        }
         return !oldTasks.isEmpty
     }
     
@@ -53,8 +55,8 @@ final class ResultsViewModel: ViewModel {
         let allTasks = tasksStorage.tasks.value
         
         self.tasks = allTasks
-        self.dailyAverageFocusValue = dateCalculatorService.calculateWeekDailyAverageFocusValue(tasks: allTasks)
-        self.totalFocusValue = dateCalculatorService.calculateWeekTotalFocusValue(tasks: allTasks)
+        self.dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: allTasks)
+        self.totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: allTasks)
         addSubscriptions()
     }
     
@@ -81,7 +83,7 @@ final class ResultsViewModel: ViewModel {
     }
     
     private func recalculateTime() {
-        dailyAverageFocusValue = dateCalculatorService.calculateWeekDailyAverageFocusValue(tasks: tasks)
-        totalFocusValue = dateCalculatorService.calculateWeekTotalFocusValue(tasks: tasks)
+        dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: tasks)
+        totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
     }
 }

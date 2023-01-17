@@ -40,7 +40,7 @@ struct PomodoroApp: App {
                         }
                     }
                     .sheet(isPresented: $navigator.previousResultsPresented) {
-                        Text("Previous results")
+                        PreviousResultsView(navigator: navigator)
                             .interactiveDismissDisabled()
                     }
                     .sheet(
