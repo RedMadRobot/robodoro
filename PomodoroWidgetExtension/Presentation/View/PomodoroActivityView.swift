@@ -13,8 +13,6 @@ import SwiftUI
 private enum Constants {
     static let timeSpacing = CGFloat(35)
     static let timeSpacingSmall = CGFloat(10)
-    static let fontSize = CGFloat(56)
-    static let fontSizeSmall = CGFloat(48)
     static let stageViewSpacing = CGFloat(8)
     static let sidePadding = CGFloat(16)
     static let sidePaddingSmall = CGFloat(0)
@@ -37,9 +35,9 @@ extension ActivityViewSize {
     var font: Font {
         switch self {
         case .small:
-            return .unbounded(size: Constants.fontSizeSmall)
+            return .timeSmall
         case .large:
-            return .unbounded(size: Constants.fontSize) 
+            return .timeBig
         }
     }
     

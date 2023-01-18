@@ -46,9 +46,7 @@ struct PomodoroWidgetExtensionLiveActivity: Widget {
                     .resizable()
                     .frame(width: Constants.imageSize, height: Constants.imageSize)
                     .padding([.trailing], Constants.padding)
-            } minimal: {
-            }
-            
+            } minimal: {}
         }
     }
 }
