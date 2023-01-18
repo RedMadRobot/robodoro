@@ -25,11 +25,16 @@ struct StageElementView: View {
     // MARK: - Private Properties
     
     private var state: StageElementViewState
+    private var theme: ActivityViewTheme
     
     // MARK: - Init
     
-    init(state: StageElementViewState) {
+    init(
+        state: StageElementViewState,
+        theme: ActivityViewTheme
+    ) {
         self.state = state
+        self.theme = theme
     }
     
     // MARK: - View
@@ -37,7 +42,7 @@ struct StageElementView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color(uiColor: Colors.black), lineWidth: Constants.lineWidth)
+                .stroke(Color(uiColor: theme.mainColor), lineWidth: Constants.lineWidth)
                 .frame(width: Constants.frameSize)
             switch state {
             case .empty:
@@ -45,12 +50,12 @@ struct StageElementView: View {
             case .half:
                 Circle()
                     .trim(from: 0, to: 0.5)
-                    .fill(Color(uiColor: Colors.black))
+                    .fill(Color(uiColor: theme.mainColor))
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
                     .rotationEffect(.degrees(90))
             case .filled:
                 Circle()
-                    .fill(Color(uiColor: Colors.black))
+                    .fill(Color(uiColor: theme.mainColor))
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
             }
         }
@@ -62,6 +67,6 @@ struct StageElementView: View {
 
 struct StageElementView_Previews: PreviewProvider {
     static var previews: some View {
-        StageElementView(state: .half)
+        StageElementView(state: .half, theme: .dark)
     }
 }

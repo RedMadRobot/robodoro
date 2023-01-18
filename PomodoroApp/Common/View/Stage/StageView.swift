@@ -20,17 +20,20 @@ struct StageView: View {
     private let maxStagesCount: Int
     private let activeStagesCount: Int
     private let lastStageState: StageElementViewState
-    
+    private var theme: ActivityViewTheme
+
     // MARK: - Init
     
     init(
         maxStagesCount: Int,
         activeStagesCount: Int,
-        lastStageState: StageElementViewState
+        lastStageState: StageElementViewState,
+        theme: ActivityViewTheme
     ) {
         self.maxStagesCount = maxStagesCount
         self.activeStagesCount = activeStagesCount
         self.lastStageState = lastStageState
+        self.theme = theme
     }
     
     // MARK: - View
@@ -40,11 +43,11 @@ struct StageView: View {
             ForEach(0..<maxStagesCount, id: \.self) { stage in
                 switch stage {
                 case 0..<activeStagesCount:
-                    StageElementView(state: .filled)
+                    StageElementView(state: .filled, theme: theme)
                 case activeStagesCount:
-                    StageElementView(state: lastStageState)
+                    StageElementView(state: lastStageState, theme: theme)
                 default:
-                    StageElementView(state: .empty)
+                    StageElementView(state: .empty, theme: theme)
                 }
             }
         }
@@ -59,6 +62,7 @@ struct StageView_Previews: PreviewProvider {
         StageView(
             maxStagesCount: 8,
             activeStagesCount: 4,
-            lastStageState: .half)
+            lastStageState: .half,
+            theme: .dark)
     }
 }

@@ -20,4 +20,8 @@ extension Images {
     static let trash = UIImage(named: "trash.pdf")!
     static let info = UIImage(named: "info.pdf")!
     static let alertCircle = UIImage(named: "alert-circle.pdf")!
+    static let islandPause = UIImage(named: "islandPause.pdf")!
+    static let islandBreak = UIImage(named: "islandBreak.pdf")!
+    static let islandLongBreak = UIImage(named: "islandLongBreak.pdf")!
+    static let islandFocus = UIImage(named: "islandFocus.pdf")!
 }

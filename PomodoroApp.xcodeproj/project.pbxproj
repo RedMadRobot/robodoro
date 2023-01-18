@@ -52,7 +52,6 @@
 		35495787292640D7000C216C /* Images+Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35495786292640D7000C216C /* Images+Big.swift */; };
 		35495789292641A4000C216C /* Unbounded-Blond.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3520396B2923999E00A4028E /* Unbounded-Blond.ttf */; };
 		3549578C2926425E000C216C /* Font+Big.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549578B2926425E000C216C /* Font+Big.swift */; };
-		3549578E29264329000C216C /* Font+Small.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549578D29264329000C216C /* Font+Small.swift */; };
 		3549579129264988000C216C /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520396D2923BD5300A4028E /* StageView.swift */; };
 		354957922926498B000C216C /* StageElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352039702923BE0100A4028E /* StageElementView.swift */; };
 		35495794292658B2000C216C /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35495793292658B2000C216C /* BackgroundView.swift */; };
@@ -114,6 +113,11 @@
 		35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 		35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B52930D00800F47AD7 /* NotificationService.swift */; };
 		35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6BA2936242300F47AD7 /* FeedbackService.swift */; };
+		878F7EEC2976C99F005F6EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35C69BDE292518AE004D176C /* Assets.xcassets */; };
+		878F7EEE2976CBD4005F6EAE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878F7EED2976CBD4005F6EAE /* Theme.swift */; };
+		878F7EEF2976CBE7005F6EAE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878F7EED2976CBD4005F6EAE /* Theme.swift */; };
+		87EB39702976B16B007073EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
+		87EB39722976B442007073EF /* Text+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EB39712976B442007073EF /* Text+Timer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,7 +185,6 @@
 		3549578029263CCF000C216C /* PomodoroState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroState.swift; sourceTree = "<group>"; };
 		35495786292640D7000C216C /* Images+Big.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Big.swift"; sourceTree = "<group>"; };
 		3549578B2926425E000C216C /* Font+Big.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Big.swift"; sourceTree = "<group>"; };
-		3549578D29264329000C216C /* Font+Small.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Small.swift"; sourceTree = "<group>"; };
 		35495793292658B2000C216C /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		3549579529265BA0000C216C /* FocusedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedBackground.swift; sourceTree = "<group>"; };
 		3549579729266037000C216C /* BreakBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakBackground.swift; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 		35F2BA0F296EA8250047E890 /* NSManagedObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extension.swift"; sourceTree = "<group>"; };
 		35F4A6B52930D00800F47AD7 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		35F4A6BA2936242300F47AD7 /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
+		878F7EED2976CBD4005F6EAE /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		87EB39712976B442007073EF /* Text+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Timer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -545,7 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				354957702926358F000C216C /* Images+Small.swift */,
-				3549578D29264329000C216C /* Font+Small.swift */,
+				87EB39712976B442007073EF /* Text+Timer.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -589,6 +594,7 @@
 				352039722923C45B00A4028E /* Font+Extension.swift */,
 				35495776292637C8000C216C /* ColorHelper.swift */,
 				354957A029269EFB000C216C /* LinkManager.swift */,
+				878F7EED2976CBD4005F6EAE /* Theme.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -891,6 +897,7 @@
 				3520396C2923999E00A4028E /* Unbounded-Blond.ttf in Resources */,
 				3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */,
 				350CC3C42975526C00753D84 /* LaunchScreen.storyboard in Resources */,
+				878F7EEC2976C99F005F6EAE /* Assets.xcassets in Resources */,
 				352B6C18294A1EB100B09E51 /* CoFoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -901,6 +908,7 @@
 			files = (
 				35C69BDF292518AE004D176C /* Assets.xcassets in Resources */,
 				35495789292641A4000C216C /* Unbounded-Blond.ttf in Resources */,
+				87EB39702976B16B007073EF /* Assets.xcassets in Resources */,
 				352B6C19294A1EB100B09E51 /* CoFoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -916,6 +924,7 @@
 				3520397D2923D61000A4028E /* TimerService.swift in Sources */,
 				352039772923D31200A4028E /* DI.swift in Sources */,
 				352039472922486F00A4028E /* Images.swift in Sources */,
+				878F7EEE2976CBD4005F6EAE /* Theme.swift in Sources */,
 				3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */,
 				3582D248295096FD00AC0127 /* SpendedMinutesView.swift in Sources */,
 				354957A72927C511000C216C /* TimeInterval+Extension.swift in Sources */,
@@ -996,10 +1005,11 @@
 				35495794292658B2000C216C /* BackgroundView.swift in Sources */,
 				35C69BF729251E76004D176C /* LiveActivityAttributes.swift in Sources */,
 				3549578429263FE9000C216C /* Colors.swift in Sources */,
+				878F7EEF2976CBE7005F6EAE /* Theme.swift in Sources */,
 				354957A229269EFB000C216C /* LinkManager.swift in Sources */,
 				35C69BD9292518AD004D176C /* PomodoroWidgetExtensionBundle.swift in Sources */,
 				35495778292637C8000C216C /* ColorHelper.swift in Sources */,
-				3549578E29264329000C216C /* Font+Small.swift in Sources */,
+				87EB39722976B442007073EF /* Text+Timer.swift in Sources */,
 				35C69BFA29252365004D176C /* PomodoroActivityView.swift in Sources */,
 				3549579A292661A5000C216C /* LongBreakBackground.swift in Sources */,
 				35C69BF429251AB4004D176C /* UIColor+Hex.swift in Sources */,

@@ -65,4 +65,15 @@ extension PomodoroState {
             return Colors.longBreakLine
         }
     }
+    
+    var islandImage: UIImage {
+        switch self {
+        case .focus:
+            return Images.islandFocus
+        case .break:
+            return Images.islandBreak
+        case .longBreak:
+            return Images.islandLongBreak
+        }
+    }
 }

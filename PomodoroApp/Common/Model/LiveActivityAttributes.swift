@@ -29,6 +29,15 @@ struct LiveActivityAttributes: ActivityAttributes {
                 timerState: timerState)
         }
         
+        var islandImage: UIImage {
+            switch timerState {
+            case .initial, .paused:
+                return Images.islandPause
+            case .running, .ended:
+                return pomodoroState.islandImage
+            }
+        }
+        
         var buttonImage: UIImage {
             timerState.buttonImage
         }
