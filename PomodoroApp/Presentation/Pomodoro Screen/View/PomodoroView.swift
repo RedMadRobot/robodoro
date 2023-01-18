@@ -58,7 +58,8 @@ struct PomodoroView: View {
             StageView(
                 maxStagesCount: viewModel.maxStagesCount,
                 activeStagesCount: viewModel.activeStagesCount,
-                lastStageState: viewModel.lastStageState)
+                lastStageState: viewModel.lastStageState,
+                theme: .dark)
             Spacer()
             Button {
                 if viewModel.timerState == .ended {
