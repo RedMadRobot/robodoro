@@ -46,7 +46,7 @@ struct TimePickerView: View {
         VStack(spacing: 12) {
             HStack {
                 Text(title)
-                    .font(.miniTitle)
+                    .font(.regularText)
                 Spacer()
                 Text(dateComponentsFormatter.string(from: value) ?? "NaN")
                     .font(.miniTime)

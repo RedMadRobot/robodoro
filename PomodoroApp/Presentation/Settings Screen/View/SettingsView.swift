@@ -41,7 +41,7 @@ struct SettingsView: View {
             }
             ToolbarItem(placement: .principal) {
                 Text("SETTINGS")
-                    .font(.customTitle)
+                    .font(.screeenTitle)
             }
         }
     }

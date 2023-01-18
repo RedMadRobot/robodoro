@@ -52,7 +52,7 @@ struct TasksListView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .font(.miniTitle)
+        .font(.regularText)
         .foregroundColor(Color(Colors.textGray2))
     }
     

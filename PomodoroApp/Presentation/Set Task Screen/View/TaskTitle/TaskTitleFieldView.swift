@@ -53,7 +53,7 @@ struct TaskTitleFieldView: View {
     private var placeholderView: some View {
         if value.isEmpty {
             Text("Add task name, if you want...")
-                .font(.miniTitle)
+                .font(.regularText)
                 .foregroundColor(Color(Colors.textGray2))
                 .padding(.leading, 25)
                 .padding(.top, 32)

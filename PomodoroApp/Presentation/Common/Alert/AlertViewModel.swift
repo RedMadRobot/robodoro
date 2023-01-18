@@ -26,14 +26,10 @@ final class AlertViewModel: ViewModel {
     
     
     private(set) var feedbackService: FeedbackService
-    
-    // MARK: - Private Propreties
-    
+        
     // MARK: - Init
     
-    init(
-        feedbackService: FeedbackService = DI.services.feedbackService
-    ) {
+    init(feedbackService: FeedbackService = DI.services.feedbackService) {
         self.feedbackService = feedbackService
     }
     

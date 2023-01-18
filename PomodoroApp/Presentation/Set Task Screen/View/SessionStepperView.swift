@@ -31,7 +31,7 @@ struct SessionStepperView: View {
     var body: some View {
         HStack {
             Text("Sessions")
-                .font(.miniTitle)
+                .font(.regularText)
             Spacer()
             stepperView
         }

@@ -59,6 +59,12 @@ struct PomodoroApp: App {
             .overlay(
                 navigator.alertPresented && navigator.rootIsVisible ?
                 AlertView(navigator: navigator) : nil)
+            .overlay(
+                navigator.onboardingPresented ?
+                OnboardingView(navigator: navigator)
+                    .onDisappear {
+                        navigator.resolveDelayedNavigation()
+                    } : nil)
             .preferredColorScheme(.light)
         }
     }

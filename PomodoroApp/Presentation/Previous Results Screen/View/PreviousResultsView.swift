@@ -39,7 +39,7 @@ struct PreviousResultsView: View {
         ScrollView {
             VStack(spacing: 8) {
                 Text("PREVIOUS RESULTS")
-                    .font(.customTitle)
+                    .font(.screeenTitle)
                     .padding(.top, 32)
                 warningView
                 SpendedMinutesView(
@@ -70,7 +70,7 @@ struct PreviousResultsView: View {
         HStack(alignment: .top, spacing: 10) {
             Image(uiImage: Images.info)
             Text("Check out your results for the previous period. After clicking the button that data will be deleted.")
-                .font(.miniTitle)
+                .font(.regularText)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)

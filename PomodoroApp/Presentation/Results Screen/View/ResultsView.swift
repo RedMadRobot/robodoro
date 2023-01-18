@@ -34,7 +34,7 @@ struct ResultsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("RESULTS PER WEEK")
-                    .font(.customTitle)
+                    .font(.screeenTitle)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -46,7 +46,7 @@ struct ResultsView: View {
         }
         .onAppear {
             if viewModel.shouldShowPreviousResults {
-                navigator.showPreviousResultsSheet()
+                navigator.showPreviousResultsSheet(delayed: navigator.onboardingPresented)
             }
         }
     }
@@ -90,7 +90,7 @@ struct ResultsView: View {
     private var deletionOnboarding: some View {
         if viewModel.showDeletionOnboarding {
             Text("If you want to delete the task, you need to tap on the cell and confirm the action")
-                .font(.miniTitle)
+                .font(.regularText)
                 .foregroundColor(Color(Colors.textGray1))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 50)

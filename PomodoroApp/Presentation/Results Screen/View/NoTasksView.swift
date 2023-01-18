@@ -21,32 +21,39 @@ struct NoTasksView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.defaultGray)
-            GeometryReader { geometry in
-                Path { path in
-                    let globalFrame = geometry.frame(in: .global)
-                    let centerX = globalFrame.midX
-                    let radius = globalFrame.maxX / 2
-                    let spacing = radius * Constants.spacingMultiplyer
-                    var y = Constants.initialY
-                    while y - radius < globalFrame.maxY {
-                        path.addArc(
-                            center: CGPoint(x: centerX, y: y),
-                            radius: radius,
-                            startAngle: .degrees(0),
-                            endAngle: .degrees(360),
-                            clockwise: true)
-                        
-                        y += spacing
-                    }
-                }
-                .stroke(Color(Colors.defaultLine), lineWidth: Constants.lineWidth)
-            }
+            backView
             Text("NO TASKS YET")
                 .font(.stageLabel)
                 .foregroundColor(Color(Colors.textGray1))
         }
         .ignoresSafeArea()
+    }
+    
+    // MARK: - Private Properties
+    
+    @ViewBuilder
+    private var backView: some View {
+        Color(Colors.defaultGray)
+        GeometryReader { geometry in
+            Path { path in
+                let globalFrame = geometry.frame(in: .global)
+                let centerX = globalFrame.midX
+                let radius = globalFrame.maxX / 2
+                let spacing = radius * Constants.spacingMultiplyer
+                var y = Constants.initialY
+                while y - radius < globalFrame.maxY {
+                    path.addArc(
+                        center: CGPoint(x: centerX, y: y),
+                        radius: radius,
+                        startAngle: .degrees(0),
+                        endAngle: .degrees(360),
+                        clockwise: true)
+                    
+                    y += spacing
+                }
+            }
+            .stroke(Color(Colors.defaultLine), lineWidth: Constants.lineWidth)
+        }
     }
 }
 

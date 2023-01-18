@@ -11,8 +11,9 @@ enum StackScreen: Hashable {
     case settings
 }
 
-enum ModalScreen {
+enum DelayedPresentingScreen {
     case pomodoro
+    case previousResults
 }
 
 final class MainNavigator: ObservableObject {
@@ -32,17 +33,31 @@ final class MainNavigator: ObservableObject {
     var previousResultsPresented = false
     
     @Published
+    var onboardingPresented: Bool
+    
+    @Published
     var alertPresented = false
     private(set) var alertViewModel = AlertViewModel()
         
+    // Используется при показе алертов
     var rootIsVisible: Bool {
-        !pomodoroModalPresented && !setTaskSheetPresented
+        !pomodoroModalPresented && !setTaskSheetPresented && !previousResultsPresented && !onboardingPresented
     }
     
     // MARK: - Private Properties
     
-    private var modalToPresent: ModalScreen?
+    private var screenToPresent: DelayedPresentingScreen?
+    
+    private var userDefaultsStorage: OnboardingStorage
+    
+    // MARK: - Init
+    
+    init(userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
         
+        self.onboardingPresented = !userDefaultsStorage.onboadingShowed
+    }
+    
     // MARK: - Public Methods
     
     func pop() {
@@ -55,7 +70,7 @@ final class MainNavigator: ObservableObject {
     
     func showPomodoroModal(delayed: Bool = false) {
         if delayed {
-            modalToPresent = .pomodoro
+            screenToPresent = .pomodoro
         } else {
             pomodoroModalPresented = true
         }
@@ -73,8 +88,12 @@ final class MainNavigator: ObservableObject {
         setTaskSheetPresented = false
     }
     
-    func showPreviousResultsSheet() {
-        previousResultsPresented = true
+    func showPreviousResultsSheet(delayed: Bool = false) {
+        if delayed {
+            screenToPresent = .previousResults
+        } else {
+            previousResultsPresented = true
+        }
     }
     
     func hidePreviousResultsSheet() {
@@ -103,13 +122,20 @@ final class MainNavigator: ObservableObject {
         alertPresented = false
     }
     
+    func hideOnboarding() {
+        onboardingPresented = false
+        userDefaultsStorage.onboadingShowed = true
+    }
+    
     func resolveDelayedNavigation() {
-        switch modalToPresent {
+        switch screenToPresent {
         case .pomodoro:
             showPomodoroModal()
+        case .previousResults:
+            showPreviousResultsSheet()
         default:
             break
         }
-        modalToPresent = nil
+        screenToPresent = nil
     }
 }

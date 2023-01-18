@@ -43,7 +43,7 @@ struct SpendedMinutesElementView: View {
                     .font(.miniTime)
                 Spacer()
                 Text(title)
-                    .font(.miniTitle)
+                    .font(.regularText)
             }
             Spacer()
         }

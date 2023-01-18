@@ -19,4 +19,5 @@ extension Images {
     static let plus = UIImage(named: "plus.pdf")!
     static let trash = UIImage(named: "trash.pdf")!
     static let info = UIImage(named: "info.pdf")!
+    static let alertCircle = UIImage(named: "alert-circle.pdf")!
 }

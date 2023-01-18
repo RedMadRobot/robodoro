@@ -42,7 +42,7 @@ struct AlertView: View {
     private var alertBanner: some View {
         VStack(spacing: 40) {
             Text(viewModel.title)
-                .font(.miniTitle)
+                .font(.regularText)
                 .padding(.top, 24)
             HStack(spacing: 12) {
                 Button(viewModel.secondaryButtonTitle) {

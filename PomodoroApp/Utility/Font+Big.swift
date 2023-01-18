@@ -17,11 +17,19 @@ extension Font {
         unbounded(size: 36)
     }
     
-    static var customTitle: Font {
-        unbounded(size: 16)
+    static var bigTitle: Font {
+        unbounded(size: 32)
     }
     
     static var miniTitle: Font {
+        cofoSans(size: 24)
+    }
+    
+    static var screeenTitle: Font {
+        unbounded(size: 16)
+    }
+    
+    static var regularText: Font {
         cofoSans(size: 15)
     }
 }
