@@ -33,29 +33,26 @@ final class MainNavigator: ObservableObject {
     var previousResultsPresented = false
     
     @Published
-    var onboardingPresented: Bool
+    var onboardingPresented: Bool = false
     
     @Published
     var alertPresented = false
     private(set) var alertViewModel = AlertViewModel()
         
-    // Используется при показе алертов
     var rootIsVisible: Bool {
         !pomodoroModalPresented && !setTaskSheetPresented && !previousResultsPresented && !onboardingPresented
     }
     
     // MARK: - Private Properties
     
-    private var screenToPresent: DelayedPresentingScreen?
+    private let scenarioResolver: ScenarioResolver
     
-    private var userDefaultsStorage: OnboardingStorage
+    private var screensToPresent: [DelayedPresentingScreen] = []
     
     // MARK: - Init
     
-    init(userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage) {
-        self.userDefaultsStorage = userDefaultsStorage
-        
-        self.onboardingPresented = !userDefaultsStorage.onboadingShowed
+    init(scenarioResolver: ScenarioResolver = ScenarioResolver()) {
+        self.scenarioResolver = scenarioResolver
     }
     
     // MARK: - Public Methods
@@ -70,7 +67,7 @@ final class MainNavigator: ObservableObject {
     
     func showPomodoroModal(delayed: Bool = false) {
         if delayed {
-            screenToPresent = .pomodoro
+            screensToPresent.append(.pomodoro)
         } else {
             pomodoroModalPresented = true
         }
@@ -90,7 +87,7 @@ final class MainNavigator: ObservableObject {
     
     func showPreviousResultsSheet(delayed: Bool = false) {
         if delayed {
-            screenToPresent = .previousResults
+            screensToPresent.append(.previousResults)
         } else {
             previousResultsPresented = true
         }
@@ -122,13 +119,29 @@ final class MainNavigator: ObservableObject {
         alertPresented = false
     }
     
+    func showOnboarding() {
+        onboardingPresented = true
+    }
+    
     func hideOnboarding() {
         onboardingPresented = false
-        userDefaultsStorage.onboadingShowed = true
+        scenarioResolver.onboardingCompleted()
+    }
+    
+    func resolveInitialNavigation() {
+        if scenarioResolver.shouldShowOnboarding {
+            showOnboarding()
+        }
+        if scenarioResolver.shouldShowPomodoro {
+            showPomodoroModal(delayed: !rootIsVisible)
+        }
+        if scenarioResolver.shouldShowPreviousResults {
+            showPreviousResultsSheet(delayed: !rootIsVisible)
+        }
     }
     
     func resolveDelayedNavigation() {
-        switch screenToPresent {
+        switch screensToPresent.popLast() {
         case .pomodoro:
             showPomodoroModal()
         case .previousResults:
@@ -136,6 +149,5 @@ final class MainNavigator: ObservableObject {
         default:
             break
         }
-        screenToPresent = nil
     }
 }

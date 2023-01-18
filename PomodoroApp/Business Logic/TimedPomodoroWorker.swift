@@ -32,6 +32,7 @@ protocol TimedPomodoroWorker {
     func handleEnterForeground()
     func requestNotificationPermissionIfNeeded()
     func cancelNotification()
+    func saveState()
 }
 
 // MARK: - TimedPomodoroWorkerImpl
@@ -220,6 +221,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     func cancelNotification() {
         notificationService.cancelPendingNotification()
+    }
+    
+    func saveState() {
+        // TODO: - Сохранить последнее состояние
     }
     
     // MARK: - Private Methods

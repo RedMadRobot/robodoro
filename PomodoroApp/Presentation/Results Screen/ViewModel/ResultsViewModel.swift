@@ -26,14 +26,6 @@ final class ResultsViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
-    public var shouldShowPreviousResults: Bool {
-        guard let startOfWeek = dateCalculatorService.startOfWeek else { return false }
-        let oldTasks = tasks.filter { task in
-            task.date < startOfWeek
-        }
-        return !oldTasks.isEmpty
-    }
-    
     // MARK: - Private Properties
         
     private let dateCalculatorService: DateCalculatorService

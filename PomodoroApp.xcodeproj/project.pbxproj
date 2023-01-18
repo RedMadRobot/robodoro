@@ -11,6 +11,7 @@
 		351C432B2977FD880005503E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C432A2977FD880005503E /* OnboardingView.swift */; };
 		351C432E297805270005503E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C432D297805270005503E /* OnboardingViewModel.swift */; };
 		351C433029783D4D0005503E /* Font+Small.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C432F29783D4D0005503E /* Font+Small.swift */; };
+		351C43322978506F0005503E /* ScenarioResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C43312978506F0005503E /* ScenarioResolver.swift */; };
 		35203937291EADAF00A4028E /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */; };
 		3520393E291EB49400A4028E /* PomodoroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520393D291EB49400A4028E /* PomodoroViewModel.swift */; };
 		3520394129223D8600A4028E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520394029223D8600A4028E /* Colors.swift */; };
@@ -150,6 +151,7 @@
 		351C432A2977FD880005503E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		351C432D297805270005503E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		351C432F29783D4D0005503E /* Font+Small.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Small.swift"; sourceTree = "<group>"; };
+		351C43312978506F0005503E /* ScenarioResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioResolver.swift; sourceTree = "<group>"; };
 		3520393A291EB3A100A4028E /* PomodoroState+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroState+Time.swift"; sourceTree = "<group>"; };
 		3520393D291EB49400A4028E /* PomodoroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroViewModel.swift; sourceTree = "<group>"; };
 		3520394029223D8600A4028E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				352B6C0529477F2E00B09E51 /* MainNavigator.swift */,
+				351C43312978506F0005503E /* ScenarioResolver.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -942,6 +945,7 @@
 				352B6C02294756CA00B09E51 /* ButtonStyle.swift in Sources */,
 				3582D2662955BDB900AC0127 /* Date+Extension.swift in Sources */,
 				355F74512977625400B16856 /* InfoOverlayView.swift in Sources */,
+				351C43322978506F0005503E /* ScenarioResolver.swift in Sources */,
 				3570EE4E294B54940039A1D2 /* SetTaskViewModel.swift in Sources */,
 				35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */,
 				3520397B2923D48000A4028E /* PomodoroService.swift in Sources */,

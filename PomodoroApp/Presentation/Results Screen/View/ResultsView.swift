@@ -44,11 +44,6 @@ struct ResultsView: View {
                 }
             }
         }
-        .onAppear {
-            if viewModel.shouldShowPreviousResults {
-                navigator.showPreviousResultsSheet(delayed: navigator.onboardingPresented)
-            }
-        }
     }
     
     // MARK: - Private Properties

@@ -24,7 +24,6 @@ struct PomodoroApp: App {
     
     init() {
         self.timedPomodoroWorker = DI.workers.timedPomodoroWorker
-        setup()
     }
     
     // MARK: - App
@@ -39,7 +38,12 @@ struct PomodoroApp: App {
                             SettingsView(navigator: navigator)
                         }
                     }
-                    .sheet(isPresented: $navigator.previousResultsPresented) {
+                    .sheet(
+                        isPresented: $navigator.previousResultsPresented,
+                        onDismiss: {
+                            navigator.resolveDelayedNavigation()
+                        }
+                    ) {
                         PreviousResultsView(navigator: navigator)
                             .interactiveDismissDisabled()
                     }
@@ -66,6 +70,9 @@ struct PomodoroApp: App {
                         navigator.resolveDelayedNavigation()
                     } : nil)
             .preferredColorScheme(.light)
+            .onAppear {
+                navigator.resolveInitialNavigation()
+            }
         }
     }
     
@@ -103,16 +110,6 @@ struct PomodoroApp: App {
     }
     
     // MARK: - Private Methods
-    
-    private func setup() {
-        NotificationCenter.default.addObserver(
-            forName: UIApplication.didFinishLaunchingNotification,
-            object: nil,
-            queue: .main)
-        { _ in
-            applicationDidFinishLaunching()
-        }
-    }
     
     private func addObservers() {
         NotificationCenter.default.addObserver(
@@ -161,11 +158,6 @@ struct PomodoroApp: App {
     private func resetPomodoroWorker() {
         timedPomodoroWorker.reset()
         timedPomodoroWorker.cancelNotification()
-    }
-
-    private func applicationDidFinishLaunching() {
-        // TODO: - Попытаться восстановить последнее состояние
-        print("App lauhcned!")
     }
     
     private func applicationDidEnterBackground() {
