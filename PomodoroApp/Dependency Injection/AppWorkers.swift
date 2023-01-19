@@ -17,6 +17,7 @@ final class AppWorkers {
         notificationService: services.notificationService,
         pomodoroService: services.pomodoroService,
         timerService: services.timerService,
+        userDefaultsStorage: storages.userDefaultsStorage,
         tasksStorage: storages.taskStorage
     )
     

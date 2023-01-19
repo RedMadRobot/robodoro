@@ -71,7 +71,9 @@ struct PomodoroApp: App {
                     } : nil)
             .preferredColorScheme(.light)
             .onAppear {
+                addObservers()
                 navigator.resolveInitialNavigation()
+                timedPomodoroWorker.stopActivityIfNeeded()
             }
         }
     }
@@ -89,20 +91,13 @@ struct PomodoroApp: App {
     @ViewBuilder
     private var pomodoroView: some View {
         PomodoroView(navigator: navigator)
-            .onAppear {
-                addObservers()
-            }
-            .onDisappear {
-                removeObservers()
-                resetPomodoroWorker()
-            }
             .onOpenURL { url in
                 guard let action = LinkManager.manage(url: url) else { return }
                 switch scenePhase {
                 case .background:
                     timedPomodoroWorker.setLinkAction(action)
                 case .inactive:
-                    timedPomodoroWorker.handleLinkAction(action)
+                    timedPomodoroWorker.handleLinkAction(action, navigator: navigator)
                 default:
                     break
                 }
@@ -117,8 +112,7 @@ struct PomodoroApp: App {
             object: nil,
             queue: .main
         ) { _ in
-            resetPomodoroWorker()
-            // TODO: - Запомнить последнее состояние
+            applicationWillTerminate()
         }
 
         NotificationCenter.default.addObserver(
@@ -137,34 +131,24 @@ struct PomodoroApp: App {
             applicationWillEnterForeground()
         }
     }
-
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIApplication.willTerminateNotification,
-            object: nil)
-        
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil)
-        
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil)
-    }
     
-    private func resetPomodoroWorker() {
-        timedPomodoroWorker.reset()
+    private func applicationWillTerminate() {
+        print("TERMINATE")
+        guard navigator.pomodoroModalPresented else { return }
+        timedPomodoroWorker.saveState()
         timedPomodoroWorker.cancelNotification()
+        timedPomodoroWorker.stopActivity()
     }
     
     private func applicationDidEnterBackground() {
+        print("BACKGROUND")
+        guard navigator.pomodoroModalPresented else { return }
         timedPomodoroWorker.handleEnterBackground()
     }
 
     private func applicationWillEnterForeground() {
-        timedPomodoroWorker.handleEnterForeground()
+        print("FOREGROUND")
+        guard navigator.pomodoroModalPresented else { return }
+        timedPomodoroWorker.handleEnterForeground(navigator: navigator)
     }
 }

@@ -21,8 +21,10 @@ protocol PomodoroService {
     var stagesCount: Int { get }
     var completedStages: Int { get }
     var atLastStateOfCurrentStage: Bool { get }
+    var dataToSave: PomodoroServiceSavedData { get }
     
     func setup(stages: Int)
+    func setup(savedData: PomodoroServiceSavedData)
     func moveForward()
     func reset()
 }
@@ -51,6 +53,13 @@ final class PomodoroServiceImpl: PomodoroService {
         innerIndex == pomodoroCycle[outerIndex].count - 1
     }
     
+    var dataToSave: PomodoroServiceSavedData {
+        PomodoroServiceSavedData(
+            stagesCount: stagesCount,
+            innerIndex: innerIndex,
+            outerIndex: outerIndex)
+    }
+    
     // MARK: - Private Properties
     
     private var pomodoroCycle: [[PomodoroState]] = [
@@ -66,6 +75,7 @@ final class PomodoroServiceImpl: PomodoroService {
     
     private var innerIndex: Int = 0 {
         didSet {
+            guard !ignoreDelegate else { return }
             delegate?.pomododoService(self, didChangeStateTo: currentState)
         }
     }
@@ -75,15 +85,21 @@ final class PomodoroServiceImpl: PomodoroService {
         }
     }
     
+    private var ignoreDelegate = false
+    
     // MARK: - Public Methods
     
     func setup(stages: Int) {
-        var newPomodoroCycle: [[PomodoroState]] = []
-        for _ in 0..<(stages - 1) {
-            newPomodoroCycle.append([.focus, .break])
-        }
-        newPomodoroCycle.append([.focus, .longBreak])
-        pomodoroCycle = newPomodoroCycle
+        pomodoroCycle = generatePomodoroCycle(stages: stages)
+    }
+    
+    func setup(savedData: PomodoroServiceSavedData) {
+        ignoreDelegate = true
+        pomodoroCycle = generatePomodoroCycle(stages: savedData.stagesCount)
+        outerIndex = savedData.outerIndex
+        innerIndex = savedData.innerIndex
+        ignoreDelegate = false
+        delegate?.pomododoService(self, didChangeStateTo: currentState)
     }
     
     func moveForward() {
@@ -96,5 +112,16 @@ final class PomodoroServiceImpl: PomodoroService {
     
     func reset() {
         outerIndex = 0
+    }
+    
+    // MARK: - Private Methods
+    
+    func generatePomodoroCycle(stages: Int) -> [[PomodoroState]] {
+        var cycle: [[PomodoroState]] = []
+        for _ in 0..<(stages - 1) {
+            cycle.append([.focus, .break])
+        }
+        cycle.append([.focus, .longBreak])
+        return cycle
     }
 }

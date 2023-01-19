@@ -26,11 +26,16 @@ protocol OnboardingStorage {
     var onboadingShowed: Bool { get set }
 }
 
+protocol SaveStateStorage {
+    var appReloadSavedData: AppReloadSavedData? { get set }
+}
+
 // MARK: - UserDefaultsStorage
 
 final class UserDefaultsStorage: SettingsStorage,
                                  LastUsedValuesStorage,
-                                 OnboardingStorage {
+                                 OnboardingStorage,
+                                 SaveStateStorage {
     
     // MARK: - Keys
     
@@ -43,6 +48,7 @@ final class UserDefaultsStorage: SettingsStorage,
         case lastStagesCount = "com.redmadrobot.PomodoroApp.lastStagesCount"
         case deleteFeatureUsed = "com.redmadrobot.PomodoroApp.deleteFeatureUsed"
         case onboadingShowed = "com.redmadrobot.PomodoroApp.onboadingShowed"
+        case appReloadSavedData = "com.redmadrobot.PomodoroApp.appReloadSavedData"
     }
     
     // MARK: - Private Properties
@@ -99,6 +105,11 @@ final class UserDefaultsStorage: SettingsStorage,
             key: Keys.onboadingShowed.rawValue,
             storage: storage
         )
+        
+        // SaveStateStorage
+        _appReloadSavedData = CodableUserDefault(
+            key: Keys.appReloadSavedData.rawValue,
+            storage: storage)
     }
     
     // MARK: - SettingsStorage
@@ -125,6 +136,11 @@ final class UserDefaultsStorage: SettingsStorage,
     var deleteFeatureUsed: Bool
     @UserDefault
     var onboadingShowed: Bool
+    
+    // MARK: - SaveStateStorage
+    
+    @CodableUserDefault
+    var appReloadSavedData: AppReloadSavedData?
 }
 
 // MARK: - Additional Types
@@ -210,6 +226,48 @@ struct RawRepresentableUserDefault<Value: RawRepresentable> {
 }
 
 extension RawRepresentableUserDefault where Value: ExpressibleByNilLiteral {
+    init(key: String, storage: UserDefaults) {
+        self.init(wrappedValue: nil, key: key, storage: storage)
+    }
+}
+
+@propertyWrapper
+struct CodableUserDefault<Value: Codable> {
+    
+    var wrappedValue: Value {
+        get {
+            guard let data = storage.object(forKey: key) as? Data,
+                  let decoded = try? JSONDecoder().decode(Value.self, from: data) else {
+                return defaultValue
+            }
+            return decoded
+        }
+        set {
+            if let optional = newValue as? AnyOptional, optional.isNil {
+                storage.removeObject(forKey: key)
+            } else {
+                guard let data = try? JSONEncoder().encode(newValue) else { return }
+                storage.set(data, forKey: key)
+            }
+        }
+    }
+
+    private let key: String
+    private let defaultValue: Value
+    private let storage: UserDefaults
+
+    init(
+        wrappedValue defaultValue: Value,
+        key: String,
+        storage: UserDefaults
+    ) {
+        self.defaultValue = defaultValue
+        self.key = key
+        self.storage = storage
+    }
+}
+
+extension CodableUserDefault where Value: ExpressibleByNilLiteral {
     init(key: String, storage: UserDefaults) {
         self.init(wrappedValue: nil, key: key, storage: storage)
     }

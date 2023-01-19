@@ -97,7 +97,10 @@ struct PomodoroView: View {
             title: "Do you want to end this task?",
             primaryButtonTitle: "END",
             secondaryButtonTitle: "CANCEL",
-            primaryAction: { navigator.hidePomodoroModal() },
+            primaryAction: {
+                viewModel.resetWorker()
+                navigator.hidePomodoroModal()
+            },
             commonCompletion: { navigator.hideAlert() })
     }
 }

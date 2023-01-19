@@ -86,6 +86,10 @@ final class PomodoroViewModel: ViewModel {
         timedPomodoroWorker.mainAction()
     }
     
+    func resetWorker() {
+        timedPomodoroWorker.reset()
+    }
+    
     // MARK: - Private Methods
     
     private func addSubscriptions() {

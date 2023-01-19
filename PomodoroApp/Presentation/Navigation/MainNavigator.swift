@@ -133,6 +133,7 @@ final class MainNavigator: ObservableObject {
             showOnboarding()
         }
         if scenarioResolver.shouldShowPomodoro {
+            scenarioResolver.setupPomodoroFromSavedData()
             showPomodoroModal(delayed: !rootIsVisible)
         }
         if scenarioResolver.shouldShowPreviousResults {

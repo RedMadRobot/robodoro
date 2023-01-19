@@ -22,15 +22,15 @@ final class ScenarioResolver {
     }
     
     var shouldShowPomodoro: Bool {
-        // TODO: - Показать экран с таймером, если есть сохраненное состояние
-        false
+        guard let _ = userDefaultsStorage.appReloadSavedData else { return false }
+        return true
     }
     
     // MARK: - Private Properties
     
     private let dateCalculatorService: DateCalculatorService
     private let tasksStorage: TasksStorage
-    private var userDefaultsStorage: OnboardingStorage
+    private var userDefaultsStorage: UserDefaultsStorage
     private let timedPomodoroWorker: TimedPomodoroWorker
     
     // MARK: - Init
@@ -38,7 +38,7 @@ final class ScenarioResolver {
     init(
         dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
-        userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
+        userDefaultsStorage: UserDefaultsStorage = DI.storages.userDefaultsStorage,
         timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker
     ) {
         self.dateCalculatorService = dateCalculatorService
@@ -51,5 +51,10 @@ final class ScenarioResolver {
     
     func onboardingCompleted() {
         userDefaultsStorage.onboadingShowed = true
+    }
+    
+    func setupPomodoroFromSavedData() {
+        guard let data = userDefaultsStorage.appReloadSavedData else { return }
+        timedPomodoroWorker.setup(savedData: data)
     }
 }
