@@ -67,7 +67,7 @@ final class MainNavigator: ObservableObject {
     
     func showPomodoroModal(delayed: Bool = false) {
         if delayed {
-            screensToPresent.append(.pomodoro)
+            screensToPresent.insert(.pomodoro, at: 0)
         } else {
             pomodoroModalPresented = true
         }
@@ -87,7 +87,7 @@ final class MainNavigator: ObservableObject {
     
     func showPreviousResultsSheet(delayed: Bool = false) {
         if delayed {
-            screensToPresent.append(.previousResults)
+            screensToPresent.insert(.previousResults, at: 0)
         } else {
             previousResultsPresented = true
         }
@@ -132,18 +132,20 @@ final class MainNavigator: ObservableObject {
         if scenarioResolver.shouldShowOnboarding {
             showOnboarding()
         }
+        if scenarioResolver.shouldShowPreviousResults {
+            showPreviousResultsSheet(delayed: !rootIsVisible)
+        }
         if scenarioResolver.shouldShowPomodoro {
             scenarioResolver.setupPomodoroFromSavedData()
             showPomodoroModal(delayed: !rootIsVisible)
         }
-        if scenarioResolver.shouldShowPreviousResults {
-            showPreviousResultsSheet(delayed: !rootIsVisible)
-        }
     }
     
     func resolveDelayedNavigation() {
+        print(screensToPresent)
         switch screensToPresent.popLast() {
         case .pomodoro:
+            guard scenarioResolver.readyToResumeTask else { return }
             showPomodoroModal()
         case .previousResults:
             showPreviousResultsSheet()

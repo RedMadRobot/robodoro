@@ -10,8 +10,9 @@ import Foundation
 // MARK: - AppReloadSavedData
 
 struct AppReloadSavedData: Codable {
+    let backgroundDate: Date?
     let taskId: UUID
-    let currentTime: TimeInterval
+    let leftTime: TimeInterval
     let focusTime: TimeInterval
     let breakTime: TimeInterval
     let longBreakTime: TimeInterval

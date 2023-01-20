@@ -19,6 +19,7 @@ protocol TimedPomodoroWorker {
     var activeStagesCount: Int { get }
     var lastStageState: StageElementViewState { get }
     var enterForegroundAction: LinkManager.Action? { get }
+    var currentTaskId: UUID? { get }
     
     func setup(
         taskName: String?,
@@ -32,10 +33,8 @@ protocol TimedPomodoroWorker {
     func handleEnterBackground()
     func handleEnterForeground(navigator: MainNavigator)
     func requestNotificationPermissionIfNeeded()
-    func stopActivity()
     func stopActivityIfNeeded()
     func cancelNotification()
-    func saveState()
 }
 
 // MARK: - TimedPomodoroWorkerImpl
@@ -70,6 +69,8 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     var enterForegroundAction: LinkManager.Action?
     
+    private(set) var currentTaskId: UUID?
+    
     // MARK: - Private Properties
     
     private let activityService: LiveActivityService
@@ -83,9 +84,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    private var backgroundDate: Date?
     private var customIntervals: ((PomodoroState) -> TimeInterval)?
-    private var currentTaskId: UUID?
     private var currentStagePassedTime: TimeInterval?
     private var settedUp = false
     
@@ -147,10 +146,33 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 return savedData.longBreakTime
             }
         }
-        let waitingTime = customIntervals!(pomodoroService.currentState) - savedData.currentTime
-        timerService.reset(waitingTime: waitingTime)
+        
         currentTaskId = savedData.taskId
-        currentStagePassedTime = savedData.currentTime
+        currentStagePassedTime = interval(for: pomodoroService.currentState) - savedData.leftTime
+        
+        timerService.reset(waitingTime: savedData.leftTime)
+        
+        if let backgroundDate = savedData.backgroundDate {
+            let currentInterval = interval(for: pomodoroService.currentState)
+            
+            // Посчитать количество секунд между текущей датой и последней зафиксированной
+            // Прибавляем к этому числу число уже пройденное время текущего этапа
+            let difference = Calendar.current.dateComponents([.second], from: backgroundDate, to: Date.now)
+            let seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
+            
+            // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение, если требуется
+            let currentWaitingTime: TimeInterval = currentInterval - seconds
+            
+            if currentWaitingTime < 0 {
+                leftTime.send(0)
+                timerService.stop()
+                pomodoroService.moveForward()
+            } else {
+                timerService.reset(waitingTime: currentWaitingTime)
+                timerService.start()
+            }
+        }
+        
         userDefaultsStorage.appReloadSavedData = nil
         settedUp = true
     }
@@ -206,24 +228,19 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     }
     
     func handleEnterBackground() {
-        // Зафиксировать дату перехода в фоновый режим
-        backgroundDate = Date.now
-        
-        // Остановить работу таймера без изменения состояния
+        guard let _ = currentTaskId  else { return }
+        saveState()
         timerService.suspend()
     }
     
     func handleEnterForeground(navigator: MainNavigator) {
-        updateTimeAfterBackgroundIfNeeded()
+        guard let savedData = userDefaultsStorage.appReloadSavedData else { return }
+        setup(savedData: savedData)
         handleLinkActionIfNeeded(navigator: navigator)
     }
     
     func requestNotificationPermissionIfNeeded() {
         notificationService.requestPermissionIfNeeded()
-    }
-    
-    func stopActivity() {
-        activityService.stop()
     }
     
     func stopActivityIfNeeded() {
@@ -236,19 +253,37 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     }
     
     func saveState() {
-        guard let id = currentTaskId else { return }
-        updateTimeAfterBackgroundIfNeeded()
-        
-        let currentTime = interval(for: pomodoroState.value) - leftTime.value
+        guard let currentTaskId = currentTaskId else { return }
+
+        var backgroundDate: Date?
+        if timerState.value == .running {
+            backgroundDate = Date.now
+        }
         
         let data = AppReloadSavedData(
-            taskId: id,
-            currentTime: currentTime,
+            backgroundDate: backgroundDate,
+            taskId: currentTaskId,
+            leftTime: leftTime.value,
             focusTime: interval(for: .focus),
             breakTime: interval(for: .break),
             longBreakTime: interval(for: .longBreak),
             pomodoroServiceSavedData: pomodoroService.dataToSave)
         userDefaultsStorage.appReloadSavedData = data
+        
+        // TODO: - MOCK DATA, REMOVE
+//        let data = AppReloadSavedData(
+//            backgroundDate: nil,
+//            taskId: UUID(uuidString: "B0C4EBEC-6D57-43E9-A964-F666E8A6B9CD")!,
+//            leftTime: 60 * 3,
+//            focusTime: 60 * 10,
+//            breakTime: 60 * 10,
+//            longBreakTime: 60 * 10,
+//            pomodoroServiceSavedData: .init(
+//                stagesCount: 4,
+//                innerIndex: 1,
+//                outerIndex: 1))
+//        userDefaultsStorage.appReloadSavedData = data
+        
         print("DATA SAVED")
     }
     
@@ -276,50 +311,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         .store(in: &subscriptions)
     }
     
-    private func updateTimeAfterBackgroundIfNeeded() {
-        defer {
-            backgroundDate = nil
-        }
-        
-        // Если последняя дата зафиксированна и таймер в состоянии .running
-        guard let backgroundDate = backgroundDate,
-              timerState.value == .running else { return }
-        
-        let currentInterval = interval(for: pomodoroState.value)
-        
-        // Посчитать количество секунд между текущей датой и последней зафиксированной
-        // Прибавляем к этому числу число уже пройденное время текущего этапа
-        let difference = Calendar.current.dateComponents([.second], from: backgroundDate, to: Date.now)
-        let seconds = TimeInterval(difference.second!) + (currentInterval - leftTime.value)
-        
-        // Отнять от последнего отсчета необходимое количество времени и продолжить выполнение, если требуется
-        let currentWaitingTime: TimeInterval = currentInterval - seconds
-        
-        if currentWaitingTime < 0 {
-            leftTime.send(0)
-            timerService.stop()
-            pomodoroService.moveForward()
-        } else {
-            timerService.reset(waitingTime: currentWaitingTime)
-            timerService.start()
-        }
-    }
-    
     private func handleLinkActionIfNeeded(navigator: MainNavigator) {
         guard let action = enterForegroundAction else { return }
         handleLinkAction(action, navigator: navigator)
         enterForegroundAction = nil
-    }
-    
-    private func scheduleCurrentStateNotification() {
-        notificationService.scheduleNotification(
-            in: leftTime.value,
-            title: "\(pomodoroState.value.title) stage ended!",
-            body: "Get ready to start new timer")
-    }
-    
-    private func interval(for state: PomodoroState) -> TimeInterval {
-        customIntervals?(state) ?? state.defaultWaitingTime
     }
     
     private func updateManagingTaskIntervalIfNeeded() {
@@ -334,6 +329,21 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             tasksStorage.updateTime(ofTaskWithId: currentTaskId, newTime: newCompletedTime)
             self.currentStagePassedTime = newStagePassedTime
         }
+    }
+    
+    private func interval(for state: PomodoroState) -> TimeInterval {
+        customIntervals?(state) ?? state.defaultWaitingTime
+    }
+    
+    private func scheduleCurrentStateNotification() {
+        notificationService.scheduleNotification(
+            in: leftTime.value,
+            title: "\(pomodoroState.value.title) stage ended!",
+            body: "Get ready to start new timer")
+    }
+    
+    private func stopActivity() {
+        activityService.stop()
     }
 }
 

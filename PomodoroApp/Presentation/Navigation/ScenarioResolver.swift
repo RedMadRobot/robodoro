@@ -26,6 +26,15 @@ final class ScenarioResolver {
         return true
     }
     
+    var readyToResumeTask: Bool {
+        guard let id = timedPomodoroWorker.currentTaskId,
+              let _ = tasksStorage.getTask(withId: id) else {
+            timedPomodoroWorker.reset()
+            return false
+        }
+        return true
+    }
+    
     // MARK: - Private Properties
     
     private let dateCalculatorService: DateCalculatorService
