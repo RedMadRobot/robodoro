@@ -43,32 +43,6 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
         self.managedObjectContext = persistentStore.context
         self.backgroundContext = persistentStore.backgroundContext
         
-        // TODO: - MOCK DATA, REMOVE
-//        let calendar = Calendar.current
-//
-//        let task0 = PomodoroTaskObject(context: backgroundContext)
-//        task0.id = UUID(uuidString: "B0C4EBEC-6D57-43E9-A964-F666E8A6B9CD")!
-//        task0.title = "123"
-//        task0.date = calendar.makeDate(year: 2023, month: 1, day: 2)
-//        task0.completedInterval = 60 * 10
-//
-//        let task1 = PomodoroTaskObject(context: backgroundContext)
-//        task1.id = UUID()
-//        task1.date = calendar.makeDate(year: 2023, month: 1, day: 8)
-//        task1.completedInterval = 60 * 5
-//
-//        let task2 = PomodoroTaskObject(context: backgroundContext)
-//        task2.id = UUID()
-//        task2.date = calendar.makeDate(year: 2023, month: 1, day: 9)
-//        task2.completedInterval = 60 * 5
-//
-//        let task3 = PomodoroTaskObject(context: backgroundContext)
-//        task3.id = UUID()
-//        task3.date = calendar.makeDate(year: 2023, month: 1, day: 15)
-//        task3.completedInterval = 60 * 5
-//
-//        try? backgroundContext.save()
-        
         let request: NSFetchRequest<PomodoroTaskObject> = PomodoroTaskObject.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \PomodoroTaskObject.date, ascending: false)]
         self.fetchedResultsController = NSFetchedResultsController(

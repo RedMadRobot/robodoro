@@ -270,20 +270,6 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             pomodoroServiceSavedData: pomodoroService.dataToSave)
         userDefaultsStorage.appReloadSavedData = data
         
-        // TODO: - MOCK DATA, REMOVE
-//        let data = AppReloadSavedData(
-//            backgroundDate: nil,
-//            taskId: UUID(uuidString: "B0C4EBEC-6D57-43E9-A964-F666E8A6B9CD")!,
-//            leftTime: 60 * 3,
-//            focusTime: 60 * 10,
-//            breakTime: 60 * 10,
-//            longBreakTime: 60 * 10,
-//            pomodoroServiceSavedData: .init(
-//                stagesCount: 4,
-//                innerIndex: 1,
-//                outerIndex: 1))
-//        userDefaultsStorage.appReloadSavedData = data
-        
         print("DATA SAVED")
     }
     
