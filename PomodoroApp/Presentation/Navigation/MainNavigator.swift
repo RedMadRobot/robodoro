@@ -142,7 +142,6 @@ final class MainNavigator: ObservableObject {
     }
     
     func resolveDelayedNavigation() {
-        print(screensToPresent)
         switch screensToPresent.popLast() {
         case .pomodoro:
             guard scenarioResolver.readyToResumeTask else { return }

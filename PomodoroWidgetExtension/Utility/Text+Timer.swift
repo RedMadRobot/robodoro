@@ -10,7 +10,6 @@ import SwiftUI
 extension Text {
     init(state: LiveActivityAttributes.ContentState) {
         let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
-        print(dateComponentsFormatter.getFormattedTime(time: 0))
         switch state.timerState {
         case .ended:
             self.init(dateComponentsFormatter.getFormattedTime(time: 0))
