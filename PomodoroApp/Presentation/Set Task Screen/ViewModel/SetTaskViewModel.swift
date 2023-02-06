@@ -103,6 +103,7 @@ final class SetTaskViewModel: ViewModel {
                     return longBreakTimeValue
                 }
             })
+        timedPomodoroWorker.mainAction()
     }
     
     func shouldChangeText(range: NSRange, replacementText: String) -> Bool {
