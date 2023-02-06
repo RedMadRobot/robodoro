@@ -10,10 +10,10 @@ import SwiftUI
 extension Font {
     
     static var timeBig: Font {
-        unbounded(size: 56)
+        unboundedBlond(size: 56)
     }
     
     static var timeSmall: Font {
-        unbounded(size: 48)
+        unboundedBlond(size: 48)
     }
 }

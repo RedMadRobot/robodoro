@@ -12,20 +12,25 @@ extension Font {
     // MARK: - Constants
     
     private enum Constants {
-        static let unbounded = "Unbounded-Blond"
+        static let undoundedRegular = "Unbounded-Regular"
+        static let unboundedBlond = "Unbounded-Blond"
         static let cofoSans = "CoFoSans-Regular"
     }
     
     // MARK: - Public Properties
     
     static var stageLabel: Font {
-        unbounded(size: 14)
+        unboundedBlond(size: 14)
     }
     
     // MARK: - Public Methods
     
-    static func unbounded(size: CGFloat) -> Font {
-        .custom(Constants.unbounded, size: size)
+    static func unboundedRegular(size: CGFloat) -> Font {
+        .custom(Constants.undoundedRegular, size: size)
+    }
+    
+    static func unboundedBlond(size: CGFloat) -> Font {
+        .custom(Constants.unboundedBlond, size: size)
     }
     
     static func cofoSans(size: CGFloat) -> Font {

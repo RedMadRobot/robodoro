@@ -12,7 +12,8 @@ extension UIFont {
     // MARK: - Constants
     
     private enum Constants {
-        static let unbounded = "Unbounded-Blond"
+        static let undoundedRegular = "Unbounded-Regular"
+        static let unboundedBlond = "Unbounded-Blond"
         static let cofoSans = "CoFoSans-Regular"
     }
     
@@ -24,8 +25,8 @@ extension UIFont {
     
     // MARK: - Public Methods
     
-    static func unbounded(size: CGFloat) -> UIFont {
-        UIFont(name: Constants.unbounded, size: size) ?? UIFont.systemFont(ofSize: size)
+    static func unboundedBlond(size: CGFloat) -> UIFont {
+        UIFont(name: Constants.unboundedBlond, size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
     static func cofoSans(size: CGFloat) -> UIFont {

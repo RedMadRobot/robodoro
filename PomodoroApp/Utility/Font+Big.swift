@@ -10,15 +10,15 @@ import SwiftUI
 extension Font {
     
     static var time: Font {
-        unbounded(size: 64)
+        unboundedBlond(size: 64)
     }
     
     static var miniTime: Font {
-        unbounded(size: 36)
+        unboundedBlond(size: 36)
     }
     
     static var bigTitle: Font {
-        unbounded(size: 32)
+        unboundedBlond(size: 32)
     }
     
     static var miniTitle: Font {
@@ -26,7 +26,7 @@ extension Font {
     }
     
     static var screeenTitle: Font {
-        unbounded(size: 16)
+        unboundedRegular(size: 16)
     }
     
     static var regularText: Font {
