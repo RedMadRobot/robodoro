@@ -58,7 +58,7 @@ struct InfoOverlayView: View {
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .background(Color(Colors.white))
-            .clipShape(RoundedRectangle(cornerRadius: 35))
+            .clipShape(RoundedRectangle(cornerRadius: 32))
             .padding(.horizontal, 16)
         }
         .padding(.bottom, 26)

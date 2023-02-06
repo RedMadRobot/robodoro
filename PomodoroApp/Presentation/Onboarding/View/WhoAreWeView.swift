@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WhoAreWeView: View {
-        
+    
     // MARK: - Private Properties
     
     private var onButtonClick: () -> Void
@@ -35,7 +35,7 @@ struct WhoAreWeView: View {
             infoView
             buttonView
         }
-        .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
+        .transition(AnyTransition.move(edge: .bottom))
     }
     
     // MARK: - Private Properties
@@ -43,6 +43,7 @@ struct WhoAreWeView: View {
     @ViewBuilder
     private var backView: some View {
         Color(Colors.averageFocusBlue)
+            .clipShape(RoundedRectangle(cornerRadius: 32))
             .ignoresSafeArea()
         GeometryReader { geometry in
             Path { path in
@@ -63,6 +64,7 @@ struct WhoAreWeView: View {
                 }
             }
             .stroke(Color(Colors.averageFocusLine), lineWidth: Constants.lineWidth)
+            .clipShape(RoundedRectangle(cornerRadius: 32))
         }
     }
     
@@ -83,7 +85,9 @@ struct WhoAreWeView: View {
         VStack {
             Spacer()
             Button("LET’S START") {
-                onButtonClick()
+                withAnimation(.linear(duration: 0.3)) {
+                    onButtonClick()
+                }
             }
             .buttonStyle(PrimaryButtonStyle())
             .padding(16)
