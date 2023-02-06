@@ -41,6 +41,7 @@ struct PomodoroView: View {
                         showAlert()
                     } label: {
                         Image(uiImage: Images.logout)
+                            .padding([.top, .bottom, .leading], 10)
                     }
                 }
             }
@@ -69,6 +70,7 @@ struct PomodoroView: View {
                 }
             } label: {
                 Image(uiImage: viewModel.buttonImage)
+                    .padding(.all, 10)
             }
         }
     }

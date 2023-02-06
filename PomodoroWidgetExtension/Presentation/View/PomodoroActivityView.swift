@@ -124,6 +124,7 @@ struct PomodoroActivityView: View {
                     Image(uiImage: state.buttonImage)
                         .renderingMode(.template)
                         .foregroundColor(Color(theme.mainColor))
+                        .padding(.all, 10)
                 }
             }
             HStack {

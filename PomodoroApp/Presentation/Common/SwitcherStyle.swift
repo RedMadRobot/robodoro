@@ -28,6 +28,8 @@ struct SettingsToggleStyle: ToggleStyle {
                         .frame(width: 20, height: 20)
                         .offset(x: configuration.isOn ? 10 : -10))
                 .animation(Animation.easeInOut(duration: 0.2), value: configuration.isOn)
+                .padding(.all, 10)
+                .contentShape(Rectangle())
                 .onTapGesture { configuration.isOn.toggle() }
         }
     }

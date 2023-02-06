@@ -37,6 +37,7 @@ struct SettingsView: View {
                     navigator.pop()
                 } label: {
                     Image(uiImage: Images.arrowLeft)
+                        .padding([.top, .bottom, .trailing], 10)
                 }
             }
             ToolbarItem(placement: .principal) {
@@ -50,15 +51,15 @@ struct SettingsView: View {
     
     @ViewBuilder
     private var frontView: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 4) {
             Toggle("Alarm sound", isOn: $viewModel.soundEnabled)
                 .toggleStyle(SettingsToggleStyle())
             Toggle("Haptic", isOn: $viewModel.hapticEnabled)
                 .toggleStyle(SettingsToggleStyle())
             Spacer()
         }
-        .padding(.top, 30)
-        .padding(.horizontal, 20)
+        .padding(.top, 20)
+        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
     }
 }
 

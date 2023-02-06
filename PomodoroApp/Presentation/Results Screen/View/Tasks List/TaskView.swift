@@ -16,6 +16,7 @@ struct TaskView: View {
     private enum Constants {
         static let offset = CGFloat(56)
         static let buttonSpacing = CGFloat(32)
+        static let buttonPadding = CGFloat(10)
     }
     
     // MARK: - Private Properties
@@ -79,8 +80,11 @@ struct TaskView: View {
                         onDelete()
                     } label: {
                         Image(uiImage: Images.trash)
+                            .padding(.all, Constants.buttonPadding)
                     }
-                    .offset(x: geometry.size.width + Constants.buttonSpacing, y: geometry.size.height / 4)
+                    .offset(
+                        x: geometry.size.width - Constants.buttonPadding + Constants.buttonSpacing,
+                        y: geometry.size.height / 4 - Constants.buttonPadding)
                 })
         }
         .padding(.horizontal, 16)
