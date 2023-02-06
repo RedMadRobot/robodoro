@@ -18,19 +18,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenCrossedLines" translatesAutoresizingMaskIntoConstraints="NO" id="PB3-nS-syC">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenTitle" translatesAutoresizingMaskIntoConstraints="NO" id="GBa-cL-Cka">
-                                <rect key="frame" x="83.666666666666686" y="395" width="226" height="38"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="226" id="fQw-43-q6f"/>
-                                    <constraint firstAttribute="height" constant="38" id="tW1-Yr-jlc"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" red="0.93725490196078431" green="0.36470588235294116" blue="0.25882352941176467" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="GBa-cL-Cka" firstAttribute="centerY" secondItem="PB3-nS-syC" secondAttribute="centerY" constant="-12" id="3gL-fR-obk"/>
-                            <constraint firstItem="GBa-cL-Cka" firstAttribute="centerX" secondItem="PB3-nS-syC" secondAttribute="centerX" id="Hbx-hL-21U"/>
                             <constraint firstAttribute="bottom" secondItem="PB3-nS-syC" secondAttribute="bottom" id="Ltl-g9-haz"/>
                             <constraint firstAttribute="trailing" secondItem="PB3-nS-syC" secondAttribute="trailing" id="Ymh-fd-lJq"/>
                             <constraint firstItem="PB3-nS-syC" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="jcy-1B-8ec"/>
@@ -45,6 +36,5 @@
     </scenes>
     <resources>
         <image name="launchScreenCrossedLines" width="393" height="852"/>
-        <image name="launchScreenTitle" width="221" height="25"/>
     </resources>
 </document>
