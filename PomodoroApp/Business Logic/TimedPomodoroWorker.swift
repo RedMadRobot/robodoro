@@ -256,7 +256,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         guard let currentTaskId = currentTaskId else { return }
 
         var backgroundDate: Date?
-        if timerState.value == .running {
+        if timerState.value == .running || timerState.value == .ended {
             backgroundDate = Date.now
         }
         
