@@ -13,7 +13,7 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding(24)
-            .font(.stageLabel)
+            .font(.regularTitle)
             .foregroundColor(Color(Colors.white))
             .background(Color(Colors.black))
             .clipShape(Capsule())
@@ -28,7 +28,7 @@ struct SecondaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding(24)
-            .font(.stageLabel)
+            .font(.regularTitle)
             .foregroundColor(Color(Colors.black))
             .background(Color(Colors.white))
             .clipShape(Capsule())

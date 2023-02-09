@@ -32,17 +32,8 @@ struct SettingsView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    navigator.pop()
-                } label: {
-                    Image(uiImage: Images.arrowLeft)
-                        .padding([.top, .bottom, .trailing], 10)
-                }
-            }
             ToolbarItem(placement: .principal) {
-                Text("SETTINGS")
-                    .font(.screeenTitle)
+                navBarView
             }
         }
     }
@@ -61,12 +52,31 @@ struct SettingsView: View {
         .padding(.top, 20)
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
     }
+    
+    @ViewBuilder
+    private var navBarView: some View {
+        ZStack {
+            HStack {
+                Button {
+                    navigator.pop()
+                } label: {
+                    Image(uiImage: Images.arrowLeft)
+                        .padding([.top, .bottom, .trailing], 10)
+                }
+                Spacer()
+            }
+            Text("SETTINGS")
+                .font(.regularTitle)
+        }
+    }
 }
 
 // MARK: - PreviewProvider
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(navigator: MainNavigator())
+        NavigationView {
+            SettingsView(navigator: MainNavigator())
+        }
     }
 }

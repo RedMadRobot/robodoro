@@ -39,7 +39,7 @@ struct PreviousResultsView: View {
         ScrollView {
             VStack(spacing: 8) {
                 Text("PREVIOUS RESULTS")
-                    .font(.screeenTitle)
+                    .font(.regularTitle)
                     .padding(.top, 32)
                 warningView
                 SpendedMinutesView(

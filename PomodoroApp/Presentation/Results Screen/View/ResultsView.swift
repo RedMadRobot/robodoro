@@ -34,7 +34,7 @@ struct ResultsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("RESULTS PER WEEK")
-                    .font(.screeenTitle)
+                    .font(.regularTitle)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -123,6 +123,8 @@ struct ResultsView: View {
 
 struct ResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultsView(navigator: MainNavigator())
+        NavigationView {
+            ResultsView(navigator: MainNavigator())
+        }
     }
 }

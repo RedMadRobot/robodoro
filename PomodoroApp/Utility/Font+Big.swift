@@ -25,7 +25,7 @@ extension Font {
         cofoSans(size: 24)
     }
     
-    static var screeenTitle: Font {
+    static var regularTitle: Font {
         unboundedRegular(size: 16)
     }
     

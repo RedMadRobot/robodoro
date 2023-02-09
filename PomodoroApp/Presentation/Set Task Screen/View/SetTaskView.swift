@@ -39,7 +39,7 @@ struct SetTaskView: View {
     private var frontView: some View {
         VStack {
             Text("SET YOUR TASK")
-                .font(.screeenTitle)
+                .font(.regularTitle)
                 .padding(.vertical, 32)
             parameters
         }

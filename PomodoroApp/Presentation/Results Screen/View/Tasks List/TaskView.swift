@@ -71,7 +71,7 @@ struct TaskView: View {
                     .foregroundColor(Color(Colors.textGray2))
             }
             .font(.regularText)
-            Spacer(minLength: 116)
+            Spacer(minLength: 45)
             Text("\(task.completedInterval.minutesIgnoringHours)")
                 .font(.miniTime)
                 .contentShape(Rectangle())
