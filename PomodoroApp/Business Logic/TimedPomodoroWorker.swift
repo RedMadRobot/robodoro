@@ -337,10 +337,15 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
 
 extension TimedPomodoroWorkerImpl: PomodoroServiceDelegate {
     
-    func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
+    func pomodoroService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
         currentStagePassedTime = 0
         pomodoroState.send(state)
         timerService.reset(waitingTime: interval(for: state))
+    }
+    
+    func pomodoroServiceEnded(_ service: PomodoroService) {
+        timerService.stop()
+        stopActivity()
     }
 }
 

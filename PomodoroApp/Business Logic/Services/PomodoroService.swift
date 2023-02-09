@@ -10,7 +10,8 @@ import Foundation
 // MARK: - PomodoroServiceDelegate
 
 protocol PomodoroServiceDelegate: AnyObject {
-    func pomododoService(_ service: PomodoroService, didChangeStateTo state: PomodoroState)
+    func pomodoroService(_ service: PomodoroService, didChangeStateTo state: PomodoroState)
+    func pomodoroServiceEnded(_ service: PomodoroService)
 }
 
 // MARK: - PomodoroService
@@ -21,6 +22,7 @@ protocol PomodoroService {
     var stagesCount: Int { get }
     var completedStages: Int { get }
     var atLastStateOfCurrentStage: Bool { get }
+    var atLastState: Bool { get }
     var dataToSave: PomodoroServiceSavedData { get }
     
     func setup(stages: Int)
@@ -53,6 +55,10 @@ final class PomodoroServiceImpl: PomodoroService {
         innerIndex == pomodoroCycle[outerIndex].count - 1
     }
     
+    var atLastState: Bool {
+        innerIndex == pomodoroCycle[outerIndex].count - 1 && outerIndex == pomodoroCycle.count - 1
+    }
+    
     var dataToSave: PomodoroServiceSavedData {
         PomodoroServiceSavedData(
             stagesCount: stagesCount,
@@ -76,7 +82,7 @@ final class PomodoroServiceImpl: PomodoroService {
     private var innerIndex: Int = 0 {
         didSet {
             guard !ignoreDelegate else { return }
-            delegate?.pomododoService(self, didChangeStateTo: currentState)
+            delegate?.pomodoroService(self, didChangeStateTo: currentState)
         }
     }
     private var outerIndex: Int = 0 {
@@ -99,7 +105,7 @@ final class PomodoroServiceImpl: PomodoroService {
         outerIndex = savedData.outerIndex
         innerIndex = savedData.innerIndex
         ignoreDelegate = false
-        delegate?.pomododoService(self, didChangeStateTo: currentState)
+        delegate?.pomodoroService(self, didChangeStateTo: currentState)
     }
     
     func moveForward() {
@@ -107,6 +113,8 @@ final class PomodoroServiceImpl: PomodoroService {
             innerIndex += 1
         } else if outerIndex < pomodoroCycle.count - 1 {
             outerIndex += 1
+        } else {
+            delegate?.pomodoroServiceEnded(self)
         }
     }
     
