@@ -46,7 +46,7 @@ final class PreviousResultsViewModel: ViewModel {
         
         self.tasks = previousTasks
         self.dailyAverageFocusValue = dateCalculatorService.calculatePreviousWeekDailyAverageFocusValue(tasks: previousTasks)
-        self.totalFocusValue = dateCalculatorService.calculatePreviousWeekTotalFocusValue(tasks: tasks)
+        self.totalFocusValue = dateCalculatorService.calculatePreviousWeekTotalFocusValue(tasks: previousTasks)
     }
     
     // MARK: - Public Methods

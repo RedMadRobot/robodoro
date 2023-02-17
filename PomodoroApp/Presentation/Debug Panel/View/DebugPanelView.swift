@@ -44,7 +44,7 @@ struct DebugPanelView: View {
                     text: $viewModel.taskTitle,
                     placeholder: "Task title (optional)",
                     onShouldChangeText: viewModel.shouldChangeText)
-                DatePicker(selection: $viewModel.taskDate, in: ...Date.now, displayedComponents: .date) {
+                DatePicker(selection: $viewModel.taskDate, in: ...Date.now) {
                     Text("Task date")
                 }
                 VStack(alignment: .leading) {

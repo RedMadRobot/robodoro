@@ -17,7 +17,7 @@ extension Date {
         var cal = calendar
         cal.firstWeekday = firstWeekday.rawValue
         var dateComponents = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        dateComponents.setTimeComponentsToNoon()
+        dateComponents.setTimeComponentsToBeginning()
         return cal.date(from: dateComponents)
     }
     
@@ -26,6 +26,7 @@ extension Date {
         var dateComponents = DateComponents()
         dateComponents.weekOfYear = 1
         dateComponents.day = -1
+        dateComponents.setTimeComponentsToEnd()
         return Calendar.current.date(byAdding: dateComponents, to: startOfWeek)
     }
     
@@ -54,18 +55,20 @@ extension Calendar {
         guard let daysNotIncludingToday = numberOfDays.day else { return nil }
         return daysNotIncludingToday + 1
     }
-    
-    func makeDate(year: Int, month: Int, day: Int) -> Date {
-        let components = DateComponents(year: year, month: month, day: day, hour: 12, minute: 0, second: 0)
-        return self.date(from: components)!
-    }
 }
 
 fileprivate extension DateComponents {
-    mutating func setTimeComponentsToNoon() {
-        self.hour = 12
+    mutating func setTimeComponentsToBeginning() {
+        self.hour = 0
         self.minute = 0
         self.second = 0
         self.nanosecond = 0
+    }
+    
+    mutating func setTimeComponentsToEnd() {
+        self.hour = 23
+        self.minute = 59
+        self.second = 59
+        self.nanosecond = 59
     }
 }
