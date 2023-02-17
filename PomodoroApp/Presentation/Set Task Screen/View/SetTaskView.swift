@@ -43,9 +43,6 @@ struct SetTaskView: View {
                 .padding(.vertical, 32)
             parameters
         }
-        .onTapGesture {
-            hideKeyboard()
-        }
     }
     
     @ViewBuilder
@@ -57,15 +54,18 @@ struct SetTaskView: View {
                         TimePickerView(
                             value: $viewModel.focusTimeValue,
                             title: PomodoroState.focus.miniTitle,
-                            color: Colors.focusRed)
+                            color: Colors.focusRed,
+                            shrinked: viewModel.shrinkSlidersStep)
                         TimePickerView(
                             value: $viewModel.breakTimeValue,
                             title: PomodoroState.break.miniTitle,
-                            color: Colors.breakPurple)
+                            color: Colors.breakPurple,
+                            shrinked: viewModel.shrinkSlidersStep)
                         TimePickerView(
                             value: $viewModel.longBreakTimeValue,
                             title: PomodoroState.longBreak.miniTitle,
-                            color: Colors.longBreakGreen)
+                            color: Colors.longBreakGreen,
+                            shrinked: viewModel.shrinkSlidersStep)
                         SessionStepperView(value: $viewModel.stagesCount)
                         taskTitleFieldView(proxy: proxy)
                         Spacer()

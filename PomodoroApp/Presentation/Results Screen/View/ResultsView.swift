@@ -71,6 +71,7 @@ struct ResultsView: View {
                     .padding(.top, 30)
                     TasksListView(
                         tasks: viewModel.tasks,
+                        disableAnimations: !navigator.rootIsVisible,
                         onDelete: { task in
                             showAlert(taskToDelete: task)
                         })

@@ -14,10 +14,12 @@ import Foundation
 protocol TasksStorage {
     var tasks: CurrentValueSubject<[PomodoroTask], Never> { get }
     func createTask(withTitle title: String?) -> PomodoroTask
+    func createTask(task: PomodoroTask)
     func getTask(withId id: UUID) -> PomodoroTask?
     func updateTime(ofTaskWithId id: UUID, newTime: TimeInterval)
     func deleteTask(withId id: UUID)
     func deleteTasks(before date: Date)
+    func deleteAllTasks()
     func getTasks(before date: Date) -> [PomodoroTask]
 }
 
@@ -82,6 +84,15 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
         return task
     }
     
+    func createTask(task: PomodoroTask) {
+        let taskObject = PomodoroTaskObject(context: managedObjectContext)
+        taskObject.id = task.id
+        taskObject.title = task.title
+        taskObject.date = task.date
+        taskObject.completedInterval = task.completedInterval
+        managedObjectContext.saveIfNeeded()
+    }
+    
     func getTask(withId id: UUID) -> PomodoroTask? {
         let predicate = NSPredicate(format: "id = %@", id as CVarArg)
         let result = managedObjectContext.fetchFirst(PomodoroTaskObject.self, predicate: predicate)
@@ -126,6 +137,19 @@ final class TasksStorageCoreDataImpl: NSObject, TasksStorage {
     func deleteTasks(before date: Date) {
         let predicate = NSPredicate(format: "date < %@", date as NSDate)
         let result = backgroundContext.fetchAll(PomodoroTaskObject.self, predicate: predicate)
+        switch result {
+        case .success(let managedObjects):
+            for managedObject in managedObjects {
+                backgroundContext.delete(managedObject)
+            }
+        case .failure(_):
+            print("Couldn't fetch PomodoroTaskObject")
+        }
+        backgroundContext.saveIfNeeded()
+    }
+    
+    func deleteAllTasks() {
+        let result = backgroundContext.fetchAll(PomodoroTaskObject.self, predicate: nil)
         switch result {
         case .success(let managedObjects):
             for managedObject in managedObjects {

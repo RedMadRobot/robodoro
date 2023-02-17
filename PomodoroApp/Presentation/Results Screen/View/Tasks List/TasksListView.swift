@@ -14,7 +14,8 @@ struct TasksListView: View {
     @State
     private var editingTask: PomodoroTask?
     
-    private var tasks: [PomodoroTask]
+    private let tasks: [PomodoroTask]
+    private let disableAnimations: Bool
     
     private var onDelete: ((PomodoroTask) -> Void)?
     
@@ -22,9 +23,11 @@ struct TasksListView: View {
     
     init(
         tasks: [PomodoroTask],
+        disableAnimations: Bool = false,
         onDelete: ((PomodoroTask) -> Void)? = nil
     ) {
         self.tasks = tasks
+        self.disableAnimations = disableAnimations
         self.onDelete = onDelete
     }
     
@@ -38,7 +41,7 @@ struct TasksListView: View {
         .background(
             RoundedRectangle(cornerRadius: 32)
                 .fill(Color(Colors.white)))
-        .animation(.easeInOut, value: tasks)
+        .animation(disableAnimations ? nil : .easeInOut, value: tasks)
     }
     
     // MARK: - Private Properties

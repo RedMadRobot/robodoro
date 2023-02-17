@@ -17,4 +17,6 @@ extension PomodoroState {
             return 60 * 5
         }
     }
+    
+    static let defaultStagesCount: Int = 4
 }

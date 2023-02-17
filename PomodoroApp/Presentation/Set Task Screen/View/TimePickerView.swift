@@ -14,8 +14,10 @@ struct TimePickerView: View {
     
     private enum Constants {
         static let minimumValue: TimeInterval = 5 * 60
+        static let shrinkedMinimumValue: TimeInterval = 0.5 * 60
         static let maximumValue: TimeInterval = 60 * 60
         static let step: TimeInterval = 5 * 60
+        static let shrinkedStep: TimeInterval = 0.5 * 60
     }
     
     // MARK: - Private Properties
@@ -25,19 +27,32 @@ struct TimePickerView: View {
     
     private let title: String
     private let color: UIColor
+    private let shrinked: Bool
     
     private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
+    
+    private var sliderInterval: ClosedRange<TimeInterval> {
+        shrinked ?
+            Constants.shrinkedMinimumValue...Constants.maximumValue :
+            Constants.minimumValue...Constants.maximumValue
+    }
+    
+    private var sliderStep: TimeInterval {
+        shrinked ? Constants.shrinkedStep : Constants.step
+    }
     
     // MARK: - Init
     
     init(
         value: Binding<TimeInterval>,
         title: String,
-        color: UIColor
+        color: UIColor,
+        shrinked: Bool = false
     ) {
         self._value = value
         self.title = title
         self.color = color
+        self.shrinked = shrinked
     }
     
     // MARK: - View
@@ -53,8 +68,8 @@ struct TimePickerView: View {
             }
             ValueSlider(
                 value: $value,
-                in: Constants.minimumValue...Constants.maximumValue,
-                step: Constants.step)
+                in: sliderInterval,
+                step: sliderStep)
             .valueSliderStyle(
                 HorizontalValueSliderStyle(
                     track: HorizontalTrack(view: Color(color))

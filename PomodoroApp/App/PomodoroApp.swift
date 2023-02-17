@@ -69,6 +69,8 @@ struct PomodoroApp: App {
                 switch screen {
                 case .settings:
                     SettingsView(navigator: navigator)
+                case .debugPanel:
+                    DebugPanelView(navigator: navigator)
                 }
             }
             .sheet(

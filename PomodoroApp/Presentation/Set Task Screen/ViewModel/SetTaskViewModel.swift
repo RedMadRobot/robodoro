@@ -49,18 +49,20 @@ final class SetTaskViewModel: ViewModel {
     @Published
     var taskTitle: String = ""
     
+    private(set) var shrinkSlidersStep: Bool
+    
     private(set) var feedbackService: FeedbackService
     
     // MARK: - Private Properties
     
     private let timedPomodoroWorker: TimedPomodoroWorker
-    private var userDefaultsStorage: LastUsedValuesStorage
+    private var userDefaultsStorage: LastUsedValuesStorage & SettingsStorage
     
     private var trimmedTaskTitle: String {
         taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    private var isTaskTitleEmptry: Bool {
+    private var isTaskTitleEmpty: Bool {
         trimmedTaskTitle == ""
     }
     
@@ -68,7 +70,7 @@ final class SetTaskViewModel: ViewModel {
     
     init(
         timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
-        userDefaultsStorage: LastUsedValuesStorage = DI.storages.userDefaultsStorage,
+        userDefaultsStorage: LastUsedValuesStorage & SettingsStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
         self.timedPomodoroWorker = timedPomodoroWorker
@@ -79,6 +81,7 @@ final class SetTaskViewModel: ViewModel {
         self.breakTimeValue = userDefaultsStorage.lastBreakTime
         self.longBreakTimeValue = userDefaultsStorage.lastLongBreakTime
         self.stagesCount = userDefaultsStorage.lastStagesCount
+        self.shrinkSlidersStep = userDefaultsStorage.shrinkSlidersStep
     }
     
     // MARK: - Public Methods
@@ -91,7 +94,7 @@ final class SetTaskViewModel: ViewModel {
         let longBreakTimeValue = longBreakTimeValue
         
         timedPomodoroWorker.setup(
-            taskName: isTaskTitleEmptry ? nil : trimmedTaskTitle,
+            taskName: isTaskTitleEmpty ? nil : trimmedTaskTitle,
             stages: stagesCount,
             intervals: { stage in
                 switch stage {

@@ -12,6 +12,7 @@ import Foundation
 protocol SettingsStorage {
     var soundEnabled: Bool { get set }
     var hapticEnabled: Bool { get set }
+    var shrinkSlidersStep: Bool { get set }
 }
 
 protocol LastUsedValuesStorage {
@@ -42,6 +43,7 @@ final class UserDefaultsStorage: SettingsStorage,
     enum Keys: String, CaseIterable {
         case soundEnabled = "com.redmadrobot.PomodoroApp.soundEnabled"
         case hapticEnabled = "com.redmadrobot.PomodoroApp.hapticEnabled"
+        case shrinkSlidersStep = "com.redmadrobot.PomodoroApp.shrinkSlidersStep"
         case lastFocusTime = "com.redmadrobot.PomodoroApp.lastFocusTime"
         case lastBreakTime = "com.redmadrobot.PomodoroApp.lastBreakTime"
         case lastLongBreakTime = "com.redmadrobot.PomodoroApp.lastLongBreakTime"
@@ -71,6 +73,11 @@ final class UserDefaultsStorage: SettingsStorage,
             key: Keys.hapticEnabled.rawValue,
             storage: storage
         )
+        _shrinkSlidersStep = UserDefault(
+            wrappedValue: false,
+            key: Keys.shrinkSlidersStep.rawValue,
+            storage: storage
+        )
         
         // LastUsedValuesStorage
         _lastFocusTime = UserDefault(
@@ -89,7 +96,7 @@ final class UserDefaultsStorage: SettingsStorage,
             storage: storage
         )
         _lastStagesCount = UserDefault(
-            wrappedValue: 4,
+            wrappedValue: PomodoroState.defaultStagesCount,
             key: Keys.lastStagesCount.rawValue,
             storage: storage
         )
@@ -110,6 +117,10 @@ final class UserDefaultsStorage: SettingsStorage,
         _appReloadSavedData = CodableUserDefault(
             key: Keys.appReloadSavedData.rawValue,
             storage: storage)
+        
+        #if DEBUG
+        shrinkSlidersStep = false
+        #endif
     }
     
     // MARK: - SettingsStorage
@@ -118,6 +129,8 @@ final class UserDefaultsStorage: SettingsStorage,
     var soundEnabled: Bool
     @UserDefault
     var hapticEnabled: Bool
+    @UserDefault
+    var shrinkSlidersStep: Bool
     
     // MARK: - LastUsedValuesStorage
     

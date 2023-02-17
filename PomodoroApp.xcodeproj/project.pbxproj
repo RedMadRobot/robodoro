@@ -70,6 +70,11 @@
 		354957A72927C511000C216C /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354957A62927C511000C216C /* TimeInterval+Extension.swift */; };
 		355F744F297761CE00B16856 /* WhoAreWeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F744E297761CE00B16856 /* WhoAreWeView.swift */; };
 		355F74512977625400B16856 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F74502977625400B16856 /* InfoOverlayView.swift */; };
+		356FDED1299E69C400FA66E3 /* DebugPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356FDED0299E69C400FA66E3 /* DebugPanelView.swift */; };
+		356FDED5299E6A0D00FA66E3 /* DebugPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356FDED4299E6A0D00FA66E3 /* DebugPanelViewModel.swift */; };
+		356FDED7299E710F00FA66E3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356FDED6299E710F00FA66E3 /* CustomTextField.swift */; };
+		356FDED9299EA66D00FA66E3 /* TimeIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356FDED8299EA66D00FA66E3 /* TimeIntervalPicker.swift */; };
+		356FDEDB299EC44E00FA66E3 /* Task+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356FDEDA299EC44E00FA66E3 /* Task+Extension.swift */; };
 		3570EE3F294B1D850039A1D2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3570EE3E294B1D850039A1D2 /* ViewModel.swift */; };
 		3570EE4B294B32130039A1D2 /* SetTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3570EE4A294B32130039A1D2 /* SetTaskView.swift */; };
 		3570EE4E294B54940039A1D2 /* SetTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3570EE4D294B54940039A1D2 /* SetTaskViewModel.swift */; };
@@ -204,6 +209,11 @@
 		354957A62927C511000C216C /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		355F744E297761CE00B16856 /* WhoAreWeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoAreWeView.swift; sourceTree = "<group>"; };
 		355F74502977625400B16856 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
+		356FDED0299E69C400FA66E3 /* DebugPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPanelView.swift; sourceTree = "<group>"; };
+		356FDED4299E6A0D00FA66E3 /* DebugPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPanelViewModel.swift; sourceTree = "<group>"; };
+		356FDED6299E710F00FA66E3 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		356FDED8299EA66D00FA66E3 /* TimeIntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalPicker.swift; sourceTree = "<group>"; };
+		356FDEDA299EC44E00FA66E3 /* Task+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Extension.swift"; sourceTree = "<group>"; };
 		3570EE3E294B1D850039A1D2 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3570EE4A294B32130039A1D2 /* SetTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTaskView.swift; sourceTree = "<group>"; };
 		3570EE4D294B54940039A1D2 /* SetTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTaskViewModel.swift; sourceTree = "<group>"; };
@@ -309,6 +319,7 @@
 		35203936291EAD5700A4028E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				356FDECF299E69A800FA66E3 /* Debug Panel */,
 				355F744C2977619D00B16856 /* Onboarding */,
 				352B6C072947815C00B09E51 /* Navigation */,
 				352B6C00294756AD00B09E51 /* Common */,
@@ -356,6 +367,7 @@
 				3582D25C2954A20900AC0127 /* UIFont+Extension.swift */,
 				3582D2632955B70B00AC0127 /* NumberFormatter+Extension.swift */,
 				3582D2652955BDB900AC0127 /* Date+Extension.swift */,
+				356FDEDA299EC44E00FA66E3 /* Task+Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -671,6 +683,33 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		356FDECF299E69A800FA66E3 /* Debug Panel */ = {
+			isa = PBXGroup;
+			children = (
+				356FDED3299E69D400FA66E3 /* ViewModel */,
+				356FDED2299E69CC00FA66E3 /* View */,
+			);
+			path = "Debug Panel";
+			sourceTree = "<group>";
+		};
+		356FDED2299E69CC00FA66E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				356FDED0299E69C400FA66E3 /* DebugPanelView.swift */,
+				356FDED6299E710F00FA66E3 /* CustomTextField.swift */,
+				356FDED8299EA66D00FA66E3 /* TimeIntervalPicker.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		356FDED3299E69D400FA66E3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				356FDED4299E6A0D00FA66E3 /* DebugPanelViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		3570EE47294B31080039A1D2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,6 +978,7 @@
 				3520397D2923D61000A4028E /* TimerService.swift in Sources */,
 				352039772923D31200A4028E /* DI.swift in Sources */,
 				352039472922486F00A4028E /* Images.swift in Sources */,
+				356FDED7299E710F00FA66E3 /* CustomTextField.swift in Sources */,
 				878F7EEE2976CBD4005F6EAE /* Theme.swift in Sources */,
 				3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */,
 				3582D248295096FD00AC0127 /* SpendedMinutesView.swift in Sources */,
@@ -948,6 +988,7 @@
 				3582D239294C731C00AC0127 /* SessionStepperView.swift in Sources */,
 				3582D24529506FB300AC0127 /* PomodoroTask.swift in Sources */,
 				352B6C0E2948DBCD00B09E51 /* AlertView.swift in Sources */,
+				356FDEDB299EC44E00FA66E3 /* Task+Extension.swift in Sources */,
 				3520396E2923BD5300A4028E /* StageView.swift in Sources */,
 				3520394A2922532700A4028E /* BackgroundView.swift in Sources */,
 				35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */,
@@ -962,6 +1003,7 @@
 				352B6C13294A067B00B09E51 /* SwitcherStyle.swift in Sources */,
 				3570EE3F294B1D850039A1D2 /* ViewModel.swift in Sources */,
 				3570EE4B294B32130039A1D2 /* SetTaskView.swift in Sources */,
+				356FDED1299E69C400FA66E3 /* DebugPanelView.swift in Sources */,
 				352B6C112949DC9F00B09E51 /* SettingsViewModel.swift in Sources */,
 				3582D2542951E38100AC0127 /* TaskView.swift in Sources */,
 				352B6BF929472ED000B09E51 /* UserDefaultsStorage.swift in Sources */,
@@ -974,6 +1016,7 @@
 				3549578C2926425E000C216C /* Font+Big.swift in Sources */,
 				352B6BFD2947373700B09E51 /* ResultsView.swift in Sources */,
 				3520394129223D8600A4028E /* Colors.swift in Sources */,
+				356FDED9299EA66D00FA66E3 /* TimeIntervalPicker.swift in Sources */,
 				3582D23B294C7EC900AC0127 /* TaskTitleFieldView.swift in Sources */,
 				3520394D2922707E00A4028E /* FocusedBackground.swift in Sources */,
 				3549579F29267836000C216C /* AppWorkers.swift in Sources */,
@@ -984,6 +1027,7 @@
 				351C432E297805270005503E /* OnboardingViewModel.swift in Sources */,
 				3582D23F294C974C00AC0127 /* View+Extension.swift in Sources */,
 				3549578129263CCF000C216C /* PomodoroState.swift in Sources */,
+				356FDED5299E6A0D00FA66E3 /* DebugPanelViewModel.swift in Sources */,
 				35C1C473294B66C20005D72C /* TimePickerView.swift in Sources */,
 				352B6BFF2947377800B09E51 /* NoTasksView.swift in Sources */,
 				35AB2D5C296D5D26002CEC4A /* PersistentStore.swift in Sources */,

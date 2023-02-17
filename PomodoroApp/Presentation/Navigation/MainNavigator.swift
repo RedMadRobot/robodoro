@@ -9,6 +9,7 @@ import SwiftUI
 
 enum StackScreen: Hashable {
     case settings
+    case debugPanel
 }
 
 enum DelayedPresentingScreen {
@@ -40,7 +41,11 @@ final class MainNavigator: ObservableObject {
     private(set) var alertViewModel = AlertViewModel()
         
     var rootIsVisible: Bool {
-        !pomodoroModalPresented && !setTaskSheetPresented && !previousResultsPresented && !onboardingPresented
+        !pomodoroModalPresented &&
+        !setTaskSheetPresented &&
+        !previousResultsPresented &&
+        !onboardingPresented &&
+        navigationPath.isEmpty
     }
     
     // MARK: - Private Properties
@@ -63,6 +68,10 @@ final class MainNavigator: ObservableObject {
     
     func pushSettings() {
         navigationPath.append(StackScreen.settings)
+    }
+    
+    func pushDebugPanel() {
+        navigationPath.append(StackScreen.debugPanel)
     }
     
     func showPomodoroModal(delayed: Bool = false) {

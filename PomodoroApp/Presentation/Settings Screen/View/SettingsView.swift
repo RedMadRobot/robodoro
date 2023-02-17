@@ -48,9 +48,11 @@ struct SettingsView: View {
             Toggle("Haptic", isOn: $viewModel.hapticEnabled)
                 .toggleStyle(SettingsToggleStyle())
             Spacer()
+            Text("With ❤️ by red_mad_robot")
+                .font(.regularText)
+                .foregroundColor(Color(Colors.textGray2))
         }
-        .padding(.top, 20)
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
+        .padding(EdgeInsets(top: 20, leading: 10, bottom: 5, trailing: 10))
     }
     
     @ViewBuilder
@@ -67,6 +69,16 @@ struct SettingsView: View {
             }
             Text("SETTINGS")
                 .font(.regularTitle)
+            #if DEBUG
+            HStack {
+                Spacer()
+                Button {
+                    navigator.pushDebugPanel()
+                } label: {
+                    Text("Debug panel")
+                }
+            }
+            #endif
         }
     }
 }
