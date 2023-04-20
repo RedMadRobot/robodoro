@@ -23,7 +23,7 @@ struct InfoOverlayView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.black).opacity(0.6)
+            Colors.black.suColor.opacity(0.6)
             bannerView
         }
         .ignoresSafeArea()
@@ -57,7 +57,7 @@ struct InfoOverlayView: View {
             }
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
-            .background(Color(Colors.white))
+            .background(Colors.white.suColor)
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .padding(.horizontal, 16)
         }
@@ -70,6 +70,6 @@ struct InfoOverlayView: View {
 struct InfoOverlayView_Previews: PreviewProvider {
     static var previews: some View {
         InfoOverlayView(onButtonClick: {})
-            .background(Color(Colors.focusRed))
+            .background(Colors.focusRed.suColor)
     }
 }

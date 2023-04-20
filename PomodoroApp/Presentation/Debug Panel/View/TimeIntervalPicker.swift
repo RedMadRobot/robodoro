@@ -61,7 +61,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("h")
-                .foregroundColor(Color(Colors.textGray1))
+                .foregroundColor(Colors.textGray1.suColor)
             Picker(selection: $minutes, label: Text("")) {
                 ForEach(self.minutesArray, id: \.self) { minute in
                     Text("\(minute)")
@@ -75,7 +75,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("m")
-                .foregroundColor(Color(Colors.textGray1))
+                .foregroundColor(Colors.textGray1.suColor)
             Picker(selection: $seconds, label: Text("")) {
                 ForEach(self.secondsArray, id: \.self) { second in
                     Text("\(second)")
@@ -89,7 +89,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("s")
-                .foregroundColor(Color(Colors.textGray1))
+                .foregroundColor(Colors.textGray1.suColor)
         }
         .pickerStyle(.wheel)
         .onChange(of: value) { _ in

@@ -60,7 +60,7 @@ struct ResultsView: View {
     @ViewBuilder
     private var tasksView: some View {
         ZStack {
-            Color(Colors.defaultGray)
+            Colors.defaultGray.suColor
                 .ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 8) {
@@ -87,7 +87,7 @@ struct ResultsView: View {
         if viewModel.showDeletionOnboarding {
             Text("If you want to delete the task, you need to tap on the cell and confirm the action")
                 .font(.regularText)
-                .foregroundColor(Color(Colors.textGray1))
+                .foregroundColor(Colors.textGray1.suColor)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 50)
                 .padding(.vertical, 16)

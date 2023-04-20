@@ -27,7 +27,7 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.white)
+            Colors.white.suColor
             frontView
         }
         .navigationBarBackButtonHidden(true)
@@ -50,7 +50,7 @@ struct SettingsView: View {
             Spacer()
             Text("With ❤️ by red_mad_robot")
                 .font(.regularText)
-                .foregroundColor(Color(Colors.textGray2))
+                .foregroundColor(Colors.textGray2.suColor)
         }
         .padding(EdgeInsets(top: 20, leading: 10, bottom: 5, trailing: 10))
     }

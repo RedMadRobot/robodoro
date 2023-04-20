@@ -24,7 +24,7 @@ struct NoTasksView: View {
             backView
             Text("NO TASKS YET")
                 .font(.stageLabel)
-                .foregroundColor(Color(Colors.textGray1))
+                .foregroundColor(Colors.textGray1.suColor)
         }
         .ignoresSafeArea()
     }
@@ -33,7 +33,7 @@ struct NoTasksView: View {
     
     @ViewBuilder
     private var backView: some View {
-        Color(Colors.defaultGray)
+        Colors.defaultGray.suColor
         GeometryReader { geometry in
             Path { path in
                 let globalFrame = geometry.frame(in: .global)
@@ -52,7 +52,7 @@ struct NoTasksView: View {
                     y += spacing
                 }
             }
-            .stroke(Color(Colors.defaultLine), lineWidth: Constants.lineWidth)
+            .stroke(Colors.defaultLine.suColor, lineWidth: Constants.lineWidth)
         }
     }
 }

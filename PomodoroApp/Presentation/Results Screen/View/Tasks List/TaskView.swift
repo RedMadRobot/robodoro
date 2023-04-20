@@ -66,7 +66,7 @@ struct TaskView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(task.title ?? "Noname Task")
                 Text(formatter.string(from: task.date))
-                    .foregroundColor(Color(Colors.textGray2))
+                    .foregroundColor(Colors.textGray2.suColor)
             }
             .font(.regularText)
             Spacer(minLength: 45)

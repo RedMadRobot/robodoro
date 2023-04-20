@@ -42,7 +42,7 @@ struct WhoAreWeView: View {
     
     @ViewBuilder
     private var backView: some View {
-        Color(Colors.averageFocusBlue)
+        Colors.averageFocusBlue.suColor
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .ignoresSafeArea()
         GeometryReader { geometry in
@@ -63,7 +63,7 @@ struct WhoAreWeView: View {
                     y += spacing
                 }
             }
-            .stroke(Color(Colors.averageFocusLine), lineWidth: Constants.lineWidth)
+            .stroke(Colors.averageFocusLine.suColor, lineWidth: Constants.lineWidth)
             .clipShape(RoundedRectangle(cornerRadius: 32))
         }
     }

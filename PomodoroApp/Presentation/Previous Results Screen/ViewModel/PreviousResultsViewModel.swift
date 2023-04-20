@@ -19,6 +19,8 @@ final class PreviousResultsViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
+    let formatter: DateFormatter = .onlyDateFormatter
+    
     // MARK: - Private Properties
     
     private let dateCalculatorService: DateCalculatorService

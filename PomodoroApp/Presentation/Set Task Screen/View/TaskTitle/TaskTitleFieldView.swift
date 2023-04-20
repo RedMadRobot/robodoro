@@ -42,7 +42,7 @@ struct TaskTitleFieldView: View {
         .background(placeholderView, alignment: .topLeading)
         .background(
             RoundedRectangle(cornerRadius: 24)
-                .fill(Color(Colors.gray)))
+                .fill(Colors.gray.suColor))
         .padding(.horizontal, 16)
         .padding(.bottom, 20)
     }
@@ -54,7 +54,7 @@ struct TaskTitleFieldView: View {
         if value.isEmpty {
             Text("Add task name, if you want...")
                 .font(.regularText)
-                .foregroundColor(Color(Colors.textGray2))
+                .foregroundColor(Colors.textGray2.suColor)
                 .padding(.leading, 25)
                 .padding(.top, 32)
         }

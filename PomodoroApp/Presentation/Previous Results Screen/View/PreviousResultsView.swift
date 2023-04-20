@@ -75,7 +75,7 @@ struct PreviousResultsView: View {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
         .padding(.vertical, 24)
-        .background(Color(Colors.gray))
+        .background(Colors.gray.suColor)
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .padding(.horizontal, 16)
         .padding(.vertical, 32)

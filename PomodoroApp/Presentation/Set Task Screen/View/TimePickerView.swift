@@ -74,7 +74,7 @@ struct TimePickerView: View {
                 HorizontalValueSliderStyle(
                     track: HorizontalTrack(view: Color(color))
                         .frame(height: 1)
-                        .background(Color(Colors.defaultLine)),
+                        .background(Colors.defaultLine.suColor),
                     thumb: Circle()
                         .fill(Color(color)),
                     thumbSize: CGSize(width: 20, height: 20)

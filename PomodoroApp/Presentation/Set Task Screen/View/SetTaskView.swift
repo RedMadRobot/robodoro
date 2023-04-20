@@ -28,7 +28,7 @@ struct SetTaskView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.white)
+            Colors.white.suColor
             frontView
         }
     }

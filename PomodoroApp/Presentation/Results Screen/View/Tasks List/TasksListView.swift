@@ -40,7 +40,7 @@ struct TasksListView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 32)
-                .fill(Color(Colors.white)))
+                .fill(Colors.white.suColor))
         .animation(disableAnimations ? nil : .easeInOut, value: tasks)
     }
     
@@ -56,7 +56,7 @@ struct TasksListView: View {
         .padding(.horizontal, 16)
         .padding(.top, 24)
         .font(.regularText)
-        .foregroundColor(Color(Colors.textGray2))
+        .foregroundColor(Colors.textGray2.suColor)
     }
     
     @ViewBuilder
@@ -81,7 +81,7 @@ struct TasksListView: View {
     @ViewBuilder
     private var divider: some View {
         Divider()
-            .overlay(Color(Colors.textGray2))
+            .overlay(Colors.textGray2.suColor)
             .padding(.horizontal, 16)
     }
     
@@ -103,7 +103,7 @@ struct TasksListView_Previews: PreviewProvider {
     
     static var previews: some View {
         ZStack {
-            Color(Colors.gray)
+            Colors.gray.suColor
                 .ignoresSafeArea()
             ScrollView {
                 TasksListView(

@@ -28,7 +28,7 @@ struct AlertView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.black).opacity(0.6)
+            Colors.black.suColor.opacity(0.6)
             alertBanner
         }
         .ignoresSafeArea()
@@ -60,7 +60,7 @@ struct AlertView: View {
             .padding(.bottom, 24)
         }
         .frame(maxWidth: .infinity)
-        .background(Color(Colors.white))
+        .background(Colors.white.suColor)
         .clipShape(RoundedRectangle(cornerRadius: 35))
         .padding(16)
     }
@@ -71,6 +71,6 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
         AlertView(navigator: MainNavigator())
-            .background(Color(Colors.focusRed))
+            .background(Colors.focusRed.suColor)
     }
 }

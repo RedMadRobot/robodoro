@@ -5,7 +5,7 @@
 //  Created by Петр Тартынских  on 14.11.2022.
 //
 
-import UIKit
+import SwiftUI
 
 enum Colors {
     static let defaultGray = UIColor("#F4F4F4")
@@ -24,4 +24,8 @@ enum Colors {
     static let toggleGreen = UIColor("#82C762")
     static let averageFocusBlue = UIColor("#99E4EE")
     static let averageFocusLine = UIColor("#5DCDDE")
+}
+
+extension UIColor {
+    var suColor: Color { Color(self) }
 }

@@ -22,7 +22,7 @@ struct SpendedMinutesBlueBackground: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.averageFocusBlue)
+            Colors.averageFocusBlue.suColor
             GeometryReader { geometry in
                 Path { path in
                     let globalFrame = geometry.frame(in: .local)
@@ -41,7 +41,7 @@ struct SpendedMinutesBlueBackground: View {
                             height: Constants.ellipsHeight))
                     }
                 }
-                .stroke(Color(Colors.averageFocusLine), lineWidth: Constants.lineWidth)
+                .stroke(Colors.averageFocusLine.suColor, lineWidth: Constants.lineWidth)
             }
         }
     }

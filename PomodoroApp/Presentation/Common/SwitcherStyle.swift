@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SettingsToggleStyle: ToggleStyle {
     
-    private let onColor = Color(Colors.toggleGreen)
-    private let offColor = Color(Colors.textGray1)
-    private let thumbColor = Color(Colors.white)
+    private let onColor = Colors.toggleGreen.suColor
+    private let offColor = Colors.textGray1.suColor
+    private let thumbColor = Colors.white.suColor
     
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack {
