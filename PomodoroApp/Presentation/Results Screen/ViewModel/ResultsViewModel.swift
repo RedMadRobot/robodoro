@@ -13,7 +13,7 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Properties
     
     @Published
-    private(set) var tasks: [PomodoroTask]
+    private(set) var taskItems: [PomodoroTaskItem]
     
     @Published
     private(set) var dailyAverageFocusValue: Double
@@ -34,7 +34,7 @@ final class ResultsViewModel: ViewModel {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    private var taskToDelete: PomodoroTask?
+    private var taskToDelete: PomodoroTaskItem?
     
     // MARK: - Init
     
@@ -52,7 +52,7 @@ final class ResultsViewModel: ViewModel {
         
         let allTasks = tasksStorage.tasks.value
         
-        self.tasks = allTasks
+        self.taskItems = allTasks.map { PomodoroTaskItem(task: $0) }
         self.dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: allTasks)
         self.totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: allTasks)
         addSubscriptions()
@@ -60,12 +60,12 @@ final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Methods
     
-    func prepareToDeleteTask(task: PomodoroTask) {
+    func prepareToDeleteTask(task: PomodoroTaskItem) {
         taskToDelete = task
     }
     
     func deleteSelectedTask() {
-        guard let taskToDelete = taskToDelete else { return }
+        guard let taskToDelete else { return }
         tasksStorage.deleteTask(withId: taskToDelete.id)
         self.taskToDelete = nil
         userDefaultsStorage.deleteFeatureUsed = true
@@ -76,13 +76,13 @@ final class ResultsViewModel: ViewModel {
     
     private func addSubscriptions() {
         tasksStorage.tasks.sink { [weak self] tasks in
-            self?.tasks = tasks
-            self?.recalculateTime()
+            self?.taskItems = tasks.map { PomodoroTaskItem(task: $0) }
+            self?.recalculateTime(tasks: tasks)
         }
         .store(in: &subscriptions)
     }
     
-    private func recalculateTime() {
+    private func recalculateTime(tasks: [PomodoroTask]) {
         dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: tasks)
         totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
     }

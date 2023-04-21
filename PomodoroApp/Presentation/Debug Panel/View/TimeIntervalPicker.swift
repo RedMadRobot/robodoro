@@ -135,7 +135,6 @@ struct TimeIntervalPicker: View {
         )
         guard newValue != value else { return }
         value = newValue
-        print(value)
     }
 }
 

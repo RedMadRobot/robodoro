@@ -46,7 +46,7 @@ struct PreviousResultsView: View {
                     dailyAverageFocusValue: viewModel.dailyAverageFocusValue,
                     totalFocusValue: viewModel.totalFocusValue)
                 .padding(.horizontal, 16)
-                TasksListView(tasks: viewModel.tasks)
+                TasksListView(tasks: viewModel.taskItems)
                 Spacer(minLength: 80)
             }
         }

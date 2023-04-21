@@ -61,7 +61,7 @@ struct TimePickerView: View {
                 Text(title)
                     .font(.regularText)
                 Spacer()
-                Text(dateComponentsFormatter.string(from: value) ?? "NaN")
+                Text(DateComponentsFormatter.minutesAndSecondsFormatter.string(from: value) ?? "NaN")
                     .font(.miniTime)
             }
             ValueSlider(

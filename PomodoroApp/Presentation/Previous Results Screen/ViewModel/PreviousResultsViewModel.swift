@@ -10,8 +10,8 @@ import SwiftUI
 final class PreviousResultsViewModel: ViewModel {
     
     // MARK: - Public Properties
-    
-    private(set) var tasks: [PomodoroTask]
+        
+    private(set) var taskItems: [PomodoroTaskItem]
     
     private(set) var dailyAverageFocusValue: Double
     
@@ -36,7 +36,7 @@ final class PreviousResultsViewModel: ViewModel {
         self.feedbackService = feedbackService
         
         guard let startOfWeek = dateCalculatorService.startOfWeek else {
-            self.tasks = []
+            self.taskItems = []
             self.dailyAverageFocusValue = 0
             self.totalFocusValue = 0
             return
@@ -44,7 +44,7 @@ final class PreviousResultsViewModel: ViewModel {
         
         let previousTasks = tasksStorage.getTasks(before: startOfWeek)
         
-        self.tasks = previousTasks
+        self.taskItems = previousTasks.map { PomodoroTaskItem(task: $0) }
         self.dailyAverageFocusValue = dateCalculatorService.calculatePreviousWeekDailyAverageFocusValue(tasks: previousTasks)
         self.totalFocusValue = dateCalculatorService.calculatePreviousWeekTotalFocusValue(tasks: previousTasks)
     }

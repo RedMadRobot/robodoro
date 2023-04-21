@@ -50,7 +50,7 @@ struct ResultsView: View {
     
     @ViewBuilder
     private var backView: some View {
-        if viewModel.tasks.isEmpty {
+        if viewModel.taskItems.isEmpty {
             NoTasksView()
         } else {
             tasksView
@@ -70,7 +70,7 @@ struct ResultsView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 30)
                     TasksListView(
-                        tasks: viewModel.tasks,
+                        tasks: viewModel.taskItems,
                         disableAnimations: !navigator.rootIsVisible,
                         onDelete: { task in
                             showAlert(taskToDelete: task)
@@ -109,7 +109,7 @@ struct ResultsView: View {
     
     // MARK: - Private Methods
     
-    private func showAlert(taskToDelete: PomodoroTask) {
+    private func showAlert(taskToDelete: PomodoroTaskItem) {
         viewModel.prepareToDeleteTask(task: taskToDelete)
         navigator.showAlert(
             title: "Do you want to delete this task?",

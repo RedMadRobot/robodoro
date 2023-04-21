@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3507AFA629F2C48D005C53C6 /* PomodoroTaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3507AFA529F2C48D005C53C6 /* PomodoroTaskItem.swift */; };
 		350CC3C42975526C00753D84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350CC3C32975526C00753D84 /* LaunchScreen.storyboard */; };
 		351C432B2977FD880005503E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C432A2977FD880005503E /* OnboardingView.swift */; };
 		351C432E297805270005503E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C432D297805270005503E /* OnboardingViewModel.swift */; };
@@ -155,6 +156,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3507AFA529F2C48D005C53C6 /* PomodoroTaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTaskItem.swift; sourceTree = "<group>"; };
 		350CC3C32975526C00753D84 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		351C432A2977FD880005503E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		351C432D297805270005503E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -283,6 +285,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3507AFA229F2C456005C53C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3582D2512951BE0700AC0127 /* TasksListView.swift */,
+				3582D2532951E38100AC0127 /* TaskView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3507AFA429F2C480005C53C6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3507AFA529F2C48D005C53C6 /* PomodoroTaskItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		350CC3C52976A2EC00753D84 /* Previous Results Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,7 +500,6 @@
 		352B6BFA2947370C00B09E51 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3582D2502951B51900AC0127 /* Tasks List */,
 				3582D24929509BAB00AC0127 /* Spended Minutes */,
 				352B6BFC2947373700B09E51 /* ResultsView.swift */,
 				352B6BFE2947377800B09E51 /* NoTasksView.swift */,
@@ -500,6 +518,7 @@
 		352B6C00294756AD00B09E51 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3582D2502951B51900AC0127 /* Tasks List */,
 				3582D2592953252D00AC0127 /* Alert */,
 				352B6C01294756CA00B09E51 /* ButtonStyle.swift */,
 				352B6C12294A067B00B09E51 /* SwitcherStyle.swift */,
@@ -752,8 +771,8 @@
 		3582D2502951B51900AC0127 /* Tasks List */ = {
 			isa = PBXGroup;
 			children = (
-				3582D2512951BE0700AC0127 /* TasksListView.swift */,
-				3582D2532951E38100AC0127 /* TaskView.swift */,
+				3507AFA429F2C480005C53C6 /* Model */,
+				3507AFA229F2C456005C53C6 /* View */,
 			);
 			path = "Tasks List";
 			sourceTree = "<group>";
@@ -983,6 +1002,7 @@
 				3582D25B2953254E00AC0127 /* AlertViewModel.swift in Sources */,
 				3582D248295096FD00AC0127 /* SpendedMinutesView.swift in Sources */,
 				354957A72927C511000C216C /* TimeInterval+Extension.swift in Sources */,
+				3507AFA629F2C48D005C53C6 /* PomodoroTaskItem.swift in Sources */,
 				35C69BEA29251989004D176C /* LiveActivityAttributes.swift in Sources */,
 				3582D241295069BB00AC0127 /* TasksStorage.swift in Sources */,
 				3582D239294C731C00AC0127 /* SessionStepperView.swift in Sources */,

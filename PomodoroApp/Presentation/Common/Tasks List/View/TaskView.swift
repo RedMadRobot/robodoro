@@ -19,7 +19,7 @@ struct TaskView: View {
     
     // MARK: - Private Properties
     
-    private let task: PomodoroTask
+    private let task: PomodoroTaskItem
     
     private var isEditing: Bool
     
@@ -29,7 +29,7 @@ struct TaskView: View {
     // MARK: - Init
     
     init(
-        task: PomodoroTask,
+        task: PomodoroTaskItem,
         isEditing: Bool,
         onTap: @escaping () -> Void,
         onDelete: @escaping () -> Void
@@ -62,20 +62,23 @@ struct TaskView: View {
     private var frontView: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(task.title ?? "Noname Task")
-                Text(formatter.string(from: task.date))
+//                Text(task.title ?? "Noname Task")
+                Text(task.title)
+//                Text(formatDate())
+                Text(task.date)
                     .foregroundColor(Colors.textGray2.suColor)
             }
             .font(.regularText)
             Spacer(minLength: 45)
-            Text("\(task.completedInterval.minutesIgnoringHours)")
+//            Text("\(task.completedInterval.minutesIgnoringHours)")
+            Text(task.completedInterval)
                 .font(.miniTime)
                 .contentShape(Rectangle())
                 .background(GeometryReader { geometry in
                     Button {
                         onDelete()
                     } label: {
-                        Image(uiImage: Images.trash)
+                        Images.trash.suImage
                             .padding(.all, Constants.buttonPadding)
                     }
                     .offset(
@@ -86,6 +89,13 @@ struct TaskView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 24)
     }
+    
+    // MARK: - Private Methods
+    
+//    private func formatDate() -> String {
+//        let formatter: DateFormatter = .onlyDateFormatter
+//        return formatter.string(from: task.date)
+//    }
 }
 
 // MARK: - PreviewProvider
@@ -94,11 +104,11 @@ struct TaskView_Previews: PreviewProvider {
     
     static var previews: some View {
         TaskView(
-            task: .init(
+            task: PomodoroTaskItem(task: .init(
                 id: UUID(),
                 title: nil,
                 date: Date(),
-                completedInterval: 60 * 60 * 10),
+                completedInterval: 60 * 60 * 10)),
             isEditing: false,
             onTap: {},
             onDelete: {})

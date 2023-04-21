@@ -12,19 +12,19 @@ struct TasksListView: View {
     // MARK: - Private Properties
     
     @State
-    private var editingTask: PomodoroTask?
+    private var editingTask: PomodoroTaskItem?
     
-    private let tasks: [PomodoroTask]
+    private let tasks: [PomodoroTaskItem]
     private let disableAnimations: Bool
     
-    private var onDelete: ((PomodoroTask) -> Void)?
+    private var onDelete: ((PomodoroTaskItem) -> Void)?
     
     // MARK: - Init
     
     init(
-        tasks: [PomodoroTask],
+        tasks: [PomodoroTaskItem],
         disableAnimations: Bool = false,
-        onDelete: ((PomodoroTask) -> Void)? = nil
+        onDelete: ((PomodoroTaskItem) -> Void)? = nil
     ) {
         self.tasks = tasks
         self.disableAnimations = disableAnimations
@@ -89,8 +89,7 @@ struct TasksListView: View {
     
     // MARK: - Private Methods
     
-    private func onRowTapped(task: PomodoroTask) {
-        guard let _ = onDelete else { return }
+    private func onRowTapped(task: PomodoroTaskItem) {
         if task == editingTask {
             editingTask = nil
         } else {
@@ -110,11 +109,11 @@ struct TasksListView_Previews: PreviewProvider {
             ScrollView {
                 TasksListView(
                     tasks: Array(1...10).map {
-                        PomodoroTask(
+                        PomodoroTaskItem(task: .init(
                             id: UUID(),
                             title: "Task № \($0)",
                             date: Date(),
-                            completedInterval: 60 * 5)
+                            completedInterval: 60 * 5))
                     },
                     onDelete: { _ in })
             }
