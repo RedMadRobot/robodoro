@@ -68,7 +68,7 @@ struct PreviousResultsView: View {
     @ViewBuilder
     private var warningView: some View {
         HStack(alignment: .top, spacing: 10) {
-            Image(uiImage: Images.info)
+            Images.info.suImage
             Text("Check out your results for the previous period. After clicking the button that data will be deleted.")
                 .font(.regularText)
         }

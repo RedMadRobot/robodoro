@@ -40,7 +40,7 @@ struct PomodoroView: View {
                     Button {
                         showAlert()
                     } label: {
-                        Image(uiImage: Images.logout)
+                        Images.logout.suImage
                             .padding([.top, .bottom, .leading], 10)
                     }
                 }

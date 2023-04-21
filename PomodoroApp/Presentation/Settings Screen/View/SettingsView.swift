@@ -60,7 +60,7 @@ struct SettingsView: View {
                 Button {
                     navigator.pop()
                 } label: {
-                    Image(uiImage: Images.arrowLeft)
+                    Images.arrowLeft.suImage
                         .padding([.top, .bottom, .trailing], 10)
                 }
                 Spacer()
@@ -84,7 +84,7 @@ struct SettingsView: View {
     private var footer: some View {
         HStack(spacing: 4) {
             Text("With")
-            Image(uiImage: Images.heart)
+            Images.heart.suImage
             Text("from red_mad_robot")
         }
         .font(.regularText)

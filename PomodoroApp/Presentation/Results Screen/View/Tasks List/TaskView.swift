@@ -25,9 +25,7 @@ struct TaskView: View {
     
     private var onTap: () -> Void
     private var onDelete: () -> Void
-    
-    private let formatter: DateFormatter = .onlyDateFormatter
-    
+        
     // MARK: - Init
     
     init(

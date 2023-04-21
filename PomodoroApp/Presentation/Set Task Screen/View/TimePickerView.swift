@@ -28,9 +28,7 @@ struct TimePickerView: View {
     private let title: String
     private let color: UIColor
     private let shrinked: Bool
-    
-    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
-    
+        
     private var sliderInterval: ClosedRange<TimeInterval> {
         shrinked ?
             Constants.shrinkedMinimumValue...Constants.maximumValue :

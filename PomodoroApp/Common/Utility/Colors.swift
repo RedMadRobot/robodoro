@@ -27,5 +27,5 @@ enum Colors {
 }
 
 extension UIColor {
-    var suColor: Color { Color(self) }
+    var suColor: Color { Color(uiColor: self) }
 }

@@ -37,7 +37,7 @@ struct InfoOverlayView: View {
         VStack {
             Spacer()
             VStack(spacing: 0) {
-                Image(uiImage: Images.alertCircle)
+                Images.alertCircle.suImage
                     .padding(40)
                 Group {
                     Text("We store your tasks\nfor a week")

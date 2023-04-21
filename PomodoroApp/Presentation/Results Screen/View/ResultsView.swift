@@ -40,7 +40,7 @@ struct ResultsView: View {
                 Button {
                     navigator.pushSettings()
                 } label: {
-                    Image(uiImage: Images.settings)
+                    Images.settings.suImage
                 }
             }
         }

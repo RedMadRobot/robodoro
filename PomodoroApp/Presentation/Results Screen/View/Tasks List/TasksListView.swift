@@ -34,7 +34,7 @@ struct TasksListView: View {
     // MARK: - View
     
     var body: some View {
-        LazyVStack(spacing: 0) {
+        VStack(spacing: 0) {
             titleView
             tableView
         }
@@ -61,19 +61,21 @@ struct TasksListView: View {
     
     @ViewBuilder
     private var tableView: some View {
-        ForEach(tasks, id: \.id) { task in
-            TaskView(
-                task: task,
-                isEditing: task == editingTask,
-                onTap: {
-                    onRowTapped(task: task)
-                },
-                onDelete: {
-                    editingTask = nil
-                    onDelete?(task)
-                })
-            if task != tasks.last {
-                divider
+        LazyVStack(spacing: 0) {
+            ForEach(tasks, id: \.id) { task in
+                TaskView(
+                    task: task,
+                    isEditing: task == editingTask,
+                    onTap: {
+                        onRowTapped(task: task)
+                    },
+                    onDelete: {
+                        editingTask = nil
+                        onDelete?(task)
+                    })
+                if task != tasks.last {
+                    divider
+                }
             }
         }
     }

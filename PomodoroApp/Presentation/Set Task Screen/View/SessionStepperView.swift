@@ -46,7 +46,7 @@ struct SessionStepperView: View {
             Button {
                 calculateNewValue(newValue: value - 1)
             } label: {
-                Image(uiImage: Images.minus)
+                Images.minus.suImage
             }
             .disabled(value == Constants.range.lowerBound)
             Text("\(value)")
@@ -55,7 +55,7 @@ struct SessionStepperView: View {
             Button {
                 calculateNewValue(newValue: value + 1)
             } label: {
-                Image(uiImage: Images.plus)
+                Images.plus.suImage
             }
             .disabled(value == Constants.range.upperBound)
         }
