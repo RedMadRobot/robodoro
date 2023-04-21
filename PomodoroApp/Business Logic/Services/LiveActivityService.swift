@@ -81,7 +81,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
         activeStagesCount: Int,
         lastStageState: StageElementViewState
     ) {
-        guard let activity = activity else { return }
+        guard let activity else { return }
         Task {
             let newState = LiveActivityAttributes.ContentState(
                 pomodoroState: pomodoroState,
@@ -94,7 +94,7 @@ final class LiveActivityServiceImpl: LiveActivityService {
     }
     
     func stop() {
-        guard let activity = activity else { return }
+        guard let activity else { return }
         
         // Сомнительное решение, возможно нужно пересмотреть
         let semaphore = DispatchSemaphore(value: 0)

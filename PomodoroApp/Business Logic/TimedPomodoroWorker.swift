@@ -253,7 +253,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     }
     
     func saveState() {
-        guard let currentTaskId = currentTaskId else { return }
+        guard let currentTaskId else { return }
 
         var backgroundDate: Date?
         if timerState.value == .running || timerState.value == .ended {
@@ -280,7 +280,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             pomodoroState,
             timerState)
         .sink { [weak self] pomodoroState, timerState in
-            guard let self = self else { return }
+            guard let self else { return }
             self.activityService.update(
                 pomodoroState: pomodoroState,
                 timerState: timerState,
@@ -291,7 +291,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         .store(in: &subscriptions)
         
         leftTime.sink { [weak self] value in
-            guard let self = self else { return }
+            guard let self else { return }
             self.updateManagingTaskIntervalIfNeeded()
         }
         .store(in: &subscriptions)

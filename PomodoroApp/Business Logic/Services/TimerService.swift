@@ -90,7 +90,7 @@ final class TimerServiceImpl: TimerService {
     private func runTimer() {
         currentState = .running
         let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             if self.currentWaitingTime >= 1.0 {
                 self.currentWaitingTime -= 1
             } else {
