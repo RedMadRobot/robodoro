@@ -59,7 +59,6 @@ struct PomodoroActivityFullView: View {
     private let size: ActivityViewSize
     private let attribute: LiveActivityAttributes
     private let state: LiveActivityAttributes.ContentState
-    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
     
     // MARK: - Init
     
@@ -94,7 +93,6 @@ struct PomodoroActivityView: View {
     private let size: ActivityViewSize
     private let attribute: LiveActivityAttributes
     private let state: LiveActivityAttributes.ContentState
-    private let dateComponentsFormatter: DateComponentsFormatter = .minutesAndSecondsFormatter
     
     // MARK: - Init
     
