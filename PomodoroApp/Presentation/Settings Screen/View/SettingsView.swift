@@ -48,9 +48,7 @@ struct SettingsView: View {
             Toggle("Haptic", isOn: $viewModel.hapticEnabled)
                 .toggleStyle(SettingsToggleStyle())
             Spacer()
-            Text("With ❤️ by red_mad_robot")
-                .font(.regularText)
-                .foregroundColor(Colors.textGray2.suColor)
+            footer
         }
         .padding(EdgeInsets(top: 20, leading: 10, bottom: 5, trailing: 10))
     }
@@ -80,6 +78,17 @@ struct SettingsView: View {
             }
             #endif
         }
+    }
+    
+    @ViewBuilder
+    private var footer: some View {
+        HStack(spacing: 4) {
+            Text("With")
+            Image(uiImage: Images.heart)
+            Text("from red_mad_robot")
+        }
+        .font(.regularText)
+        .foregroundColor(Colors.textGray2.suColor)
     }
 }
 

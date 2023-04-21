@@ -24,4 +24,5 @@ extension Images {
     static let islandBreak = UIImage(named: "islandBreak.pdf")!
     static let islandLongBreak = UIImage(named: "islandLongBreak.pdf")!
     static let islandFocus = UIImage(named: "islandFocus.pdf")!
+    static let heart = UIImage(named: "heart.pdf")!
 }
