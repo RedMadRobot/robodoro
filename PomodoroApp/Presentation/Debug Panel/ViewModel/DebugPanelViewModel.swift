@@ -13,7 +13,7 @@ final class DebugPanelViewModel: ViewModel {
     // MARK: - Constants
     
     private enum Constants {
-        static let maxTitleLength = 10
+        static let maxTitleLength = 50
     }
     
     // MARK: - Public Properties
