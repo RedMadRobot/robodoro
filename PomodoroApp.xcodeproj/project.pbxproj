@@ -100,7 +100,6 @@
 		3582D269296C14E500AC0127 /* PomodoroModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3582D267296C14E500AC0127 /* PomodoroModel.xcdatamodeld */; };
 		3585B8E9291EA7B2007B01B1 /* PomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */; };
 		3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EC291EA7B3007B01B1 /* Assets.xcassets */; };
-		3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */; };
 		359DFDC82976A66700D8B39F /* PreviousResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359DFDC72976A66700D8B39F /* PreviousResultsView.swift */; };
 		359DFDCA2976A6A500D8B39F /* PreviousResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359DFDC92976A6A500D8B39F /* PreviousResultsViewModel.swift */; };
 		35AB2D5C296D5D26002CEC4A /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AB2D5B296D5D26002CEC4A /* PersistentStore.swift */; };
@@ -249,7 +248,6 @@
 		3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroApp.swift; sourceTree = "<group>"; };
 		3585B8EA291EA7B2007B01B1 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
 		3585B8EC291EA7B3007B01B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		359DFDC72976A66700D8B39F /* PreviousResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousResultsView.swift; sourceTree = "<group>"; };
 		359DFDC92976A6A500D8B39F /* PreviousResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousResultsViewModel.swift; sourceTree = "<group>"; };
 		35AB2D5B296D5D26002CEC4A /* PersistentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStore.swift; sourceTree = "<group>"; };
@@ -841,17 +839,8 @@
 				3549577A292639EB000C216C /* Common */,
 				3520394829224A3200A4028E /* Resources */,
 				352039682923974800A4028E /* Supporting Files */,
-				3585B8EE291EA7B3007B01B1 /* Preview Content */,
 			);
 			path = PomodoroApp;
-			sourceTree = "<group>";
-		};
-		3585B8EE291EA7B3007B01B1 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				3585B8EF291EA7B3007B01B1 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		3585B8F6291EA9A9007B01B1 /* App */ = {
@@ -1004,7 +993,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3585B8F0291EA7B3007B01B1 /* Preview Assets.xcassets in Resources */,
 				3520396C2923999E00A4028E /* Unbounded-Blond.ttf in Resources */,
 				3585B8ED291EA7B3007B01B1 /* Assets.xcassets in Resources */,
 				350CC3C42975526C00753D84 /* LaunchScreen.storyboard in Resources */,
@@ -1310,7 +1298,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"PomodoroApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 66Q5RW6PQQ;
 				ENABLE_PREVIEWS = YES;
@@ -1351,7 +1339,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"PomodoroApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 66Q5RW6PQQ;
 				ENABLE_PREVIEWS = YES;
