@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+//@main
 struct PomodoroApp: App {
     
     // MARK: - Private Properties

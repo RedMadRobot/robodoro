@@ -1,6 +1,24 @@
 {
   "pins" : [
     {
+      "identity" : "ios-core-components",
+      "kind" : "remoteSourceControl",
+      "location" : "https://git.redmadrobot.com/apple/foundation-ios/ios-core-components",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0f723b0033c79b5d4356a736e223bc75e607d9e9"
+      }
+    },
+    {
+      "identity" : "navidux",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RedMadRobot/navidux",
+      "state" : {
+        "revision" : "e69482cee684b2cdb233092546561cf6a3acdb1e",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "swiftui-sliders",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/spacenation/swiftui-sliders",

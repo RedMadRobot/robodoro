@@ -124,6 +124,13 @@
 		35F4A6B1292CCEBE00F47AD7 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3520397E2923DC3700A4028E /* DateComponentsFormatter+Extension.swift */; };
 		35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6B52930D00800F47AD7 /* NotificationService.swift */; };
 		35F4A6BB2936242300F47AD7 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4A6BA2936242300F47AD7 /* FeedbackService.swift */; };
+		35FE75632B5E67F400E5AD8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE75622B5E67F400E5AD8D /* AppDelegate.swift */; };
+		35FE75682B5E6FD900E5AD8D /* Navidux in Frameworks */ = {isa = PBXBuildFile; productRef = 35FE75672B5E6FD900E5AD8D /* Navidux */; };
+		35FE756A2B5E702700E5AD8D /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE75692B5E702700E5AD8D /* TestViewController.swift */; };
+		35FE756D2B5E73FE00E5AD8D /* CoreComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 35FE756C2B5E73FE00E5AD8D /* CoreComponents */; };
+		35FE75712B5EAC5C00E5AD8D /* NaviduxScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE75702B5EAC5C00E5AD8D /* NaviduxScreen+Extension.swift */; };
+		35FE75742B5EAC6700E5AD8D /* NaviduxScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE75722B5EAC6700E5AD8D /* NaviduxScreenFactory.swift */; };
+		35FE75752B5EAC6700E5AD8D /* NaviduxScreenAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FE75732B5EAC6700E5AD8D /* NaviduxScreenAssembler.swift */; };
 		878F7EEC2976C99F005F6EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35C69BDE292518AE004D176C /* Assets.xcassets */; };
 		878F7EEE2976CBD4005F6EAE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878F7EED2976CBD4005F6EAE /* Theme.swift */; };
 		878F7EEF2976CBE7005F6EAE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878F7EED2976CBD4005F6EAE /* Theme.swift */; };
@@ -260,6 +267,11 @@
 		35F2BA0F296EA8250047E890 /* NSManagedObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extension.swift"; sourceTree = "<group>"; };
 		35F4A6B52930D00800F47AD7 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		35F4A6BA2936242300F47AD7 /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
+		35FE75622B5E67F400E5AD8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		35FE75692B5E702700E5AD8D /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		35FE75702B5EAC5C00E5AD8D /* NaviduxScreen+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NaviduxScreen+Extension.swift"; sourceTree = "<group>"; };
+		35FE75722B5EAC6700E5AD8D /* NaviduxScreenFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NaviduxScreenFactory.swift; sourceTree = "<group>"; };
+		35FE75732B5EAC6700E5AD8D /* NaviduxScreenAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NaviduxScreenAssembler.swift; sourceTree = "<group>"; };
 		878F7EED2976CBD4005F6EAE /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		87EB39712976B442007073EF /* Text+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Timer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,6 +281,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35FE756D2B5E73FE00E5AD8D /* CoreComponents in Frameworks */,
+				35FE75682B5E6FD900E5AD8D /* Navidux in Frameworks */,
 				35C1C479294B97210005D72C /* Sliders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,10 +352,11 @@
 		35203936291EAD5700A4028E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				352B6C00294756AD00B09E51 /* Common */,
+				352B6C072947815C00B09E51 /* Navigation */,
+				35FE75652B5E6B2E00E5AD8D /* Test Sceen */,
 				356FDECF299E69A800FA66E3 /* Debug Panel */,
 				355F744C2977619D00B16856 /* Onboarding */,
-				352B6C072947815C00B09E51 /* Navigation */,
-				352B6C00294756AD00B09E51 /* Common */,
 				352B6BF229435A0000B09E51 /* Set Task Screen */,
 				352B6BEF294359C300B09E51 /* Settings Screen */,
 				352B6BEC2943599F00B09E51 /* Results Screen */,
@@ -821,6 +836,7 @@
 				352039742923D29C00A4028E /* Business Logic */,
 				352039752923D2E300A4028E /* Dependency Injection */,
 				35203936291EAD5700A4028E /* Presentation */,
+				35FE75662B5E6B6D00E5AD8D /* Navidux */,
 				3520393F29223D6D00A4028E /* Utility */,
 				3549577A292639EB000C216C /* Common */,
 				3520394829224A3200A4028E /* Resources */,
@@ -842,6 +858,7 @@
 			isa = PBXGroup;
 			children = (
 				3585B8E8291EA7B2007B01B1 /* PomodoroApp.swift */,
+				35FE75622B5E67F400E5AD8D /* AppDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -877,6 +894,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		35FE75652B5E6B2E00E5AD8D /* Test Sceen */ = {
+			isa = PBXGroup;
+			children = (
+				35FE75692B5E702700E5AD8D /* TestViewController.swift */,
+			);
+			path = "Test Sceen";
+			sourceTree = "<group>";
+		};
+		35FE75662B5E6B6D00E5AD8D /* Navidux */ = {
+			isa = PBXGroup;
+			children = (
+				35FE75702B5EAC5C00E5AD8D /* NaviduxScreen+Extension.swift */,
+				35FE75732B5EAC6700E5AD8D /* NaviduxScreenAssembler.swift */,
+				35FE75722B5EAC6700E5AD8D /* NaviduxScreenFactory.swift */,
+			);
+			path = Navidux;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -898,6 +933,8 @@
 			name = PomodoroApp;
 			packageProductDependencies = (
 				35C1C478294B97210005D72C /* Sliders */,
+				35FE75672B5E6FD900E5AD8D /* Navidux */,
+				35FE756C2B5E73FE00E5AD8D /* CoreComponents */,
 			);
 			productName = PomodoroApp;
 			productReference = 3585B8E5291EA7B2007B01B1 /* PomodoroApp.app */;
@@ -949,6 +986,8 @@
 			mainGroup = 3585B8DC291EA7B2007B01B1;
 			packageReferences = (
 				35C1C477294B97210005D72C /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
+				35FE75642B5E682700E5AD8D /* XCRemoteSwiftPackageReference "navidux" */,
+				35FE756B2B5E73FE00E5AD8D /* XCRemoteSwiftPackageReference "ios-core-components" */,
 			);
 			productRefGroup = 3585B8E6291EA7B2007B01B1 /* Products */;
 			projectDirPath = "";
@@ -1038,6 +1077,7 @@
 				3582D2662955BDB900AC0127 /* Date+Extension.swift in Sources */,
 				355F74512977625400B16856 /* InfoOverlayView.swift in Sources */,
 				351C43322978506F0005503E /* ScenarioResolver.swift in Sources */,
+				35FE75742B5EAC6700E5AD8D /* NaviduxScreenFactory.swift in Sources */,
 				3570EE4E294B54940039A1D2 /* SetTaskViewModel.swift in Sources */,
 				35F4A6B62930D00800F47AD7 /* NotificationService.swift in Sources */,
 				351C433429793F9B0005503E /* AppReloadSavedData.swift in Sources */,
@@ -1074,7 +1114,9 @@
 				352B6BFF2947377800B09E51 /* NoTasksView.swift in Sources */,
 				35AB2D5C296D5D26002CEC4A /* PersistentStore.swift in Sources */,
 				352039712923BE0100A4028E /* StageElementView.swift in Sources */,
+				35FE75712B5EAC5C00E5AD8D /* NaviduxScreen+Extension.swift in Sources */,
 				352B6BF629472E6B00B09E51 /* AppStorages.swift in Sources */,
+				35FE75632B5E67F400E5AD8D /* AppDelegate.swift in Sources */,
 				35F2BA10296EA8250047E890 /* NSManagedObject+Extension.swift in Sources */,
 				3549579C29266AAC000C216C /* TimedPomodoroWorker.swift in Sources */,
 				35203953292270B600A4028E /* LongBreakBackground.swift in Sources */,
@@ -1084,9 +1126,11 @@
 				3582D269296C14E500AC0127 /* PomodoroModel.xcdatamodeld in Sources */,
 				3582D2562951EB3900AC0127 /* DateFormatter+Extension.swift in Sources */,
 				3582D25D2954A20900AC0127 /* UIFont+Extension.swift in Sources */,
+				35FE756A2B5E702700E5AD8D /* TestViewController.swift in Sources */,
 				35C69BEC29251A0C004D176C /* PomodoroState+Time.swift in Sources */,
 				3582D25F2954B0A500AC0127 /* CustomTextView.swift in Sources */,
 				352039502922709E00A4028E /* BreakBackground.swift in Sources */,
+				35FE75752B5EAC6700E5AD8D /* NaviduxScreenAssembler.swift in Sources */,
 				3582D2622955B13E00AC0127 /* DateCalculatorService.swift in Sources */,
 				354957A129269EFB000C216C /* LinkManager.swift in Sources */,
 				35203937291EADAF00A4028E /* PomodoroView.swift in Sources */,
@@ -1265,7 +1309,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"PomodoroApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 66Q5RW6PQQ;
@@ -1306,7 +1350,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"PomodoroApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 66Q5RW6PQQ;
@@ -1443,6 +1487,22 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		35FE75642B5E682700E5AD8D /* XCRemoteSwiftPackageReference "navidux" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RedMadRobot/navidux";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		35FE756B2B5E73FE00E5AD8D /* XCRemoteSwiftPackageReference "ios-core-components" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://git.redmadrobot.com/apple/foundation-ios/ios-core-components";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1450,6 +1510,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35C1C477294B97210005D72C /* XCRemoteSwiftPackageReference "swiftui-sliders" */;
 			productName = Sliders;
+		};
+		35FE75672B5E6FD900E5AD8D /* Navidux */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35FE75642B5E682700E5AD8D /* XCRemoteSwiftPackageReference "navidux" */;
+			productName = Navidux;
+		};
+		35FE756C2B5E73FE00E5AD8D /* CoreComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35FE756B2B5E73FE00E5AD8D /* XCRemoteSwiftPackageReference "ios-core-components" */;
+			productName = CoreComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 
