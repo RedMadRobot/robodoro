@@ -1,0 +1,70 @@
+name: PomodoroApp
+configs:
+  Debug: debug
+  Release: release
+schemes:
+  Debug:
+    build:
+      targets:
+        PomodoroApp: all
+    run:
+      config: Debug
+options:
+  defaultConfig: Debug
+  deploymentTarget:
+    iOS: 16.1
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+packages:
+  CoreComponents:
+    url: https://git.redmadrobot.com/apple/foundation-ios/ios-core-components
+    branch: main
+  Navidux:
+    url: https://github.com/RedMadRobot/navidux
+    from: 1.0.0
+  Sliders:
+    url: https://github.com/spacenation/swiftui-sliders
+    from: 2.0.0
+targets:
+  PomodoroApp:
+    type: application
+    platform: iOS
+    onlyCopyFilesOnInstall: true
+    sources: 
+      - path: PomodoroApp
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: 1
+        PRODUCT_BUNDLE_IDENTIFIER: com.redmadrobot.pomodoro
+        INFOPLIST_FILE: PomodoroApp/Supporting Files/Info.plist
+        CURRENT_PROJECT_VERSION: 2
+        MARKETING_VERSION: 1.3
+        OTHER_SWIFT_FLAGS:
+          $(inherited)
+          -driver-time-compilation
+          -Xfrontend -warn-long-function-bodies=250
+          -Xfrontend -warn-long-expression-type-checking=250
+          -Xfrontend -debug-time-function-bodies
+          -Xfrontend -debug-time-expression-type-checking
+      configs:
+        Debug:
+          DEBUG_INFORMATION_FORMAT: dwarf
+        Release:
+          DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+    dependencies:
+      - target: PomodoroWidgetExtension
+      - package: CoreComponents
+      - package: Navidux
+      - package: Sliders
+  PomodoroWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources: 
+      - path: PomodoroWidgetExtension
+      - path: PomodoroApp/Common
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: 1
+        PRODUCT_BUNDLE_IDENTIFIER: com.redmadrobot.pomodoro.widget
+        INFOPLIST_FILE: PomodoroWidgetExtension/Supporting Files/Info.plist
