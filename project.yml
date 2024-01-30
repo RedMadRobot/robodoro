@@ -1,3 +1,5 @@
+include:
+- xcodegens/packages.yml
 name: PomodoroApp
 configs:
   Debug: debug
@@ -9,23 +11,22 @@ schemes:
         PomodoroApp: all
     run:
       config: Debug
+    archive:
+      config: Debug
+  Release:
+    build:
+      targets:
+        PomodoroApp: all
+    run:
+      config: Release
 options:
   defaultConfig: Debug
   deploymentTarget:
     iOS: 16.1
+  postGenCommand: swiftgen
 settings:
   base:
     SWIFT_VERSION: 5.0
-packages:
-  CoreComponents:
-    url: https://git.redmadrobot.com/apple/foundation-ios/ios-core-components
-    branch: main
-  Navidux:
-    url: https://github.com/RedMadRobot/navidux
-    from: 1.0.0
-  Sliders:
-    url: https://github.com/spacenation/swiftui-sliders
-    from: 2.0.0
 targets:
   PomodoroApp:
     type: application
@@ -47,9 +48,12 @@ targets:
           -Xfrontend -warn-long-expression-type-checking=250
           -Xfrontend -debug-time-function-bodies
           -Xfrontend -debug-time-expression-type-checking
+        DEVELOPMENT_TEAM: 66Q5RW6PQQ
+        CODE_SIGN_IDENTITY: iPhone Distribution
+        PROVISIONING_PROFILE_SPECIFIER: ROBODORO Distribution
       configs:
         Debug:
-          DEBUG_INFORMATION_FORMAT: dwarf
+          DEBUG_INFORMATION_FORMAT: dwarf 
         Release:
           DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
     dependencies:
@@ -68,3 +72,6 @@ targets:
         TARGETED_DEVICE_FAMILY: 1
         PRODUCT_BUNDLE_IDENTIFIER: com.redmadrobot.pomodoro.widget
         INFOPLIST_FILE: PomodoroWidgetExtension/Supporting Files/Info.plist
+        DEVELOPMENT_TEAM: 66Q5RW6PQQ
+        CODE_SIGN_IDENTITY: iPhone Distribution
+        PROVISIONING_PROFILE_SPECIFIER: ROBODORO Widget Distribution

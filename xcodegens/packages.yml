@@ -1,0 +1,10 @@
+packages:
+  CoreComponents:
+    url: https://git.redmadrobot.com/apple/foundation-ios/ios-core-components
+    branch: main
+  Navidux:
+    url: https://github.com/RedMadRobot/navidux
+    from: 1.0.0
+  Sliders:
+    url: https://github.com/spacenation/swiftui-sliders
+    from: 2.0.0
