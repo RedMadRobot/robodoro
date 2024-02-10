@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  PomodoroApp
+
+  Created by Петр Тартынских  on 30.01.2024.
+  
+*/
+
+// MARK: - Common
+"common.foo" = "Фуу";

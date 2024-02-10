@@ -23,7 +23,7 @@ options:
   defaultConfig: Debug
   deploymentTarget:
     iOS: 16.1
-  postGenCommand: swiftgen
+  preGenCommand: swiftgen
 settings:
   base:
     SWIFT_VERSION: 5.0
