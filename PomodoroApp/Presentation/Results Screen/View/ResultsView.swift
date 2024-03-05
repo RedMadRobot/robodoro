@@ -86,8 +86,7 @@ struct ResultsView: View {
     private var deletionOnboarding: some View {
         if viewModel.showDeletionOnboarding {
             Text("If you want to delete the task, you need to tap on the cell and confirm the action")
-                .textStyle(.regularText)
-                .foregroundColor(Colors.textGray1.swiftUIColor)
+                .textStyle(.regularText, color: Colors.textGray1.swiftUIColor)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 50)
                 .padding(.vertical, 16)

@@ -28,6 +28,17 @@ extension TimerState {
             return Images.play.swiftUIImage
         }
     }
+    
+    var smallButtonImage: Image {
+        switch self {
+        case .running:
+            return Images.smallPause.swiftUIImage
+        case .ended:
+            return Images.smallStop.swiftUIImage
+        case .initial, .paused:
+            return Images.smallPlay.swiftUIImage
+        }
+    }
 }
 
 // MARK: - Link

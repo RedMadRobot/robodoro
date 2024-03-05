@@ -41,7 +41,7 @@ struct LiveActivityAttributes: ActivityAttributes {
         }
         
         var buttonImage: Image {
-            timerState.buttonImage
+            timerState.smallButtonImage
         }
         
         var actionLink: String {

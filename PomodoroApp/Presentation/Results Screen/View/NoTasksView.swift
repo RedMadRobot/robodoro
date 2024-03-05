@@ -23,8 +23,7 @@ struct NoTasksView: View {
         ZStack {
             backView
             Text("NO TASKS YET")
-                .textStyle(.stageLabel)
-                .foregroundColor(Colors.textGray1.swiftUIColor)
+                .textStyle(.stageLabel, color: Colors.textGray1.swiftUIColor)
         }
         .ignoresSafeArea()
     }

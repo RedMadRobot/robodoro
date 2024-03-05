@@ -79,16 +79,13 @@ struct PomodoroView: View {
     private var timeSection: some View {
         HStack(alignment: .center, spacing: 0) {
             Text(viewModel.minutes)
-                .textStyle(.time)
+                .textStyle(.time, color: Colors.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .foregroundColor(Colors.black.swiftUIColor)
             Text(":")
-                .textStyle(.time)
-                .foregroundColor(Colors.black.swiftUIColor)
+                .textStyle(.time, color: Colors.black.swiftUIColor)
             Text(viewModel.seconds)
-                .textStyle(.time)
+                .textStyle(.time, color: Colors.black.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Colors.black.swiftUIColor)
         }
     }
     
