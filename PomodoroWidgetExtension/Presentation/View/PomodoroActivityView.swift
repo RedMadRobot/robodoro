@@ -32,12 +32,12 @@ extension ActivityViewSize {
         }
     }
     
-    var font: Font {
+    var textStyle: TextStyle {
         switch self {
         case .small:
-            return .timeSmall
+            return .widgetSmallTime
         case .large:
-            return .timeBig
+            return .widgetBigTime
         }
     }
     
@@ -114,14 +114,15 @@ struct PomodoroActivityView: View {
         VStack(alignment: .center, spacing: size.timeSpacing) {
             HStack {
                 Text(state: state)
-                    .font(size.font)
-                    .foregroundColor(Color(uiColor: theme == .dark ? theme.mainColor : state.strokeColor))
-                
+                    .textStyle(
+                        size.textStyle,
+                        color: theme == .dark ? theme.mainColor : state.strokeColor
+                    )
                 Spacer()
                 Link(destination: LinkManager.buttonActionURL(action: state.actionLink)) {
-                    Image(uiImage: state.buttonImage)
+                    state.buttonImage
                         .renderingMode(.template)
-                        .foregroundColor(Color(theme.mainColor))
+                        .foregroundColor(theme.mainColor)
                         .padding(.all, 10)
                 }
             }
@@ -131,10 +132,10 @@ struct PomodoroActivityView: View {
                         maxStagesCount: attribute.maxStagesCount,
                         activeStagesCount: state.activeStagesCount,
                         lastStageState: state.lastStageState,
-                        theme: theme)
+                        theme: theme
+                    )
                     Text(state.pomodoroState.title)
-                        .font(.stageLabel)
-                        .foregroundColor(Color(theme.mainColor))
+                        .textStyle(.stageLabel, color: theme.mainColor)
                 }
                 Spacer()
             }

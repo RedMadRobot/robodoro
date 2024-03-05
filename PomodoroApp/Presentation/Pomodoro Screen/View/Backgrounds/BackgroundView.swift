@@ -28,15 +28,18 @@ struct BackgroundView: View {
             case .focus:
                 FocusedBackground(
                     backgroundColor: viewModel.backgroundColor,
-                    strokeColor: viewModel.strokeColor)
+                    strokeColor: viewModel.strokeColor
+                )
             case .break:
                 BreakBackground(
                     backgroundColor: viewModel.backgroundColor,
-                    strokeColor: viewModel.strokeColor)
+                    strokeColor: viewModel.strokeColor
+                )
             case .longBreak:
                 LongBreakBackground(
                     backgroundColor: viewModel.backgroundColor,
-                    strokeColor: viewModel.strokeColor)
+                    strokeColor: viewModel.strokeColor
+                )
             }
         }
         .animation(.easeInOut, value: viewModel.pomodoroState)

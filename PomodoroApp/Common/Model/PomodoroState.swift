@@ -5,7 +5,7 @@
 //  Created by Петр Тартынских  on 17.11.2022.
 //
 
-import UIKit
+import SwiftUI
 
 enum PomodoroState: Codable, Hashable {
     case focus
@@ -44,36 +44,36 @@ extension PomodoroState {
 
 extension PomodoroState {
     
-    var backgroundColor: UIColor {
+    var backgroundColor: Color {
         switch self {
         case .focus:
-            return Colors.focusRed
+            return Colors.focusRed.swiftUIColor
         case .break:
-            return Colors.breakPurple
+            return Colors.breakPurple.swiftUIColor
         case .longBreak:
-            return Colors.longBreakGreen
+            return Colors.longBreakGreen.swiftUIColor
         }
     }
     
-    var strokeColor: UIColor {
+    var strokeColor: Color {
         switch self {
         case .focus:
-            return Colors.focusLine
+            return Colors.focusLine.swiftUIColor
         case .break:
-            return Colors.breakLine
+            return Colors.breakLine.swiftUIColor
         case .longBreak:
-            return Colors.longBreakLine
+            return Colors.longBreakLine.swiftUIColor
         }
     }
     
-    var islandImage: UIImage {
+    var islandImage: Image {
         switch self {
         case .focus:
-            return Images.islandFocus
+            return Images.islandFocus.swiftUIImage
         case .break:
-            return Images.islandBreak
+            return Images.islandBreak.swiftUIImage
         case .longBreak:
-            return Images.islandLongBreak
+            return Images.islandLongBreak.swiftUIImage
         }
     }
 }

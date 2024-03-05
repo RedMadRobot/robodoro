@@ -28,7 +28,7 @@ struct SetTaskView: View {
     
     var body: some View {
         ZStack {
-            Colors.white.suColor
+            Colors.white.swiftUIColor
             frontView
         }
     }
@@ -39,7 +39,7 @@ struct SetTaskView: View {
     private var frontView: some View {
         VStack {
             Text("SET YOUR TASK")
-                .font(.regularTitle)
+                .textStyle(.regularTitle)
                 .padding(.vertical, 32)
             parameters
         }
@@ -54,18 +54,21 @@ struct SetTaskView: View {
                         TimePickerView(
                             value: $viewModel.focusTimeValue,
                             title: PomodoroState.focus.miniTitle,
-                            color: Colors.focusRed,
-                            shrinked: viewModel.shrinkSlidersStep)
+                            color: Colors.focusRed.swiftUIColor,
+                            shrinked: viewModel.shrinkSlidersStep
+                        )
                         TimePickerView(
                             value: $viewModel.breakTimeValue,
                             title: PomodoroState.break.miniTitle,
-                            color: Colors.breakPurple,
-                            shrinked: viewModel.shrinkSlidersStep)
+                            color: Colors.breakPurple.swiftUIColor,
+                            shrinked: viewModel.shrinkSlidersStep
+                        )
                         TimePickerView(
                             value: $viewModel.longBreakTimeValue,
                             title: PomodoroState.longBreak.miniTitle,
-                            color: Colors.longBreakGreen,
-                            shrinked: viewModel.shrinkSlidersStep)
+                            color: Colors.longBreakGreen.swiftUIColor,
+                            shrinked: viewModel.shrinkSlidersStep
+                        )
                         SessionStepperView(value: $viewModel.stagesCount)
                         taskTitleFieldView(proxy: proxy)
                         Spacer()
@@ -90,7 +93,8 @@ struct SetTaskView: View {
     private func taskTitleFieldView(proxy: ScrollViewProxy) -> some View {
         TaskTitleFieldView(
             value: $viewModel.taskTitle,
-            onShouldChangeText: viewModel.shouldChangeText)
+            onShouldChangeText: viewModel.shouldChangeText
+        )
         .id(1)
         .onReceive(keyboardPublisher) { value in
             if value {

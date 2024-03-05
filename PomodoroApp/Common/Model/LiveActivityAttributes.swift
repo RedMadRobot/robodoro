@@ -6,7 +6,7 @@
 //
 
 import ActivityKit
-import UIKit
+import SwiftUI
 
 struct LiveActivityAttributes: ActivityAttributes {
     
@@ -17,28 +17,30 @@ struct LiveActivityAttributes: ActivityAttributes {
         var activeStagesCount: Int
         var lastStageState: StageElementViewState
         
-        var backgroundColor: UIColor {
+        var backgroundColor: Color {
             ColorHelper.getBackgroundColor(
                 pomodoroState: pomodoroState,
-                timerState: timerState)
+                timerState: timerState
+            )
         }
         
-        var strokeColor: UIColor {
+        var strokeColor: Color {
             ColorHelper.getStrokeColor(
                 pomodoroState: pomodoroState,
-                timerState: timerState)
+                timerState: timerState
+            )
         }
         
-        var islandImage: UIImage {
+        var islandImage: Image {
             switch timerState {
             case .initial, .paused:
-                return Images.islandPause
+                return Images.islandPause.swiftUIImage
             case .running, .ended:
                 return pomodoroState.islandImage
             }
         }
         
-        var buttonImage: UIImage {
+        var buttonImage: Image {
             timerState.buttonImage
         }
         

@@ -5,17 +5,17 @@
 //  Created by Петр Тартынских  on 17.11.2022.
 //
 
-import UIKit
+import SwiftUI
 
 final class ColorHelper {
     
     static func getBackgroundColor(
         pomodoroState: PomodoroState,
         timerState: TimerState
-    ) -> UIColor {
+    ) -> Color {
         switch timerState {
         case .initial, .paused:
-            return Colors.defaultGray
+            return Colors.defaultGray.swiftUIColor
         case .running, .ended:
             return pomodoroState.backgroundColor
         }
@@ -24,10 +24,10 @@ final class ColorHelper {
     static func getStrokeColor(
         pomodoroState: PomodoroState,
         timerState: TimerState
-    ) -> UIColor {
+    ) -> Color {
         switch timerState {
         case .initial, .paused:
-            return Colors.defaultLine
+            return Colors.defaultLine.swiftUIColor
         case .running, .ended:
             return pomodoroState.strokeColor
         }

@@ -1,20 +1,38 @@
 input_dir: PomodoroApp/Resources
-output_dir: PomodoroApp/Resources/Generated
+output_dir: PomodoroApp/Common/Resources+Generated
 xcassets:
-  inputs: Assets.xcassets
-  outputs:
-    templateName: swift5
-    output: Assets+Generated.swift
-    params:
-      enumName: Images
-      publicAccess: true
+  - inputs: Assets/Images.xcassets
+    outputs:
+      templateName: swift5
+      output: Assets+Generated.swift
+      params:
+        enumName: Images
+        publicAccess: true
+  - inputs: Assets/Colors.xcassets
+    outputs:
+      templateName: swift5
+      output: Colors+Generated.swift
+      params:
+        enumName: Colors
+        publicAccess: true
 strings:
   inputs:
-    - Localizable.strings
-    - Localizable.stringsdict
+    - Strings/Localizable.strings
+    - Strings/Localizable.stringsdict
   outputs:
     templateName: structured-swift5
     output: Localized+Generated.swift
     params:
       enumName: Strings
+      publicAccess: true
+fonts:
+  inputs: 
+    - Fonts/CoFoSans-Regular.ttf
+    - Fonts/Unbounded-Blond.ttf
+    - Fonts/Unbounded-Regular.ttf
+  outputs:
+    templateName: swift5
+    output: Fonts+Generated.swift
+    params:
+      enumName: Fonts
       publicAccess: true

@@ -34,13 +34,13 @@ struct PomodoroView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text(viewModel.pomodoroState.title)
-                        .font(.stageLabel)
+                        .textStyle(.stageLabel)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showAlert()
                     } label: {
-                        Images.logout.suImage
+                        Images.logout.swiftUIImage
                             .padding([.top, .bottom, .leading], 10)
                     }
                 }
@@ -69,7 +69,7 @@ struct PomodoroView: View {
                     viewModel.mainButtonAction()
                 }
             } label: {
-                Image(uiImage: viewModel.buttonImage)
+                viewModel.buttonImage
                     .padding(.all, 10)
             }
         }
@@ -79,16 +79,16 @@ struct PomodoroView: View {
     private var timeSection: some View {
         HStack(alignment: .center, spacing: 0) {
             Text(viewModel.minutes)
+                .textStyle(.time)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .font(.time)
-                .foregroundColor(Color(uiColor: Colors.black))
+                .foregroundColor(Colors.black.swiftUIColor)
             Text(":")
-                .font(.time)
-                .foregroundColor(Color(uiColor: Colors.black))
+                .textStyle(.time)
+                .foregroundColor(Colors.black.swiftUIColor)
             Text(viewModel.seconds)
+                .textStyle(.time)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.time)
-                .foregroundColor(Color(uiColor: Colors.black))
+                .foregroundColor(Colors.black.swiftUIColor)
         }
     }
     

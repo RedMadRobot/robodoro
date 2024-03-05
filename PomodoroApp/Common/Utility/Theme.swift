@@ -5,19 +5,19 @@
 //  Created by Anna Kocheshkova on 17.01.2023.
 //
 
-import UIKit
+import SwiftUI
 
 enum ActivityViewTheme {
     case dark, light
 }
 
 extension ActivityViewTheme {
-    var mainColor: UIColor {
+    var mainColor: Color {
         switch self {
         case .dark:
-            return Colors.black
+            return Colors.black.swiftUIColor
         case .light:
-            return Colors.white
+            return Colors.white.swiftUIColor
         }
     }
 }

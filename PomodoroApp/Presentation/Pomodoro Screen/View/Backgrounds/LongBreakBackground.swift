@@ -22,12 +22,12 @@ struct LongBreakBackground: View {
     
     // MARK: - Private Properties
     
-    private let backgroundColor: UIColor
-    private let strokeColor: UIColor
+    private let backgroundColor: Color
+    private let strokeColor: Color
     
     // MARK: - Init
     
-    init(backgroundColor: UIColor, strokeColor: UIColor) {
+    init(backgroundColor: Color, strokeColor: Color) {
         self.backgroundColor = backgroundColor
         self.strokeColor = strokeColor
     }
@@ -36,7 +36,7 @@ struct LongBreakBackground: View {
     
     var body: some View {
         ZStack {
-            Color(backgroundColor)
+            backgroundColor
             GeometryReader { geometry in
                 Path { path in
                     let globalFrame = geometry.frame(in: .global)
@@ -52,7 +52,7 @@ struct LongBreakBackground: View {
                     }
                     
                 }
-                .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
+                .stroke(strokeColor, lineWidth: Constants.lineWidth)
             }
         }
         .ignoresSafeArea()
@@ -64,7 +64,8 @@ struct LongBreakBackground: View {
 struct LongBreakBackground_Previews: PreviewProvider {
     static var previews: some View {
         LongBreakBackground(
-            backgroundColor: Colors.longBreakGreen,
-            strokeColor: Colors.longBreakLine)
+            backgroundColor: Colors.longBreakGreen.swiftUIColor,
+            strokeColor: Colors.longBreakLine.swiftUIColor
+        )
     }
 }

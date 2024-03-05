@@ -71,7 +71,8 @@ final class LiveActivityServiceImpl: LiveActivityService {
         _ = try? Activity<LiveActivityAttributes>.request(
             attributes: attributes,
             contentState: state,
-            pushType: nil)
+            pushType: nil
+        )
     }
     
     func update(

@@ -26,7 +26,7 @@ struct TimePickerView: View {
     private var value: TimeInterval
     
     private let title: String
-    private let color: UIColor
+    private let color: Color
     private let shrinked: Bool
         
     private var sliderInterval: ClosedRange<TimeInterval> {
@@ -44,7 +44,7 @@ struct TimePickerView: View {
     init(
         value: Binding<TimeInterval>,
         title: String,
-        color: UIColor,
+        color: Color,
         shrinked: Bool = false
     ) {
         self._value = value
@@ -59,10 +59,10 @@ struct TimePickerView: View {
         VStack(spacing: 12) {
             HStack {
                 Text(title)
-                    .font(.regularText)
+                    .textStyle(.regularText)
                 Spacer()
                 Text(DateComponentsFormatter.minutesAndSecondsFormatter.string(from: value) ?? "NaN")
-                    .font(.miniTime)
+                    .textStyle(.miniTime)
             }
             ValueSlider(
                 value: $value,
@@ -70,11 +70,11 @@ struct TimePickerView: View {
                 step: sliderStep)
             .valueSliderStyle(
                 HorizontalValueSliderStyle(
-                    track: HorizontalTrack(view: Color(color))
+                    track: HorizontalTrack(view: color)
                         .frame(height: 1)
-                        .background(Colors.defaultLine.suColor),
+                        .background(Colors.defaultLine.swiftUIColor),
                     thumb: Circle()
-                        .fill(Color(color)),
+                        .fill(color),
                     thumbSize: CGSize(width: 20, height: 20)
                 )
             )
@@ -96,7 +96,8 @@ struct TimePickerView_Previews: PreviewProvider {
             TimePickerView(
                 value: $value,
                 title: "Focus",
-                color: Colors.longBreakGreen)
+                color: Colors.longBreakGreen.swiftUIColor
+            )
         }
     }
     

@@ -42,7 +42,7 @@ struct StageElementView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color(uiColor: theme.mainColor), lineWidth: Constants.lineWidth)
+                .stroke(theme.mainColor, lineWidth: Constants.lineWidth)
                 .frame(width: Constants.frameSize)
             switch state {
             case .empty:
@@ -50,12 +50,12 @@ struct StageElementView: View {
             case .half:
                 Circle()
                     .trim(from: 0, to: 0.5)
-                    .fill(Color(uiColor: theme.mainColor))
+                    .fill(theme.mainColor)
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
                     .rotationEffect(.degrees(90))
             case .filled:
                 Circle()
-                    .fill(Color(uiColor: theme.mainColor))
+                    .fill(theme.mainColor)
                     .frame(width: Constants.frameSize, height: Constants.frameSize)
             }
         }

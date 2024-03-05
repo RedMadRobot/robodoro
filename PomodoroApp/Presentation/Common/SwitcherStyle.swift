@@ -9,14 +9,14 @@ import SwiftUI
 
 struct SettingsToggleStyle: ToggleStyle {
     
-    private let onColor = Colors.toggleGreen.suColor
-    private let offColor = Colors.textGray1.suColor
-    private let thumbColor = Colors.white.suColor
+    private let onColor = Colors.toggleGreen.swiftUIColor
+    private let offColor = Colors.textGray1.swiftUIColor
+    private let thumbColor = Colors.white.swiftUIColor
     
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack {
             configuration.label
-                .font(.regularText)
+                .font(.custom(TextStyle.regularText.font.stringName, size: TextStyle.regularText.size))
                 .padding(.leading, 10)
             Spacer()
             RoundedRectangle(cornerRadius: 16, style: .circular)

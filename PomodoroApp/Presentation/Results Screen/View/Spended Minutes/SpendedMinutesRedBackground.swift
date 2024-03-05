@@ -23,7 +23,7 @@ struct SpendedMinutesRedBackground: View {
         
     var body: some View {
         ZStack {
-            Colors.focusRed.suColor
+            Colors.focusRed.swiftUIColor
             GeometryReader { geometry in
                 Path { path in
                     let center = CGPoint(
@@ -39,7 +39,7 @@ struct SpendedMinutesRedBackground: View {
                                     degrees: Double(i) * 360 / Double(Constants.numberOfLines))))
                     }
                 }
-                .stroke(Colors.focusLine.suColor, lineWidth: Constants.lineWidth)
+                .stroke(Colors.focusLine.swiftUIColor, lineWidth: Constants.lineWidth)
             }
         }
     }

@@ -61,7 +61,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("h")
-                .foregroundColor(Colors.textGray1.suColor)
+                .foregroundColor(Colors.textGray1.swiftUIColor)
             Picker(selection: $minutes, label: Text("")) {
                 ForEach(self.minutesArray, id: \.self) { minute in
                     Text("\(minute)")
@@ -75,7 +75,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("m")
-                .foregroundColor(Colors.textGray1.suColor)
+                .foregroundColor(Colors.textGray1.swiftUIColor)
             Picker(selection: $seconds, label: Text("")) {
                 ForEach(self.secondsArray, id: \.self) { second in
                     Text("\(second)")
@@ -89,7 +89,7 @@ struct TimeIntervalPicker: View {
                 recalculateInterval()
             }
             Text("s")
-                .foregroundColor(Colors.textGray1.suColor)
+                .foregroundColor(Colors.textGray1.swiftUIColor)
         }
         .pickerStyle(.wheel)
         .onChange(of: value) { _ in
@@ -143,7 +143,8 @@ struct TimeIntervalPicker: View {
 struct TimeIntervalPicker_Previews: PreviewProvider {
     struct BindingValueHolder: View {
         
-        @State var value: TimeInterval = 10 * 3600 + 25 * 60 + 30
+        @State 
+        var value: TimeInterval = 10 * 3600 + 25 * 60 + 30
         
         var body: some View {
             TimeIntervalPicker(value: $value)

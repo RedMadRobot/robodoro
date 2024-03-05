@@ -34,13 +34,13 @@ struct ResultsView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("RESULTS PER WEEK")
-                    .font(.regularTitle)
+                    .textStyle(.regularTitle)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     navigator.pushSettings()
                 } label: {
-                    Images.settings.suImage
+                    Images.settings.swiftUIImage
                 }
             }
         }
@@ -60,7 +60,7 @@ struct ResultsView: View {
     @ViewBuilder
     private var tasksView: some View {
         ZStack {
-            Colors.defaultGray.suColor
+            Colors.defaultGray.swiftUIColor
                 .ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 8) {
@@ -86,8 +86,8 @@ struct ResultsView: View {
     private var deletionOnboarding: some View {
         if viewModel.showDeletionOnboarding {
             Text("If you want to delete the task, you need to tap on the cell and confirm the action")
-                .font(.regularText)
-                .foregroundColor(Colors.textGray1.suColor)
+                .textStyle(.regularText)
+                .foregroundColor(Colors.textGray1.swiftUIColor)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 50)
                 .padding(.vertical, 16)

@@ -19,12 +19,12 @@ struct FocusedBackground: View {
     
     // MARK: - Private Properties
     
-    private let backgroundColor: UIColor
-    private let strokeColor: UIColor
+    private let backgroundColor: Color
+    private let strokeColor: Color
     
     // MARK: - Init
     
-    init(backgroundColor: UIColor, strokeColor: UIColor) {
+    init(backgroundColor: Color, strokeColor: Color) {
         self.backgroundColor = backgroundColor
         self.strokeColor = strokeColor
     }
@@ -33,7 +33,7 @@ struct FocusedBackground: View {
     
     var body: some View {
         ZStack {
-            Color(backgroundColor)
+            backgroundColor
             GeometryReader { geometry in
                 Path { path in
                     let center = CGPoint(
@@ -49,7 +49,7 @@ struct FocusedBackground: View {
                                     degrees: Double(i) * 360 / Double(Constants.numberOfLines))))
                     }
                 }
-                .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
+                .stroke(strokeColor, lineWidth: Constants.lineWidth)
             }
         }
         .ignoresSafeArea()
@@ -71,7 +71,8 @@ struct FocusedBackground: View {
 struct FocusedBackground_Previews: PreviewProvider {
     static var previews: some View {
         FocusedBackground(
-            backgroundColor: Colors.focusRed,
-            strokeColor: Colors.focusLine)
+            backgroundColor: Colors.focusRed.swiftUIColor,
+            strokeColor: Colors.focusLine.swiftUIColor
+        )
     }
 }

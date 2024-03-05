@@ -40,10 +40,10 @@ struct SpendedMinutesElementView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(numberFormatter.getValue(double: value))
-                    .font(.miniTime)
+                    .textStyle(.miniTime)
                 Spacer()
                 Text(title)
-                    .font(.regularText)
+                    .textStyle(.regularText)
             }
             Spacer()
         }

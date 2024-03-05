@@ -41,19 +41,19 @@ final class PomodoroViewModel: ViewModel {
         timedPomodoroWorker.lastStageState
     }
     
-    var backgroundColor: UIColor {
+    var backgroundColor: Color {
         ColorHelper.getBackgroundColor(
             pomodoroState: pomodoroState,
             timerState: timerState)
     }
     
-    var strokeColor: UIColor {
+    var strokeColor: Color {
         ColorHelper.getStrokeColor(
             pomodoroState: pomodoroState,
             timerState: timerState)
     }
     
-    var buttonImage: UIImage {
+    var buttonImage: Image {
         timerState.buttonImage
     }
     

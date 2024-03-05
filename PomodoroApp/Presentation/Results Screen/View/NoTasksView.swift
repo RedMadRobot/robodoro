@@ -23,8 +23,8 @@ struct NoTasksView: View {
         ZStack {
             backView
             Text("NO TASKS YET")
-                .font(.stageLabel)
-                .foregroundColor(Colors.textGray1.suColor)
+                .textStyle(.stageLabel)
+                .foregroundColor(Colors.textGray1.swiftUIColor)
         }
         .ignoresSafeArea()
     }
@@ -33,7 +33,7 @@ struct NoTasksView: View {
     
     @ViewBuilder
     private var backView: some View {
-        Colors.defaultGray.suColor
+        Colors.defaultGray.swiftUIColor
         GeometryReader { geometry in
             Path { path in
                 let globalFrame = geometry.frame(in: .global)
@@ -52,7 +52,7 @@ struct NoTasksView: View {
                     y += spacing
                 }
             }
-            .stroke(Colors.defaultLine.suColor, lineWidth: Constants.lineWidth)
+            .stroke(Colors.defaultLine.swiftUIColor, lineWidth: Constants.lineWidth)
         }
     }
 }

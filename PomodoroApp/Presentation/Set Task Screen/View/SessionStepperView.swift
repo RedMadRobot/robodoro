@@ -31,7 +31,7 @@ struct SessionStepperView: View {
     var body: some View {
         HStack {
             Text("Sessions")
-                .font(.regularText)
+                .textStyle(.regularText)
             Spacer()
             stepperView
         }
@@ -46,16 +46,16 @@ struct SessionStepperView: View {
             Button {
                 calculateNewValue(newValue: value - 1)
             } label: {
-                Images.minus.suImage
+                Images.minus.swiftUIImage
             }
             .disabled(value == Constants.range.lowerBound)
             Text("\(value)")
-                .font(.miniTime)
+                .textStyle(.miniTime)
                 .frame(width: 48)
             Button {
                 calculateNewValue(newValue: value + 1)
             } label: {
-                Images.plus.suImage
+                Images.plus.swiftUIImage
             }
             .disabled(value == Constants.range.upperBound)
         }

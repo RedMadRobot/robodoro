@@ -27,15 +27,18 @@ struct BackgroundView: View {
             case .focus:
                 FocusedBackground(
                     backgroundColor: state.backgroundColor,
-                    strokeColor: state.strokeColor)
+                    strokeColor: state.strokeColor
+                )
             case .break:
                 BreakBackground(
                     backgroundColor: state.backgroundColor,
-                    strokeColor: state.strokeColor)
+                    strokeColor: state.strokeColor
+                )
             case .longBreak:
                 LongBreakBackground(
                     backgroundColor: state.backgroundColor,
-                    strokeColor: state.strokeColor)
+                    strokeColor: state.strokeColor
+                )
             }
         }
     }

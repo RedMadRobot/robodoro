@@ -5,7 +5,7 @@
 //  Created by Петр Тартынских  on 17.11.2022.
 //
 
-import UIKit
+import SwiftUI
 
 enum TimerState: Codable, Hashable {
     case initial(TimeInterval)
@@ -18,14 +18,14 @@ enum TimerState: Codable, Hashable {
 
 extension TimerState {
     
-    var buttonImage: UIImage {
+    var buttonImage: Image {
         switch self {
         case .running:
-            return Images.pause
+            return Images.pause.swiftUIImage
         case .ended:
-            return Images.stop
+            return Images.stop.swiftUIImage
         case .initial, .paused:
-            return Images.play
+            return Images.play.swiftUIImage
         }
     }
 }

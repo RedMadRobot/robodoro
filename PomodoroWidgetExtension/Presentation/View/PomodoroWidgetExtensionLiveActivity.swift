@@ -25,7 +25,8 @@ struct PomodoroWidgetExtensionLiveActivity: Widget {
                 attribute: context.attributes,
                 state: context.state,
                 theme: .dark,
-                size: .large)
+                size: .large
+            )
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
@@ -33,19 +34,19 @@ struct PomodoroWidgetExtensionLiveActivity: Widget {
                         attribute: context.attributes,
                         state: context.state,
                         theme: .light,
-                        size: .small)
+                        size: .small
+                    )
                 }
             } compactLeading: {
                 Text(state: context.state)
+                    .textStyle(.stageLabel, color: context.state.strokeColor)
                     .frame(width: Constants.textWidth)
-                    .font(.stageLabel)
-                    .padding([.leading], Constants.padding)
-                    .foregroundColor(Color(context.state.strokeColor))
+                    .padding(.leading, Constants.padding)
             } compactTrailing: {
-                Image(uiImage: context.state.islandImage)
+                context.state.islandImage
                     .resizable()
                     .frame(width: Constants.imageSize, height: Constants.imageSize)
-                    .padding([.trailing], Constants.padding)
+                    .padding(.trailing, Constants.padding)
             } minimal: {}
         }
     }

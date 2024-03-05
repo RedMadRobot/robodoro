@@ -42,7 +42,7 @@ struct WhoAreWeView: View {
     
     @ViewBuilder
     private var backView: some View {
-        Colors.averageFocusBlue.suColor
+        Colors.averageFocusBlue.swiftUIColor
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .ignoresSafeArea()
         GeometryReader { geometry in
@@ -63,7 +63,7 @@ struct WhoAreWeView: View {
                     y += spacing
                 }
             }
-            .stroke(Colors.averageFocusLine.suColor, lineWidth: Constants.lineWidth)
+            .stroke(Colors.averageFocusLine.swiftUIColor, lineWidth: Constants.lineWidth)
             .clipShape(RoundedRectangle(cornerRadius: 32))
         }
     }
@@ -72,9 +72,9 @@ struct WhoAreWeView: View {
     private var infoView: some View {
         VStack(spacing: 16) {
             Text("WHO ARE WE?")
-                .font(.bigTitle)
+                .textStyle(.bigTitle)
             Text("We are red_mad_robot company. This app is an experimentation lab for our designers and developers. We have created the Timer for ours use and your as well.")
-                .font(.regularText)
+                .textStyle(.regularText)
         }
         .multilineTextAlignment(.center)
         .padding(.horizontal, 40)

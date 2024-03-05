@@ -62,23 +62,20 @@ struct TaskView: View {
     private var frontView: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
-//                Text(task.title ?? "Noname Task")
                 Text(task.title)
-//                Text(formatDate())
+                    .textStyle(.regularText)
                 Text(task.date)
-                    .foregroundColor(Colors.textGray2.suColor)
+                    .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
             }
-            .font(.regularText)
             Spacer(minLength: 45)
-//            Text("\(task.completedInterval.minutesIgnoringHours)")
             Text(task.completedInterval)
-                .font(.miniTime)
+                .textStyle(.miniTime)
                 .contentShape(Rectangle())
                 .background(GeometryReader { geometry in
                     Button {
                         onDelete()
                     } label: {
-                        Images.trash.suImage
+                        Images.trash.swiftUIImage
                             .padding(.all, Constants.buttonPadding)
                     }
                     .offset(
@@ -89,13 +86,6 @@ struct TaskView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 24)
     }
-    
-    // MARK: - Private Methods
-    
-//    private func formatDate() -> String {
-//        let formatter: DateFormatter = .onlyDateFormatter
-//        return formatter.string(from: task.date)
-//    }
 }
 
 // MARK: - PreviewProvider

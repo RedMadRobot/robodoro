@@ -40,7 +40,7 @@ struct TasksListView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 32)
-                .fill(Colors.white.suColor))
+                .fill(Colors.white.swiftUIColor))
         .animation(disableAnimations ? nil : .easeInOut, value: tasks)
     }
     
@@ -50,13 +50,13 @@ struct TasksListView: View {
     private var titleView: some View {
         HStack {
             Text("Task")
+                .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
             Spacer()
             Text("Focus, min")
+                .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
         }
         .padding(.horizontal, 16)
         .padding(.top, 24)
-        .font(.regularText)
-        .foregroundColor(Colors.textGray2.suColor)
     }
     
     @ViewBuilder
@@ -83,7 +83,7 @@ struct TasksListView: View {
     @ViewBuilder
     private var divider: some View {
         Divider()
-            .overlay(Colors.textGray2.suColor)
+            .overlay(Colors.textGray2.swiftUIColor)
             .padding(.horizontal, 16)
     }
     
@@ -104,7 +104,7 @@ struct TasksListView_Previews: PreviewProvider {
     
     static var previews: some View {
         ZStack {
-            Colors.gray.suColor
+            Colors.gray.swiftUIColor
                 .ignoresSafeArea()
             ScrollView {
                 TasksListView(

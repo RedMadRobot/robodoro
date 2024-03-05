@@ -28,7 +28,7 @@ struct AlertView: View {
     
     var body: some View {
         ZStack {
-            Colors.black.suColor.opacity(0.6)
+            Colors.black.swiftUIColor.opacity(0.6)
             alertBanner
         }
         .ignoresSafeArea()
@@ -42,7 +42,7 @@ struct AlertView: View {
     private var alertBanner: some View {
         VStack(spacing: 40) {
             Text(viewModel.title)
-                .font(.regularText)
+                .textStyle(.regularText)
                 .padding(.top, 24)
             HStack(spacing: 12) {
                 Button(viewModel.secondaryButtonTitle) {
@@ -60,7 +60,7 @@ struct AlertView: View {
             .padding(.bottom, 24)
         }
         .frame(maxWidth: .infinity)
-        .background(Colors.white.suColor)
+        .background(Colors.white.swiftUIColor)
         .clipShape(RoundedRectangle(cornerRadius: 35))
         .padding(16)
     }
@@ -71,6 +71,6 @@ struct AlertView: View {
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
         AlertView(navigator: MainNavigator())
-            .background(Colors.focusRed.suColor)
+            .background(Colors.focusRed.swiftUIColor)
     }
 }

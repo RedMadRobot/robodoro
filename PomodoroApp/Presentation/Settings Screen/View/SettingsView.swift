@@ -27,7 +27,7 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Colors.white.suColor
+            Colors.white.swiftUIColor
             frontView
         }
         .navigationBarBackButtonHidden(true)
@@ -60,13 +60,13 @@ struct SettingsView: View {
                 Button {
                     navigator.pop()
                 } label: {
-                    Images.arrowLeft.suImage
+                    Images.arrowLeft.swiftUIImage
                         .padding([.top, .bottom, .trailing], 10)
                 }
                 Spacer()
             }
             Text("SETTINGS")
-                .font(.regularTitle)
+                .textStyle(.regularTitle)
             #if DEBUG
             HStack {
                 Spacer()
@@ -84,11 +84,11 @@ struct SettingsView: View {
     private var footer: some View {
         HStack(spacing: 4) {
             Text("With")
-            Images.heart.suImage
+                .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
+            Images.heart.swiftUIImage
             Text("from red_mad_robot")
+                .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
         }
-        .font(.regularText)
-        .foregroundColor(Colors.textGray2.suColor)
     }
 }
 

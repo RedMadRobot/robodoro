@@ -63,6 +63,7 @@ struct StageView_Previews: PreviewProvider {
             maxStagesCount: 8,
             activeStagesCount: 4,
             lastStageState: .half,
-            theme: .dark)
+            theme: .dark
+        )
     }
 }

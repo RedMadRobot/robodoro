@@ -23,7 +23,7 @@ struct InfoOverlayView: View {
     
     var body: some View {
         ZStack {
-            Colors.black.suColor.opacity(0.6)
+            Colors.black.swiftUIColor.opacity(0.6)
             bannerView
         }
         .ignoresSafeArea()
@@ -37,14 +37,14 @@ struct InfoOverlayView: View {
         VStack {
             Spacer()
             VStack(spacing: 0) {
-                Images.alertCircle.suImage
+                Images.alertCircle.swiftUIImage
                     .padding(40)
                 Group {
                     Text("We store your tasks\nfor a week")
-                        .font(.miniTitle)
+                        .textStyle(.miniTitle)
                         .padding(.bottom, 16)
                     Text("At the start of a week you can check out previous results and then we will delete it")
-                        .font(.regularText)
+                        .textStyle(.regularText)
                 }
                 .padding(.horizontal, 16)
                 Button("OKAY, GOT IT") {
@@ -57,7 +57,7 @@ struct InfoOverlayView: View {
             }
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
-            .background(Colors.white.suColor)
+            .background(Colors.white.swiftUIColor)
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .padding(.horizontal, 16)
         }
@@ -70,6 +70,6 @@ struct InfoOverlayView: View {
 struct InfoOverlayView_Previews: PreviewProvider {
     static var previews: some View {
         InfoOverlayView(onButtonClick: {})
-            .background(Colors.focusRed.suColor)
+            .background(Colors.focusRed.swiftUIColor)
     }
 }

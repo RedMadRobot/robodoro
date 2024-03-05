@@ -18,12 +18,12 @@ struct BreakBackground: View {
     
     // MARK: - Private Properties
     
-    private let backgroundColor: UIColor
-    private let strokeColor: UIColor
+    private let backgroundColor: Color
+    private let strokeColor: Color
     
     // MARK: - Init
     
-    init(backgroundColor: UIColor, strokeColor: UIColor) {
+    init(backgroundColor: Color, strokeColor: Color) {
         self.backgroundColor = backgroundColor
         self.strokeColor = strokeColor
     }
@@ -32,7 +32,7 @@ struct BreakBackground: View {
     
     var body: some View {
         ZStack {
-            Color(backgroundColor)
+            backgroundColor
             GeometryReader { geometry in
                 Path { path in
                     let globalFrame = geometry.frame(in: .global)
@@ -47,7 +47,7 @@ struct BreakBackground: View {
                                 y: globalFrame.maxY))
                     }
                 }
-                .stroke(Color(strokeColor), lineWidth: Constants.lineWidth)
+                .stroke(strokeColor, lineWidth: Constants.lineWidth)
             }
         }
         .ignoresSafeArea()
@@ -59,7 +59,8 @@ struct BreakBackground: View {
 struct BreakBackground_Previews: PreviewProvider {
     static var previews: some View {
         BreakBackground(
-            backgroundColor: Colors.breakPurple,
-            strokeColor: Colors.breakLine)
+            backgroundColor: Colors.breakPurple.swiftUIColor,
+            strokeColor: Colors.breakLine.swiftUIColor
+        )
     }
 }

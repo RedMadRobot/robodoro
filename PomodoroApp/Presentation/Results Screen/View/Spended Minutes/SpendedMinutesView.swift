@@ -31,12 +31,14 @@ struct SpendedMinutesView: View {
             SpendedMinutesElementView(
                 value: dailyAverageFocusValue,
                 title: "Daily average\nfocus, min",
-                style: .blue)
+                style: .blue
+            )
             .animation(.easeInOut, value: dailyAverageFocusValue)
             SpendedMinutesElementView(
                 value: totalFocusValue,
                 title: "Total focus,\n min",
-                style: .red)
+                style: .red
+            )
             .animation(.easeInOut, value: totalFocusValue)
         }
     }
@@ -51,6 +53,7 @@ struct SpendedMinutesView_Previews: PreviewProvider {
     static var previews: some View {
         SpendedMinutesView(
             dailyAverageFocusValue: 50,
-            totalFocusValue: 132)
+            totalFocusValue: 132
+        )
     }
 }
