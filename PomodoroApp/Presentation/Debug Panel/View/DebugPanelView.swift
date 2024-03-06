@@ -29,7 +29,7 @@ struct DebugPanelView: View {
         form
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Debug panel")
+                    Text(Strings.DebugPanel.navigationTitle)
                 }
             }
     }
@@ -42,38 +42,41 @@ struct DebugPanelView: View {
             Section {
                 CustomTextField(
                     text: $viewModel.taskTitle,
-                    placeholder: "Task title (optional)",
+                    placeholder: Strings.DebugPanel.Form.name,
                     onShouldChangeText: viewModel.shouldChangeText)
                 DatePicker(selection: $viewModel.taskDate, in: ...Date.now) {
-                    Text("Task date")
+                    Text(Strings.DebugPanel.Form.date)
                 }
                 VStack(alignment: .leading) {
-                    Text("Completed interval")
+                    Text(Strings.DebugPanel.Form.completedInterval)
                     TimeIntervalPicker(value: $viewModel.taskCompletedInterval)
                 }
-                Button("Create task") {
+                Button(Strings.DebugPanel.Form.createTask) {
                     viewModel.createTask()
                 }
                 .foregroundColor(.blue)
             }
             Section {
                 HStack {
-                    Text("Total number of tasks:")
+                    Text(Strings.DebugPanel.Form.totalNumberOfTasks)
                     Spacer()
                     Text("\(viewModel.totalTasksCount)")
                 }
-                Button("Delete All tasks") {
+                Button(Strings.DebugPanel.Form.deleteAllTasks) {
                     viewModel.deleteAllTasks()
                 }
                 .foregroundColor(.red)
             }
             Section {
-                Toggle("Shrink sliders step", isOn: $viewModel.shrinkSlidersStep)
-                Button("Reset onboarding") {
+                Toggle(
+                    Strings.DebugPanel.Form.shrinkSlidersStep,
+                    isOn: $viewModel.shrinkSlidersStep
+                )
+                Button(Strings.DebugPanel.Form.resetOnboarding) {
                     viewModel.resetOnboarding()
                 }
                 .foregroundColor(.blue)
-                Button("Reset last used values") {
+                Button(Strings.DebugPanel.Form.resetLastUsedValues) {
                     viewModel.resetLastUsedValues()
                 }
                 .foregroundColor(.blue)

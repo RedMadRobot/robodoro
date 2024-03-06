@@ -71,9 +71,9 @@ struct WhoAreWeView: View {
     @ViewBuilder
     private var infoView: some View {
         VStack(spacing: 16) {
-            Text("WHO ARE WE?")
+            Text(Strings.Onboaring.AboutUs.title)
                 .textStyle(.bigTitle)
-            Text("We are red_mad_robot company. This app is an experimentation lab for our designers and developers. We have created the Timer for ours use and your as well.")
+            Text(Strings.Onboaring.AboutUs.info)
                 .textStyle(.regularText)
         }
         .multilineTextAlignment(.center)
@@ -84,7 +84,7 @@ struct WhoAreWeView: View {
     private var buttonView: some View {
         VStack {
             Spacer()
-            Button("LET’S START") {
+            Button(Strings.Onboaring.AboutUs.buttonTitle) {
                 withAnimation(.linear(duration: 0.3)) {
                     onButtonClick()
                 }

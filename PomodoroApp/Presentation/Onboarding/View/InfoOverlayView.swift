@@ -40,14 +40,14 @@ struct InfoOverlayView: View {
                 Images.alertCircle.swiftUIImage
                     .padding(40)
                 Group {
-                    Text("We store your tasks\nfor a week")
+                    Text(Strings.Onboaring.UserTaskStorage.title)
                         .textStyle(.miniTitle)
                         .padding(.bottom, 16)
-                    Text("At the start of a week you can check out previous results and then we will delete it")
+                    Text(Strings.Onboaring.UserTaskStorage.info)
                         .textStyle(.regularText)
                 }
                 .padding(.horizontal, 16)
-                Button("OKAY, GOT IT") {
+                Button(Strings.Onboaring.UserTaskStorage.buttonTitle) {
                     onButtonClick()
                 }
                 .buttonStyle(PrimaryButtonStyle())

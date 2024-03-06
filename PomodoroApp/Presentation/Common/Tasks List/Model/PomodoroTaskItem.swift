@@ -15,7 +15,7 @@ struct PomodoroTaskItem: Equatable {
     
     init(task: PomodoroTask) {
         self.id = task.id
-        self.title = task.title ?? "Noname Task"
+        self.title = task.title ?? Strings.TasksList.unnamedTaskTitle
         self.date = DateFormatter.onlyDateFormatter.string(from: task.date)
         self.completedInterval = String(task.completedInterval.minutesIgnoringHours)
     }

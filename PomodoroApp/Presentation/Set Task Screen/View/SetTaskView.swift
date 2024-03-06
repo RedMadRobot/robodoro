@@ -38,7 +38,7 @@ struct SetTaskView: View {
     @ViewBuilder
     private var frontView: some View {
         VStack {
-            Text("SET YOUR TASK")
+            Text(Strings.SetTask.title)
                 .textStyle(.regularTitle)
                 .padding(.vertical, 32)
             parameters
@@ -72,7 +72,7 @@ struct SetTaskView: View {
                         SessionStepperView(value: $viewModel.stagesCount)
                         taskTitleFieldView(proxy: proxy)
                         Spacer()
-                        Button("START TIMER") {
+                        Button(Strings.SetTask.startTimerAction) {
                             viewModel.applyParameters()
                             navigator.hideSetTaskSheet()
                             navigator.showPomodoroModal(delayed: true)

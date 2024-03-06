@@ -6,5 +6,88 @@
   
 */
 
-// MARK: - Common
-"common.foo" = "Фуу";
+// MARK: - Pomodoro state
+
+"pomodoroState.title.focus" = "focus";
+"pomodoroState.title.break" = "break";
+"pomodoroState.title.longBreak" = "long break";
+
+// MARK: - Tasks list
+
+"tasksList.unnamedTaskTitle" = "Noname Task";
+"tasksList.tasksColumnTitle" = "Task";
+"tasksList.timeColumnTitle" = "Focus, min";
+
+// MARK: - Results screen
+
+"resultsScreen.title" = "RESULTS PER WEEK";
+"resultsScreen.info" = "If you want to delete the task, you need to tap on the cell and confirm the action";
+"resultsScreen.noTasks" = "NO TASKS YET";
+"resultsScreen.setTaskAction" = "LET’S GO";
+"resultsScreen.deleteTaskAlert.title" = "Do you want to delete this task?";
+"resultsScreen.deleteTaskAlert.primaryAction" = "DELETE";
+"resultsScreen.deleteTaskAlert.secondaryAction" = "CANCEL";
+"resultsScreen.averageFocus" = "Daily average\nfocus, min";
+"resultsScreen.totalFocus" = "Total focus,\n min";
+
+// MARK: - Set task screen
+
+"setTask.title" = "SET YOUR TASK";
+"setTask.startTimerAction" = "START TIMER";
+"setTask.taskNamePlaceholder" = "Add task name, if you want...";
+"setTask.sessionsStepperTitle" = "Sessions";
+
+// MARK: - Settings
+
+"settings.title" = "SETTINGS";
+"settings.alarmSound" = "SETTINGS";
+"settings.haptics" = "SETTINGS";
+"settings.debugPanel" = "SETTINGS";
+"settings.footer.prefix" = "With";
+"settings.footer.suffix" = "from red_mad_robot";
+
+// MARK: - Previous results
+
+"previousResults.title" = "PREVIOUS RESULTS";
+"previousResults.info" = "Check out your results for the previous period. After clicking the button that data will be deleted.";
+"previousResults.buttonTitle" = "OKAY, I GOT IT";
+
+// MARK: - Onboarding
+
+"onboaring.userTaskStorage.title" = "We store your tasks\nfor a week";
+"onboaring.userTaskStorage.info" = "At the start of a week you can check out previous results and then we will delete it";
+"onboaring.userTaskStorage.buttonTitle" = "OKAY, GOT IT";
+"onboaring.aboutUs.title" = "WHO ARE WE?";
+"onboaring.aboutUs.info" = "We are red_mad_robot company. This app is an experimentation lab for our designers and developers. We have created the Timer for ours use and your as well.";
+"onboaring.aboutUs.buttonTitle" = "LET’S START";
+
+// MARK: - Pomodoro screen
+
+"pomodoroScreen.endTaskAlert.title" = "Do you want to end this task?";
+"pomodoroScreen.endTaskAlert.primaryAction" = "END";
+"pomodoroScreen.endTaskAlert.secondaryAction" = "CANCEL";
+
+// MARK: - Debug panel
+
+"debugPanel.navigationTitle" = "Debug panel";
+"debugPanel.form.name" = "Task title (optional)";
+"debugPanel.form.date" = "Task date";
+"debugPanel.form.completedInterval" = "Completed interval";
+"debugPanel.form.createTask" = "Create task";
+"debugPanel.form.totalNumberOfTasks" = "Total number of tasks:";
+"debugPanel.form.deleteAllTasks" = "Delete All tasks";
+"debugPanel.form.shrinkSlidersStep" = "Shrink sliders step";
+"debugPanel.form.resetOnboarding" = "Reset onboadring";
+"debugPanel.form.resetLastUsedValues" = "Reset last used values";
+"debugPanel.timeIntervalPicker.hours" = "h";
+"debugPanel.timeIntervalPicker.minutes" = "m";
+"debugPanel.timeIntervalPicker.seconds" = "s";
+
+// MARK: - Notification
+
+"notification.stageEnded.title" = "%@ stage ended!";
+"notification.stageEnded.body" = "Get ready to start new timer";
+
+// MARK: - Test screen
+
+"testScreen.navigationTitle" = "Test screen";

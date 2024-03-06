@@ -58,7 +58,7 @@ struct CustomTextView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> some UITextView {
         let textView = UITextView()
-        textView.font = .miniTitle
+        textView.font = Fonts.CoFoSans.regular.font(size: 15)
         textView.backgroundColor = .clear
         textView.delegate = context.coordinator
         textView.returnKeyType = .done

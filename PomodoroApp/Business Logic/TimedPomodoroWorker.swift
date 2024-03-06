@@ -324,8 +324,9 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     private func scheduleCurrentStateNotification() {
         notificationService.scheduleNotification(
             in: leftTime.value,
-            title: "\(pomodoroState.value.title) stage ended!",
-            body: "Get ready to start new timer")
+            title: Strings.Notification.StageEnded.title(pomodoroState.value.title),
+            body: Strings.Notification.StageEnded.body
+        )
     }
     
     private func stopActivity() {

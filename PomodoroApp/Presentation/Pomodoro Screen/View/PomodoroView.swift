@@ -93,9 +93,9 @@ struct PomodoroView: View {
     
     private func showAlert() {
         navigator.showAlert(
-            title: "Do you want to end this task?",
-            primaryButtonTitle: "END",
-            secondaryButtonTitle: "CANCEL",
+            title: Strings.PomodoroScreen.EndTaskAlert.title,
+            primaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.primaryAction,
+            secondaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.secondaryAction,
             primaryAction: {
                 viewModel.resetWorker()
                 navigator.hidePomodoroModal()

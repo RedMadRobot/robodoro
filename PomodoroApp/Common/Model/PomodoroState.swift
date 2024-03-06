@@ -20,22 +20,22 @@ extension PomodoroState {
     var title: String {
         switch self {
         case .focus:
-            return "FOCUS"
+            return Strings.PomodoroState.Title.focus.uppercased()
         case .break:
-            return "BREAK"
+            return Strings.PomodoroState.Title.break.uppercased()
         case .longBreak:
-            return "LONG BREAK"
+            return Strings.PomodoroState.Title.longBreak.uppercased()
         }
     }
     
     var miniTitle: String {
         switch self {
         case .focus:
-            return "Focus"
+            return Strings.PomodoroState.Title.focus.capitalized
         case .break:
-            return "Break"
+            return Strings.PomodoroState.Title.break.capitalized
         case .longBreak:
-            return "Long Break"
+            return Strings.PomodoroState.Title.longBreak.capitalized
         }
     }
 }

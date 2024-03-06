@@ -49,10 +49,10 @@ struct TasksListView: View {
     @ViewBuilder
     private var titleView: some View {
         HStack {
-            Text("Task")
+            Text(Strings.TasksList.tasksColumnTitle)
                 .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
             Spacer()
-            Text("Focus, min")
+            Text(Strings.TasksList.timeColumnTitle)
                 .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
         }
         .padding(.horizontal, 16)

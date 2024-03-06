@@ -38,7 +38,7 @@ struct PreviousResultsView: View {
     private var tasksView: some View {
         ScrollView {
             VStack(spacing: 8) {
-                Text("PREVIOUS RESULTS")
+                Text(Strings.PreviousResults.title)
                     .textStyle(.regularTitle)
                     .padding(.top, 32)
                 warningView
@@ -56,7 +56,7 @@ struct PreviousResultsView: View {
     private var frontView: some View {
         VStack {
             Spacer()
-            Button("OKAY, I GOT IT") {
+            Button(Strings.PreviousResults.buttonTitle) {
                 viewModel.clearOldTasks()
                 navigator.hidePreviousResultsSheet()
             }
@@ -69,7 +69,7 @@ struct PreviousResultsView: View {
     private var warningView: some View {
         HStack(alignment: .top, spacing: 10) {
             Images.info.swiftUIImage
-            Text("Check out your results for the previous period. After clicking the button that data will be deleted.")
+            Text(Strings.PreviousResults.info)
                 .textStyle(.regularText)
         }
         .frame(maxWidth: .infinity)

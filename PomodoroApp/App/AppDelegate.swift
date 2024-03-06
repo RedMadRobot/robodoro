@@ -39,7 +39,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationCoordinatorProxy.route(
             with: .push(
                 .testScreen,
-                ScreenConfig(navigationTitle: "Test screen", isNeedSetBackButton: false),
+                ScreenConfig(
+                    navigationTitle: Strings.TestScreen.navigationTitle,
+                    isNeedSetBackButton: false
+                ),
                 .fullscreen
             )
         )

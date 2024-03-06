@@ -30,7 +30,7 @@ struct SessionStepperView: View {
 
     var body: some View {
         HStack {
-            Text("Sessions")
+            Text(Strings.SetTask.sessionsStepperTitle)
                 .textStyle(.regularText)
             Spacer()
             stepperView

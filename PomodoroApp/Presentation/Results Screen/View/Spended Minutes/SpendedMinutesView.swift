@@ -30,13 +30,13 @@ struct SpendedMinutesView: View {
         HStack(spacing: 8) {
             SpendedMinutesElementView(
                 value: dailyAverageFocusValue,
-                title: "Daily average\nfocus, min",
+                title: Strings.ResultsScreen.averageFocus,
                 style: .blue
             )
             .animation(.easeInOut, value: dailyAverageFocusValue)
             SpendedMinutesElementView(
                 value: totalFocusValue,
-                title: "Total focus,\n min",
+                title: Strings.ResultsScreen.totalFocus,
                 style: .red
             )
             .animation(.easeInOut, value: totalFocusValue)

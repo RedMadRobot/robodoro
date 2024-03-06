@@ -52,7 +52,7 @@ struct TaskTitleFieldView: View {
     @ViewBuilder
     private var placeholderView: some View {
         if value.isEmpty {
-            Text("Add task name, if you want...")
+            Text(Strings.SetTask.taskNamePlaceholder)
                 .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
                 .padding(.leading, 25)
                 .padding(.top, 32)

@@ -43,10 +43,16 @@ struct SettingsView: View {
     @ViewBuilder
     private var frontView: some View {
         VStack(spacing: 4) {
-            Toggle("Alarm sound", isOn: $viewModel.soundEnabled)
-                .toggleStyle(SettingsToggleStyle())
-            Toggle("Haptic", isOn: $viewModel.hapticEnabled)
-                .toggleStyle(SettingsToggleStyle())
+            Toggle(
+                Strings.Settings.alarmSound,
+                isOn: $viewModel.soundEnabled
+            )
+            .toggleStyle(SettingsToggleStyle())
+            Toggle(
+                Strings.Settings.haptics,
+                isOn: $viewModel.hapticEnabled
+            )
+            .toggleStyle(SettingsToggleStyle())
             Spacer()
             footer
         }
@@ -65,7 +71,7 @@ struct SettingsView: View {
                 }
                 Spacer()
             }
-            Text("SETTINGS")
+            Text(Strings.Settings.title)
                 .textStyle(.regularTitle)
             #if DEBUG
             HStack {
@@ -73,7 +79,7 @@ struct SettingsView: View {
                 Button {
                     navigator.pushDebugPanel()
                 } label: {
-                    Text("Debug panel")
+                    Text(Strings.Settings.debugPanel)
                 }
             }
             #endif
@@ -83,10 +89,10 @@ struct SettingsView: View {
     @ViewBuilder
     private var footer: some View {
         HStack(spacing: 4) {
-            Text("With")
+            Text(Strings.Settings.Footer.prefix)
                 .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
             Images.heart.swiftUIImage
-            Text("from red_mad_robot")
+            Text(Strings.Settings.Footer.suffix)
                 .textStyle(.regularText, color: Colors.textGray2.swiftUIColor)
         }
     }

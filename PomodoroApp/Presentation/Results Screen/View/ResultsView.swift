@@ -33,7 +33,7 @@ struct ResultsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("RESULTS PER WEEK")
+                Text(Strings.ResultsScreen.title)
                     .textStyle(.regularTitle)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -85,7 +85,7 @@ struct ResultsView: View {
     @ViewBuilder
     private var deletionOnboarding: some View {
         if viewModel.showDeletionOnboarding {
-            Text("If you want to delete the task, you need to tap on the cell and confirm the action")
+            Text(Strings.ResultsScreen.info)
                 .textStyle(.regularText, color: Colors.textGray1.swiftUIColor)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 50)
@@ -98,7 +98,7 @@ struct ResultsView: View {
     private var frontView: some View {
         VStack {
             Spacer()
-            Button("LET’S GO") {
+            Button(Strings.ResultsScreen.setTaskAction) {
                 navigator.showSetTaskSheet()
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -111,9 +111,9 @@ struct ResultsView: View {
     private func showAlert(taskToDelete: PomodoroTaskItem) {
         viewModel.prepareToDeleteTask(task: taskToDelete)
         navigator.showAlert(
-            title: "Do you want to delete this task?",
-            primaryButtonTitle: "DELETE",
-            secondaryButtonTitle: "CANCEL",
+            title: Strings.ResultsScreen.DeleteTaskAlert.title,
+            primaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.primaryAction,
+            secondaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.secondaryAction,
             primaryAction: { viewModel.deleteSelectedTask() },
             commonCompletion: { navigator.hideAlert() })
     }
