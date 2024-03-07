@@ -87,7 +87,3 @@
 
 "notification.stageEnded.title" = "%@ stage ended!";
 "notification.stageEnded.body" = "Get ready to start new timer";
-
-// MARK: - Test screen
-
-"testScreen.navigationTitle" = "Test screen";

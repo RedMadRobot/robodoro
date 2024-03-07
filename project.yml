@@ -59,7 +59,7 @@ targets:
     dependencies:
       - target: PomodoroWidgetExtension
       - package: CoreComponents
-      - package: Navidux
+      - package: Nivelir
       - package: Sliders
   PomodoroWidgetExtension:
     type: app-extension

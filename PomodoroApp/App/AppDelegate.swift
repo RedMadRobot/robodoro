@@ -6,49 +6,27 @@
 //
 
 import UIKit
-import Navidux
+import Nivelir
 
-//@main
+@main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var navigator: ScreenNavigator?
     
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let navigator = ScreenNavigator(window: window)
+        let screens = Screens()
         
-        let navigation = NavigationControllerImpl { controller in
-            controller.navigationBar.isTranslucent = true
-        }
+        self.window = window
+        self.navigator = navigator
         
-        let screenFactory = NaviduxScreenFactory()
-        let alertFactory = AlertFactoryImpl()
-        let navigationCoordinatorProxy = NavigationCoordinatorProxy()
-        let screenAssembler = NaviduxScreenAssembler(
-            screenFactory: screenFactory,
-            alertFactory: alertFactory,
-            screenCoordinator: navigationCoordinatorProxy
-        )
-        let navigationCoordinator = NavigationCoordinator(
-            navigation,
-            screenAssembler: screenAssembler
-        )
-        navigationCoordinatorProxy.subject = navigationCoordinator
-        navigationCoordinatorProxy.route(
-            with: .push(
-                .testScreen,
-                ScreenConfig(
-                    navigationTitle: Strings.TestScreen.navigationTitle,
-                    isNeedSetBackButton: false
-                ),
-                .fullscreen
-            )
-        )
-        
-        window?.rootViewController = navigation
-        window?.makeKeyAndVisible()
+        navigator
+            .navigate(to: screens.showTestRoute())
         
         return true
     }

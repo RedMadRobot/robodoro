@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-@main
+// TODO: - [2.0.0] В процессе перехода на новую систему навигации, в будущем будет удалено
+//@main
 struct PomodoroApp: App {
     
     // MARK: - Private Properties
