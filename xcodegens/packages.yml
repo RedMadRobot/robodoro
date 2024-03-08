@@ -1,10 +1,10 @@
 packages:
-  CoreComponents:
-    url: https://git.redmadrobot.com/apple/foundation-ios/ios-core-components
-    branch: main
   Nivelir:
     url: "https://github.com/hhru/Nivelir"
     from: 1.7.0
   Sliders:
     url: https://github.com/spacenation/swiftui-sliders
     from: 2.0.0
+  SnapKit:
+    url: "https://github.com/SnapKit/SnapKit"
+    from: 5.0.1

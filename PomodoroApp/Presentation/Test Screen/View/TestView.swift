@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Nivelir
 
-struct TestView: View {
+struct TestView: View, ScreenKeyedContainer {
     
     // MARK: - Private properties
     
@@ -15,7 +16,15 @@ struct TestView: View {
     
     // MARK: - Public properties
     
-    init(viewModel: TestViewModel) {
+    var screenKey: ScreenKey
+    
+    // MARK: - Init
+    
+    init(
+        screenKey: ScreenKey,
+        viewModel: TestViewModel
+    ) {
+        self.screenKey = screenKey
         self.viewModel = viewModel
     }
     
@@ -49,5 +58,6 @@ struct TestView: View {
                 )
             }
         }
+        .border(.red, width: 5)
     }
 }

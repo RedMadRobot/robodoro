@@ -58,9 +58,9 @@ targets:
           DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
     dependencies:
       - target: PomodoroWidgetExtension
-      - package: CoreComponents
       - package: Nivelir
       - package: Sliders
+      - package: SnapKit
   PomodoroWidgetExtension:
     type: app-extension
     platform: iOS

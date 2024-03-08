@@ -105,13 +105,12 @@ class TestViewModel: ViewModel {
     }
     
     func closeAll() {
-        // TODO: - Спросить на проработке
-//        let firstScreen = screens.testScreen(numberOfScreen: 0)
-//        print(firstScreen.key)
+        let firstScreen = screens.testScreen(numberOfScreen: 0)
+        print(firstScreen.key)
         
         navigator.navigate { route in
             route
-                .first(.stack)
+                .first(.container(key: firstScreen.key))
                 .makeVisible()
         }
     }
