@@ -23,17 +23,11 @@ struct TestScreen: Screen {
             navigator: navigator,
             screens: screens
         )
-        let view = TestView(
+        let view = TestView(viewModel: viewModel)
+        let controller = CustomHostingController(
             screenKey: key,
-            viewModel: viewModel
+            rootView: view
         )
-        let controller = UIHostingController(rootView: view)
-        
-        // TODO: - Узнать на проработке
-//        let controller = DeclarativeController(
-//            screenKey: key,
-//            content: view
-//        )
         
         controller.sizingOptions = .preferredContentSize
         viewModel.viewController = controller

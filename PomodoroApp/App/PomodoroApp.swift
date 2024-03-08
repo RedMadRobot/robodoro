@@ -69,7 +69,8 @@ struct PomodoroApp: App {
             .navigationDestination(for: StackScreen.self) { screen in
                 switch screen {
                 case .settings:
-                    SettingsView(navigator: navigator)
+//                    SettingsView()
+                    EmptyView()
                 case .debugPanel:
                     DebugPanelView(navigator: navigator)
                 }

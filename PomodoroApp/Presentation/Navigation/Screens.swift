@@ -12,6 +12,11 @@ struct Screens {
     
     // MARK: - Screens
     
+    func settingsScreen() -> AnyModalScreen {
+        SettingsScreen(screens: self)
+            .eraseToAnyScreen()
+    }
+    
     func testScreen(numberOfScreen: Int) -> AnyModalScreen {
         TestScreen(
             numberOfScreen: numberOfScreen,
@@ -28,7 +33,8 @@ struct Screens {
                 to: testScreen(
                     numberOfScreen: 0
                 )
-                .withStackContainer())
+                .withStackContainer(of: CustomStackController.self)
+            )
             .makeKeyAndVisible()
     }
 }

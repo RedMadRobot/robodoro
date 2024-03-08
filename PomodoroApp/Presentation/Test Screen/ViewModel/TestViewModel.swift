@@ -5,10 +5,10 @@
 //  Created by Петр Тартынских on 07.03.2024.
 //
 
-import SwiftUI
 import Nivelir
+import SwiftUI
 
-class TestViewModel: ViewModel {
+final class TestViewModel: ViewModel {
     
     // MARK: - Private properties
     
@@ -49,7 +49,7 @@ class TestViewModel: ViewModel {
                 .top(.container)
                 .present(
                     screens.testScreen(numberOfScreen: numberOfScreen + 1)
-                        .withStackContainer()
+                        .withStackContainer(of: CustomStackController.self)
                         .withModalPresentationStyle(.fullScreen)
                 )
         }
@@ -76,7 +76,7 @@ class TestViewModel: ViewModel {
                 .top(.container)
                 .present(
                     screens.testScreen(numberOfScreen: numberOfScreen + 1)
-                        .withBottomSheetStack(bottomSheet)
+                        .withBottomSheetStack(bottomSheet, of: CustomBottomSheetStackController.self)
                 )
         }
     }
@@ -112,6 +112,14 @@ class TestViewModel: ViewModel {
             route
                 .first(.container(key: firstScreen.key))
                 .makeVisible()
+        }
+    }
+    
+    func showSettings() {
+        navigator.navigate { route in
+            route
+                .top(.stack)
+                .push(screens.settingsScreen())
         }
     }
 }

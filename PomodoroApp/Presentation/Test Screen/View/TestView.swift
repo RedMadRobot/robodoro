@@ -5,26 +5,18 @@
 //  Created by Петр Тартынских on 07.03.2024.
 //
 
-import SwiftUI
 import Nivelir
+import SwiftUI
 
-struct TestView: View, ScreenKeyedContainer {
+struct TestView: View {
     
     // MARK: - Private properties
     
     private var viewModel: TestViewModel
     
-    // MARK: - Public properties
-    
-    var screenKey: ScreenKey
-    
     // MARK: - Init
     
-    init(
-        screenKey: ScreenKey,
-        viewModel: TestViewModel
-    ) {
-        self.screenKey = screenKey
+    init(viewModel: TestViewModel) {
         self.viewModel = viewModel
     }
     
@@ -56,8 +48,13 @@ struct TestView: View, ScreenKeyedContainer {
                     "Close all",
                     action: viewModel.closeAll
                 )
+                Button(
+                    "Show ROBODORO settings",
+                    action: viewModel.showSettings
+                )
             }
         }
         .border(.red, width: 5)
+        .navigationTitle("Green screen")
     }
 }

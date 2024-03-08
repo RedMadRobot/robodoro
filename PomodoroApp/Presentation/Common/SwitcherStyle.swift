@@ -16,7 +16,7 @@ struct SettingsToggleStyle: ToggleStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack {
             configuration.label
-                .font(.custom(TextStyle.regularText.font.stringName, size: TextStyle.regularText.size))
+                .font(TextStyle.regularText.swiftUiFont)
                 .padding(.leading, 10)
             Spacer()
             RoundedRectangle(cornerRadius: 16, style: .circular)

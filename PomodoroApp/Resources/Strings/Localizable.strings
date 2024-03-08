@@ -40,9 +40,9 @@
 // MARK: - Settings
 
 "settings.title" = "SETTINGS";
-"settings.alarmSound" = "SETTINGS";
-"settings.haptics" = "SETTINGS";
-"settings.debugPanel" = "SETTINGS";
+"settings.alarmSound" = "Alarm sound";
+"settings.haptics" = "Haptics";
+"settings.debugPanel" = "Debug panel";
 "settings.footer.prefix" = "With";
 "settings.footer.suffix" = "from red_mad_robot";
 
