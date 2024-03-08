@@ -17,6 +17,11 @@ struct Screens {
             .eraseToAnyScreen()
     }
     
+    func debugPanelScreen() -> AnyModalScreen {
+        DebugPanelScreen(screens: self)
+            .eraseToAnyScreen()
+    }
+    
     func testScreen(numberOfScreen: Int) -> AnyModalScreen {
         TestScreen(
             numberOfScreen: numberOfScreen,

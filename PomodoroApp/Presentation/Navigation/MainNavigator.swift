@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum StackScreen: Hashable {
-    case settings
-    case debugPanel
-}
-
 enum DelayedPresentingScreen {
     case pomodoro
     case previousResults
@@ -64,14 +59,6 @@ final class MainNavigator: ObservableObject {
     
     func pop() {
         navigationPath.removeLast()
-    }
-    
-    func pushSettings() {
-        navigationPath.append(StackScreen.settings)
-    }
-    
-    func pushDebugPanel() {
-        navigationPath.append(StackScreen.debugPanel)
     }
     
     func showPomodoroModal(delayed: Bool = false) {

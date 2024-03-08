@@ -56,6 +56,10 @@ final class SettingsViewModel: ViewModel {
     // MARK: - Public methods
     
     func moveToDebugPanelTapped() {
-        print("NOT IMPLEMENTED")
+        navigator.navigate { route in
+            route
+                .top(.stack)
+                .push(screens.debugPanelScreen())
+        }
     }
 }

@@ -66,15 +66,6 @@ struct PomodoroApp: App {
     @ViewBuilder
     private var resultsView: some View {
         ResultsView(navigator: navigator)
-            .navigationDestination(for: StackScreen.self) { screen in
-                switch screen {
-                case .settings:
-//                    SettingsView()
-                    EmptyView()
-                case .debugPanel:
-                    DebugPanelView(navigator: navigator)
-                }
-            }
             .sheet(
                 isPresented: $navigator.previousResultsPresented,
                 onDismiss: {
