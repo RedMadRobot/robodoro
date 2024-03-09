@@ -15,7 +15,7 @@ final class OnboardingViewModel: ViewModel {
     private let navigator: ScreenNavigator
     private let screens: Screens
     
-    private var userDefaultsStorage: OnboardingStorage
+    private let scenarioResolver: ScenarioResolver
     
     // MARK: - Public Properties
     
@@ -29,13 +29,13 @@ final class OnboardingViewModel: ViewModel {
     init(
         navigator: ScreenNavigator,
         screens: Screens,
-        userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
-        feedbackService: FeedbackService = DI.services.feedbackService
+        feedbackService: FeedbackService = DI.services.feedbackService,
+        scenarioResolver: ScenarioResolver = ScenarioResolver()
     ) {
         self.navigator = navigator
         self.screens = screens
-        self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
+        self.scenarioResolver = scenarioResolver
     }
     
     func whoWeAreViewButtonTapped() {
@@ -43,7 +43,7 @@ final class OnboardingViewModel: ViewModel {
     }
     
     func onboardingButtonTapped() {
-        userDefaultsStorage.onboadingShowed = true
+        scenarioResolver.onboardingCompleted()
         navigator.navigate { route in
             route
                 .top(.container)

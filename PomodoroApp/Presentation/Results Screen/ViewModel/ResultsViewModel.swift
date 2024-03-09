@@ -24,6 +24,8 @@ final class ResultsViewModel: ViewModel {
     
     private var taskToDelete: PomodoroTaskItem?
     
+    private let scenarioResolver: ScenarioResolver
+    
     // MARK: - Public Properties
     
     @Published
@@ -51,7 +53,8 @@ final class ResultsViewModel: ViewModel {
         dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
         userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
-        feedbackService: FeedbackService = DI.services.feedbackService
+        feedbackService: FeedbackService = DI.services.feedbackService,
+        scenarioResolver: ScenarioResolver = ScenarioResolver()
     ) {
         self.navigator = navigator
         self.screens = screens
@@ -59,6 +62,8 @@ final class ResultsViewModel: ViewModel {
         self.tasksStorage = tasksStorage
         self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
+        self.scenarioResolver = scenarioResolver
+        
         self.showDeletionOnboarding = !userDefaultsStorage.deleteFeatureUsed
         
         let allTasks = tasksStorage.tasks.value
@@ -72,7 +77,7 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Methods
     
     func viewDidAppear() {
-        showOnboardingIfNeeded()
+        showOverlayScreensIfNeeded()
     }
     
     func moveToSettingsTapped() {
@@ -126,8 +131,14 @@ final class ResultsViewModel: ViewModel {
         totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
     }
     
-    private func showOnboardingIfNeeded() {
-        if !userDefaultsStorage.onboadingShowed {
+    private func showOverlayScreensIfNeeded() {
+        guard !showOnboardingIfNeeded() else { return }
+        guard !showPreviousResultsScreenIfNeeded() else { return }
+        guard !showPomodoroScreenIfNeeded() else { return }
+    }
+    
+    private func showOnboardingIfNeeded() -> Bool {
+        if scenarioResolver.shouldShowOnboarding {
             navigator.navigate { route in
                 route
                     .top(.container)
@@ -137,6 +148,25 @@ final class ResultsViewModel: ViewModel {
                             .withModalTransitionStyle(.crossDissolve)
                     )
             }
+            return true
         }
+        return false
+    }
+    
+    private func showPreviousResultsScreenIfNeeded() -> Bool {
+        if scenarioResolver.shouldShowPreviousResults {
+            // TODO: - Показ экрана с прошлыми результатами
+            return true
+        }
+        return false
+    }
+    
+    private func showPomodoroScreenIfNeeded() -> Bool {
+        if scenarioResolver.shouldShowPomodoro {
+            scenarioResolver.setupPomodoroFromSavedData()
+            // TODO: - Показ экрана помодоро
+            return true
+        }
+        return false
     }
 }
