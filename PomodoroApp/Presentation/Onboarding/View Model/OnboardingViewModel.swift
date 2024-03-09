@@ -15,6 +15,8 @@ final class OnboardingViewModel: ViewModel {
     private let navigator: ScreenNavigator
     private let screens: Screens
     
+    private weak var delegate: OnboardingScreenDelegate?
+    
     private let scenarioResolver: ScenarioResolver
     
     // MARK: - Public Properties
@@ -30,12 +32,14 @@ final class OnboardingViewModel: ViewModel {
         navigator: ScreenNavigator,
         screens: Screens,
         feedbackService: FeedbackService = DI.services.feedbackService,
-        scenarioResolver: ScenarioResolver = ScenarioResolver()
+        scenarioResolver: ScenarioResolver = ScenarioResolver(),
+        delegate: OnboardingScreenDelegate? = nil
     ) {
         self.navigator = navigator
         self.screens = screens
         self.feedbackService = feedbackService
         self.scenarioResolver = scenarioResolver
+        self.delegate = delegate
     }
     
     func whoWeAreViewButtonTapped() {
@@ -44,11 +48,16 @@ final class OnboardingViewModel: ViewModel {
     
     func onboardingButtonTapped() {
         scenarioResolver.onboardingCompleted()
-        navigator.navigate { route in
-            route
-                .top(.container)
-                .presenting
-                .dismiss()
-        }
+        navigator.navigate(
+            to: { route in
+                route
+                    .top(.container)
+                    .presenting
+                    .dismiss()
+            },
+            completion: { [weak self] result in
+                self?.delegate?.onboardingCompleted()
+            }
+        )
     }
 }

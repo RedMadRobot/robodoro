@@ -8,14 +8,23 @@
 import Nivelir
 import SwiftUI
 
+// MARK: - OnboardingScreenDelegate
+
+protocol OnboardingScreenDelegate: AnyObject {
+    func onboardingCompleted()
+}
+
 struct OnboardingScreen: Screen {
     
     let screens: Screens
     
+    weak var delegate: OnboardingScreenDelegate?
+    
     func build(navigator: ScreenNavigator) -> UIViewController {
         let viewModel = OnboardingViewModel(
             navigator: navigator,
-            screens: screens
+            screens: screens,
+            delegate: delegate
         )
         let view = OnboardingView(viewModel: viewModel)
         let controller = CustomHostingController(

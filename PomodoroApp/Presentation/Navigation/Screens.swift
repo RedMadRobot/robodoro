@@ -22,8 +22,11 @@ struct Screens {
             .eraseToAnyScreen()
     }
     
-    func onboardingScreen() -> AnyModalScreen {
-        OnboardingScreen(screens: self)
+    func onboardingScreen(delegate: OnboardingScreenDelegate?) -> AnyModalScreen {
+        OnboardingScreen(
+            screens: self,
+            delegate: delegate
+        )
             .eraseToAnyScreen()
     }
     

@@ -77,7 +77,6 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Methods
     
     func viewDidAppear() {
-        // TODO: - Не вызывается повторно после закрытия шторок, использовать делегат
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.showOverlayScreensIfNeeded()
         }
@@ -146,7 +145,9 @@ final class ResultsViewModel: ViewModel {
                 route
                     .top(.container)
                     .present(
-                        screens.onboardingScreen()
+                        screens.onboardingScreen(
+                            delegate: self
+                        )
                             .withModalPresentationStyle(.overFullScreen)
                             .withModalTransitionStyle(.crossDissolve)
                     )
@@ -185,5 +186,13 @@ final class ResultsViewModel: ViewModel {
             return true
         }
         return false
+    }
+}
+
+// MARK: - OnboardingScreenDelegate
+
+extension ResultsViewModel: OnboardingScreenDelegate {
+    func onboardingCompleted() {
+        showOverlayScreensIfNeeded()
     }
 }
