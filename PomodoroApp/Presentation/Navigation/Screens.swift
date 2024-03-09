@@ -12,6 +12,11 @@ struct Screens {
     
     // MARK: - Screens
     
+    func resultsScreen() -> AnyModalScreen {
+        ResultsScreen(screens: self)
+            .eraseToAnyScreen()
+    }
+    
     func settingsScreen() -> AnyModalScreen {
         SettingsScreen(screens: self)
             .eraseToAnyScreen()
@@ -31,6 +36,15 @@ struct Screens {
     }
     
     // MARK: - Routes
+    
+    func showResultsRoute() -> ScreenWindowRoute {
+        ScreenWindowRoute()
+            .setRoot(
+                to: resultsScreen()
+                    .withStackContainer(of: CustomStackController.self)
+            )
+            .makeKeyAndVisible()
+    }
     
     func showTestRoute() -> ScreenWindowRoute {
         ScreenWindowRoute()

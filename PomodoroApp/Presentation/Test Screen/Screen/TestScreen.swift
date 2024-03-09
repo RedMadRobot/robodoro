@@ -29,7 +29,6 @@ struct TestScreen: Screen {
             rootView: view
         )
         
-        controller.sizingOptions = .preferredContentSize
         viewModel.viewController = controller
         
         return controller

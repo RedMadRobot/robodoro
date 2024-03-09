@@ -92,15 +92,15 @@ struct PomodoroView: View {
     // MARK: - Private Methods
     
     private func showAlert() {
-        navigator.showAlert(
-            title: Strings.PomodoroScreen.EndTaskAlert.title,
-            primaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.primaryAction,
-            secondaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.secondaryAction,
-            primaryAction: {
-                viewModel.resetWorker()
-                navigator.hidePomodoroModal()
-            },
-            commonCompletion: { navigator.hideAlert() })
+//        navigator.showAlert(
+//            title: Strings.PomodoroScreen.EndTaskAlert.title,
+//            primaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.primaryAction,
+//            secondaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.secondaryAction,
+//            primaryAction: {
+//                viewModel.resetWorker()
+//                navigator.hidePomodoroModal()
+//            },
+//            commonCompletion: { navigator.hideAlert() })
     }
 }
 

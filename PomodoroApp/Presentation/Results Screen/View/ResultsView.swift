@@ -5,22 +5,20 @@
 //  Created by Петр Тартынских  on 12.12.2022.
 //
 
+import Nivelir
 import SwiftUI
 
 struct ResultsView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = ResultsViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: ResultsViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: ResultsViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
@@ -32,18 +30,22 @@ struct ResultsView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(Strings.ResultsScreen.title)
-                    .textStyle(.regularTitle)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    navigator.pushSettings()
-                } label: {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: viewModel.moveToSettingsTapped) {
                     Images.settings.swiftUIImage
                 }
             }
         }
+        .overlay(
+            ZStack {
+                switch viewModel.alertState {
+                case .noAlert:
+                    EmptyView()
+                case .presenting(let viewModel):
+                    AlertView(viewModel: viewModel)
+                }
+            }
+        )
     }
     
     // MARK: - Private Properties
@@ -71,9 +73,8 @@ struct ResultsView: View {
                     .padding(.top, 30)
                     TasksListView(
                         tasks: viewModel.taskItems,
-                        disableAnimations: !navigator.rootIsVisible,
                         onDelete: { task in
-                            showAlert(taskToDelete: task)
+                            viewModel.prepareToDeleteTask(task: task)
                         })
                     deletionOnboarding
                     Spacer(minLength: 80)
@@ -98,24 +99,13 @@ struct ResultsView: View {
     private var frontView: some View {
         VStack {
             Spacer()
-            Button(Strings.ResultsScreen.setTaskAction) {
-                navigator.showSetTaskSheet()
-            }
+            Button(
+                Strings.ResultsScreen.setTaskAction,
+                action: viewModel.setTaskTapped
+            )
             .buttonStyle(PrimaryButtonStyle())
             .padding(16)
         }
-    }
-    
-    // MARK: - Private Methods
-    
-    private func showAlert(taskToDelete: PomodoroTaskItem) {
-        viewModel.prepareToDeleteTask(task: taskToDelete)
-        navigator.showAlert(
-            title: Strings.ResultsScreen.DeleteTaskAlert.title,
-            primaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.primaryAction,
-            secondaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.secondaryAction,
-            primaryAction: { viewModel.deleteSelectedTask() },
-            commonCompletion: { navigator.hideAlert() })
     }
 }
 
@@ -124,7 +114,12 @@ struct ResultsView: View {
 struct ResultsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ResultsView(navigator: MainNavigator())
+            ResultsView(
+                viewModel: ResultsViewModel(
+                    navigator: ScreenNavigator(window: UIWindow()),
+                    screens: Screens()
+                )
+            )
         }
     }
 }

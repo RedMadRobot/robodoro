@@ -49,8 +49,8 @@ struct TestView: View {
                     action: viewModel.closeAll
                 )
                 Button(
-                    "Show ROBODORO settings",
-                    action: viewModel.showSettings
+                    "Show ROBODORO",
+                    action: viewModel.showRobodoro
                 )
             }
         }

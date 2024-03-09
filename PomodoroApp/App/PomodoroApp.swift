@@ -31,12 +31,9 @@ struct PomodoroApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $navigator.navigationPath) {
+            NavigationStack() {
                 resultsView
             }
-            .overlay(
-                navigator.alertPresented && navigator.rootIsVisible ?
-                AlertView(navigator: navigator) : nil)
             .overlay(
                 navigator.onboardingPresented ?
                 onboardingView : nil)
@@ -65,7 +62,8 @@ struct PomodoroApp: App {
     
     @ViewBuilder
     private var resultsView: some View {
-        ResultsView(navigator: navigator)
+//        ResultsView(navigator: navigator)
+        EmptyView()
             .sheet(
                 isPresented: $navigator.previousResultsPresented,
                 onDismiss: {
@@ -91,7 +89,6 @@ struct PomodoroApp: App {
     @ViewBuilder
     private var pomodoroView: some View {
         PomodoroView(navigator: navigator)
-            .overlay(navigator.alertPresented ? AlertView(navigator: navigator) : nil)
     }
     
     @ViewBuilder

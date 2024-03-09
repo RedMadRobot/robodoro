@@ -12,6 +12,11 @@ import SwiftUI
 
 final class CustomHostingController<Content: View>: UIHostingController<Content>, ScreenKeyedContainer {
     
+    // MARK: - Private properties
+    
+    private let onViewDidLoad: () -> Void
+    private let onViewDidAppear: () -> Void
+    
     // MARK: - Public properties
     
     private(set) var screenKey: ScreenKey
@@ -20,9 +25,13 @@ final class CustomHostingController<Content: View>: UIHostingController<Content>
     
     init(
         screenKey: ScreenKey,
-        rootView: Content
+        rootView: Content,
+        onViewDidLoad: @escaping () -> Void = {},
+        onViewDidAppear: @escaping () -> Void = {}
     ) {
         self.screenKey = screenKey
+        self.onViewDidLoad = onViewDidLoad
+        self.onViewDidAppear = onViewDidAppear
         super.init(rootView: rootView)
     }
     
@@ -35,6 +44,18 @@ final class CustomHostingController<Content: View>: UIHostingController<Content>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        sizingOptions = .preferredContentSize
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        onViewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        onViewDidAppear()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.invalidateIntrinsicContentSize()
     }
 }

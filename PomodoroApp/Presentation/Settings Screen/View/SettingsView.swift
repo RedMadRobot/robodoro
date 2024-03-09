@@ -26,6 +26,7 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             Colors.white.swiftUIColor
+                .ignoresSafeArea()
             frontView
         }
         .toolbar {

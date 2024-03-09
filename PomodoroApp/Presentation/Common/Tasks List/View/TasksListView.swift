@@ -15,6 +15,7 @@ struct TasksListView: View {
     private var editingTask: PomodoroTaskItem?
     
     private let tasks: [PomodoroTaskItem]
+    // TODO: - Понять зачем это
     private let disableAnimations: Bool
     
     private var onDelete: ((PomodoroTaskItem) -> Void)?

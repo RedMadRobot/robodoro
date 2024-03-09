@@ -21,11 +21,7 @@ final class TestViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
-    weak var viewController: UIViewController? {
-        didSet {
-            viewController?.view.backgroundColor = UIColor(Color.green)
-        }
-    }
+    weak var viewController: UIViewController?
     
     // MARK: - Init
     
@@ -115,11 +111,11 @@ final class TestViewModel: ViewModel {
         }
     }
     
-    func showSettings() {
+    func showRobodoro() {
         navigator.navigate { route in
             route
                 .top(.stack)
-                .push(screens.settingsScreen())
+                .push(screens.resultsScreen())
         }
     }
 }

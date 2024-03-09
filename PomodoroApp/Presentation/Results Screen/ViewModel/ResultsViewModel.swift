@@ -6,9 +6,23 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 final class ResultsViewModel: ViewModel {
+        
+    // MARK: - Private Properties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private let dateCalculatorService: DateCalculatorService
+    private let tasksStorage: TasksStorage
+    private var userDefaultsStorage: OnboardingStorage
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private var taskToDelete: PomodoroTaskItem?
     
     // MARK: - Public Properties
     
@@ -24,26 +38,23 @@ final class ResultsViewModel: ViewModel {
     @Published
     private(set) var showDeletionOnboarding: Bool
     
+    @Published
+    private(set) var alertState: AlertState = .noAlert
+    
     private(set) var feedbackService: FeedbackService
-    
-    // MARK: - Private Properties
-        
-    private let dateCalculatorService: DateCalculatorService
-    private let tasksStorage: TasksStorage
-    private var userDefaultsStorage: OnboardingStorage
-    
-    private var subscriptions = Set<AnyCancellable>()
-    
-    private var taskToDelete: PomodoroTaskItem?
     
     // MARK: - Init
     
     init(
+        navigator: ScreenNavigator,
+        screens: Screens,
         dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
         userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
+        self.navigator = navigator
+        self.screens = screens
         self.dateCalculatorService = dateCalculatorService
         self.tasksStorage = tasksStorage
         self.userDefaultsStorage = userDefaultsStorage
@@ -60,14 +71,42 @@ final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Methods
     
+    func viewDidLoad() {
+        print("View Loaded")
+    }
+    
+    func moveToSettingsTapped() {
+        navigator.navigate { route in
+            route
+                .top(.stack)
+                .push(screens.settingsScreen())
+        }
+    }
+    
+    func setTaskTapped() {
+        print("NOT IMPLEMENTED")
+    }
+    
     func prepareToDeleteTask(task: PomodoroTaskItem) {
         taskToDelete = task
+        
+        let alertViewModel = AlertViewModel(
+            title: Strings.ResultsScreen.DeleteTaskAlert.title,
+            primaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.primaryAction,
+            secondaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.secondaryAction,
+            primaryAction: deleteSelectedTask,
+            commonCompletion: { [weak self] in
+                self?.taskToDelete = nil
+                self?.alertState = .noAlert
+            }
+        )
+        
+        alertState = .presenting(alertViewModel)
     }
     
     func deleteSelectedTask() {
         guard let taskToDelete else { return }
         tasksStorage.deleteTask(withId: taskToDelete.id)
-        self.taskToDelete = nil
         userDefaultsStorage.deleteFeatureUsed = true
         showDeletionOnboarding = false
     }

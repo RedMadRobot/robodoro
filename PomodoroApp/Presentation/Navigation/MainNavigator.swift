@@ -17,9 +17,6 @@ final class MainNavigator: ObservableObject {
     // MARK: - Public Properties
     
     @Published
-    var navigationPath = NavigationPath()
-    
-    @Published
     var pomodoroModalPresented = false
     
     @Published
@@ -30,17 +27,12 @@ final class MainNavigator: ObservableObject {
     
     @Published
     var onboardingPresented: Bool = false
-    
-    @Published
-    var alertPresented = false
-    private(set) var alertViewModel = AlertViewModel()
         
     var rootIsVisible: Bool {
         !pomodoroModalPresented &&
         !setTaskSheetPresented &&
         !previousResultsPresented &&
-        !onboardingPresented &&
-        navigationPath.isEmpty
+        !onboardingPresented
     }
     
     // MARK: - Private Properties
@@ -56,10 +48,6 @@ final class MainNavigator: ObservableObject {
     }
     
     // MARK: - Public Methods
-    
-    func pop() {
-        navigationPath.removeLast()
-    }
     
     func showPomodoroModal(delayed: Bool = false) {
         if delayed {
@@ -91,28 +79,6 @@ final class MainNavigator: ObservableObject {
     
     func hidePreviousResultsSheet() {
         previousResultsPresented = false
-    }
-    
-    func showAlert(
-        title: String,
-        primaryButtonTitle: String,
-        secondaryButtonTitle: String,
-        primaryAction: (() -> Void)? = nil,
-        secondaryAction: (() -> Void)? = nil,
-        commonCompletion: (() -> Void)? = nil
-    ) {
-        alertViewModel.setup(
-            title: title,
-            primaryButtonTitle: primaryButtonTitle,
-            secondaryButtonTitle: secondaryButtonTitle,
-            primaryAction: primaryAction,
-            secondaryAction: secondaryAction,
-            commonCompletion: commonCompletion)
-        alertPresented = true
-    }
-    
-    func hideAlert() {
-        alertPresented = false
     }
     
     func showOnboarding() {

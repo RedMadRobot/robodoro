@@ -14,14 +14,10 @@ struct AlertView: View {
     @ObservedObject
     private var viewModel: AlertViewModel
     
-    @ObservedObject
-    private var navigator: MainNavigator
-    
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
-        self.viewModel = navigator.alertViewModel
+    init(viewModel: AlertViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
@@ -45,15 +41,15 @@ struct AlertView: View {
                 .textStyle(.regularText)
                 .padding(.top, 24)
             HStack(spacing: 12) {
-                Button(viewModel.secondaryButtonTitle) {
-                    viewModel.secondaryAction?()
-                    viewModel.commonCompletion?()
-                }
+                Button(
+                    viewModel.secondaryButtonTitle,
+                    action: viewModel.secondaryButtonTapped
+                )
                 .buttonStyle(SecondaryButtonStyle())
-                Button(viewModel.primaryButtonTitle) {
-                    viewModel.primaryAction?()
-                    viewModel.commonCompletion?()
-                }
+                Button(
+                    viewModel.primaryButtonTitle,
+                    action: viewModel.primaryButtonTapped
+                )
                 .buttonStyle(PrimaryButtonStyle())
             }
             .padding(.horizontal, 16)
@@ -70,7 +66,16 @@ struct AlertView: View {
 
 struct AlertView_Previews: PreviewProvider {
     static var previews: some View {
-        AlertView(navigator: MainNavigator())
-            .background(Colors.focusRed.swiftUIColor)
+        AlertView(
+            viewModel: AlertViewModel(
+                title: "Alert",
+                primaryButtonTitle: "OK",
+                secondaryButtonTitle: "Cancel",
+                primaryAction: {},
+                secondaryAction: {},
+                commonCompletion: {}
+            )
+        )
+        .background(Colors.focusRed.swiftUIColor)
     }
 }
