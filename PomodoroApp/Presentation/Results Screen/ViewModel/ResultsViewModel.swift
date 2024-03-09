@@ -91,7 +91,21 @@ final class ResultsViewModel: ViewModel {
     }
     
     func setTaskTapped() {
-        print("NOT IMPLEMENTED")
+        let bottomSheet = BottomSheet(
+            detents: [.large],
+            preferredCard: BottomSheetCard(),
+            preferredGrabber: .default,
+            prefferedGrabberForMaximumDetentValue: .default
+        )
+        
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .present(
+                    screens.setTaskScreen()
+                        .withBottomSheetStack(bottomSheet, of: CustomBottomSheetStackController.self)
+                )
+        }
     }
     
     func prepareToDeleteTask(task: PomodoroTaskItem) {
@@ -148,8 +162,8 @@ final class ResultsViewModel: ViewModel {
                         screens.onboardingScreen(
                             delegate: self
                         )
-                            .withModalPresentationStyle(.overFullScreen)
-                            .withModalTransitionStyle(.crossDissolve)
+                        .withModalPresentationStyle(.overFullScreen)
+                        .withModalTransitionStyle(.crossDissolve)
                     )
             }
             return true
@@ -171,7 +185,7 @@ final class ResultsViewModel: ViewModel {
                     .top(.container)
                     .present(
                         screens.previousResultsScreen()
-                            .withBottomSheet(bottomSheet)
+                            .withBottomSheetStack(bottomSheet, of: CustomBottomSheetStackController.self)
                     )
             }
             return true
@@ -180,9 +194,20 @@ final class ResultsViewModel: ViewModel {
     }
     
     private func showPomodoroScreenIfNeeded() -> Bool {
-        if scenarioResolver.shouldShowPomodoro {
+        if scenarioResolver.shouldShowPomodoro, scenarioResolver.readyToResumeTask { // TODO: - Проверить работу
             scenarioResolver.setupPomodoroFromSavedData()
             // TODO: - Показ экрана помодоро
+//            navigator.navigate { route in
+//                route
+//                    .top(.container)
+//                    .presenting
+//                    .dismiss()
+//                    .present(
+//                        screens.pomodoroScreen()
+//                            .withStackContainer(of: CustomStackController.self)
+//                            .withModalPresentationStyle(.fullScreen)
+//                    )
+//            }
             return true
         }
         return false

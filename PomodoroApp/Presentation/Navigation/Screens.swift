@@ -27,6 +27,11 @@ struct Screens {
             screens: self,
             delegate: delegate
         )
+        .eraseToAnyScreen()
+    }
+    
+    func setTaskScreen() -> AnyModalScreen {
+        SetTaskScreen(screens: self)
             .eraseToAnyScreen()
     }
     

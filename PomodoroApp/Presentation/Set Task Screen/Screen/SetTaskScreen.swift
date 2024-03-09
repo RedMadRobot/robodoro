@@ -1,29 +1,29 @@
 //
-//  DebugPanelScreen.swift
+//  SetTaskScreen.swift
 //  PomodoroApp
 //
-//  Created by Петр Тартынских on 08.03.2024.
+//  Created by Петр Тартынских on 10.03.2024.
 //
 
 import SwiftUI
 import Nivelir
 
-struct DebugPanelScreen: Screen {
+struct SetTaskScreen: Screen {
     
     let screens: Screens
     
     func build(navigator: ScreenNavigator) -> UIViewController {
-        let viewModel = DebugPanelViewModel(
+        let viewModel = SetTaskViewModel(
             navigator: navigator,
             screens: screens
         )
-        let view = DebugPanelView(viewModel: viewModel)
+        let view = SetTaskView(viewModel: viewModel)
         let controller = CustomHostingController(
             screenKey: key,
             rootView: view
         )
         
-        controller.title = Strings.DebugPanel.title
+        controller.title = Strings.SetTask.title
         
         return controller
     }

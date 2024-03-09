@@ -69,7 +69,7 @@
 
 // MARK: - Debug panel
 
-"debugPanel.navigationTitle" = "Debug panel";
+"debugPanel.title" = "Debug panel";
 "debugPanel.form.name" = "Task title (optional)";
 "debugPanel.form.date" = "Task date";
 "debugPanel.form.completedInterval" = "Completed interval";

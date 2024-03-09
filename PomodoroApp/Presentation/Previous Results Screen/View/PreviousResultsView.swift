@@ -36,9 +36,6 @@ struct PreviousResultsView: View {
     private var tasksView: some View {
         ScrollView {
             VStack(spacing: 8) {
-                Text(Strings.PreviousResults.title)
-                    .textStyle(.regularTitle)
-                    .padding(.top, 32)
                 warningView
                 SpendedMinutesView(
                     dailyAverageFocusValue: viewModel.dailyAverageFocusValue,

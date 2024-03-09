@@ -6,22 +6,20 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 struct SetTaskView: View {
     
     // MARK: - Private Propeties
     
-    @StateObject
-    private var viewModel = SetTaskViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: SetTaskViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: SetTaskViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
@@ -29,6 +27,7 @@ struct SetTaskView: View {
     var body: some View {
         ZStack {
             Colors.white.swiftUIColor
+                .ignoresSafeArea()
             frontView
         }
     }
@@ -37,16 +36,6 @@ struct SetTaskView: View {
     
     @ViewBuilder
     private var frontView: some View {
-        VStack {
-            Text(Strings.SetTask.title)
-                .textStyle(.regularTitle)
-                .padding(.vertical, 32)
-            parameters
-        }
-    }
-    
-    @ViewBuilder
-    private var parameters: some View {
         GeometryReader { geometry in
             ScrollViewReader { proxy in
                 ScrollView {
@@ -72,11 +61,10 @@ struct SetTaskView: View {
                         SessionStepperView(value: $viewModel.stagesCount)
                         taskTitleFieldView(proxy: proxy)
                         Spacer()
-                        Button(Strings.SetTask.startTimerAction) {
-                            viewModel.applyParameters()
-                            navigator.hideSetTaskSheet()
-                            navigator.showPomodoroModal(delayed: true)
-                        }
+                        Button(
+                            Strings.SetTask.startTimerAction,
+                            action: viewModel.startTimerTapped
+                        )
                         .buttonStyle(PrimaryButtonStyle())
                         .padding(16)
                     }
@@ -124,6 +112,11 @@ struct SetTaskView: View {
 
 struct SetTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        SetTaskView(navigator: MainNavigator())
+        SetTaskView(
+            viewModel: SetTaskViewModel(
+                navigator: ScreenNavigator(window: UIWindow()),
+                screens: Screens()
+            )
+        )
     }
 }
