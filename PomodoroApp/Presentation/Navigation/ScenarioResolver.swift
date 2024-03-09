@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: - [2.0.0] В процессе перехода на новую систему навигации, в будущем будет удалено
+
 final class ScenarioResolver {
     
     // MARK: - Public Properties

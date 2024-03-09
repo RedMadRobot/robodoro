@@ -5,37 +5,34 @@
 //  Created by Петр Тартынских  on 18.01.2023.
 //
 
+import Nivelir
 import SwiftUI
 
 struct OnboardingView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = OnboardingViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: OnboardingViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: OnboardingViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
     
     var body: some View {
-        InfoOverlayView(onButtonClick: {
-            navigator.hideOnboarding()
-        })
+        InfoOverlayView(
+            onButtonTapped: viewModel.onboardingButtonTapped
+        )
         .overlay(
             viewModel.whoWeAreIsVisible ?
-            WhoAreWeView(onButtonClick: {
-                viewModel.hideWhoWeAre()
-            }) : nil
+            WhoAreWeView(
+                onButtonTapped: viewModel.whoWeAreViewButtonTapped
+            ) : nil
         )
-        .zIndex(1) // Без этого анимация не работает
     }
     
     // MARK: - PrivateProperties
@@ -45,6 +42,11 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(navigator: MainNavigator())
+        OnboardingView(
+            viewModel: OnboardingViewModel(
+                navigator: ScreenNavigator(window: UIWindow()),
+                screens: Screens()
+            )
+        )
     }
 }

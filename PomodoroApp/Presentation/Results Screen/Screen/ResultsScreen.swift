@@ -21,7 +21,7 @@ struct ResultsScreen: Screen {
         let controller = CustomHostingController(
             screenKey: key,
             rootView: view,
-            onViewDidLoad: viewModel.viewDidLoad
+            onViewDidAppear: viewModel.viewDidAppear
         )
         
         controller.title = Strings.ResultsScreen.title

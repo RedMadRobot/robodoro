@@ -12,6 +12,7 @@ struct TestView: View {
     
     // MARK: - Private properties
     
+    @ObservedObject
     private var viewModel: TestViewModel
     
     // MARK: - Init

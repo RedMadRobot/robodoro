@@ -29,7 +29,6 @@ struct AlertView: View {
         }
         .ignoresSafeArea()
         .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
-        .zIndex(1) // Без этого анимация не работает
     }
     
     // MARK: - Private Properties

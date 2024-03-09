@@ -71,8 +71,8 @@ final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Methods
     
-    func viewDidLoad() {
-        print("View Loaded")
+    func viewDidAppear() {
+        showOnboardingIfNeeded()
     }
     
     func moveToSettingsTapped() {
@@ -124,5 +124,19 @@ final class ResultsViewModel: ViewModel {
     private func recalculateTime(tasks: [PomodoroTask]) {
         dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: tasks)
         totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
+    }
+    
+    private func showOnboardingIfNeeded() {
+        if !userDefaultsStorage.onboadingShowed {
+            navigator.navigate { route in
+                route
+                    .top(.container)
+                    .present(
+                        screens.onboardingScreen()
+                            .withModalPresentationStyle(.overFullScreen)
+                            .withModalTransitionStyle(.crossDissolve)
+                    )
+            }
+        }
     }
 }

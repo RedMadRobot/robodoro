@@ -34,9 +34,6 @@ struct PomodoroApp: App {
             NavigationStack() {
                 resultsView
             }
-            .overlay(
-                navigator.onboardingPresented ?
-                onboardingView : nil)
             .onAppear {
                 addObservers()
                 navigator.resolveInitialNavigation()
@@ -89,14 +86,6 @@ struct PomodoroApp: App {
     @ViewBuilder
     private var pomodoroView: some View {
         PomodoroView(navigator: navigator)
-    }
-    
-    @ViewBuilder
-    private var onboardingView: some View {
-        OnboardingView(navigator: navigator)
-            .onDisappear {
-                navigator.resolveDelayedNavigation()
-            }
     }
     
     // MARK: - Private Methods

@@ -11,12 +11,12 @@ struct InfoOverlayView: View {
     
     // MARK: - Private Properties
     
-    private var onButtonClick: () -> Void
+    private var onButtonTapped: () -> Void
     
     // MARK: - Init
     
-    init(onButtonClick: @escaping () -> Void) {
-        self.onButtonClick = onButtonClick
+    init(onButtonTapped: @escaping () -> Void) {
+        self.onButtonTapped = onButtonTapped
     }
     
     // MARK: - View
@@ -48,7 +48,7 @@ struct InfoOverlayView: View {
                 }
                 .padding(.horizontal, 16)
                 Button(Strings.Onboaring.UserTaskStorage.buttonTitle) {
-                    onButtonClick()
+                    onButtonTapped()
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal, 16)
@@ -69,7 +69,7 @@ struct InfoOverlayView: View {
 
 struct InfoOverlayView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoOverlayView(onButtonClick: {})
+        InfoOverlayView(onButtonTapped: {})
             .background(Colors.focusRed.swiftUIColor)
     }
 }

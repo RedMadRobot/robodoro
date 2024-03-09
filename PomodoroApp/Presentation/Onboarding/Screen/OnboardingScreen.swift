@@ -1,35 +1,29 @@
 //
-//  TestScreen.swift
+//  OnboardingScreen.swift
 //  PomodoroApp
 //
-//  Created by Петр Тартынских on 07.03.2024.
+//  Created by Петр Тартынских on 09.03.2024.
 //
 
 import Nivelir
 import SwiftUI
 
-struct TestScreen: Screen {
+struct OnboardingScreen: Screen {
     
-    public var traits: Set<AnyHashable> {
-        [numberOfScreen]
-    }
-    
-    let numberOfScreen: Int
     let screens: Screens
     
     func build(navigator: ScreenNavigator) -> UIViewController {
-        let viewModel = TestViewModel(
-            numberOfScreen: numberOfScreen,
+        let viewModel = OnboardingViewModel(
             navigator: navigator,
             screens: screens
         )
-        let view = TestView(viewModel: viewModel)
+        let view = OnboardingView(viewModel: viewModel)
         let controller = CustomHostingController(
             screenKey: key,
             rootView: view
         )
         
-        viewModel.viewController = controller
+        controller.view.backgroundColor = .clear
         
         return controller
     }

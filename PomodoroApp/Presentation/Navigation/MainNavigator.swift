@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: - [2.0.0] В процессе перехода на новую систему навигации, в будущем будет удалено
+
 enum DelayedPresentingScreen {
     case pomodoro
     case previousResults
@@ -24,15 +26,11 @@ final class MainNavigator: ObservableObject {
     
     @Published
     var previousResultsPresented = false
-    
-    @Published
-    var onboardingPresented: Bool = false
         
     var rootIsVisible: Bool {
         !pomodoroModalPresented &&
         !setTaskSheetPresented &&
-        !previousResultsPresented &&
-        !onboardingPresented
+        !previousResultsPresented
     }
     
     // MARK: - Private Properties
@@ -81,19 +79,10 @@ final class MainNavigator: ObservableObject {
         previousResultsPresented = false
     }
     
-    func showOnboarding() {
-        onboardingPresented = true
-    }
-    
-    func hideOnboarding() {
-        onboardingPresented = false
-        scenarioResolver.onboardingCompleted()
-    }
-    
     func resolveInitialNavigation() {
-        if scenarioResolver.shouldShowOnboarding {
-            showOnboarding()
-        }
+//        if scenarioResolver.shouldShowOnboarding {
+//            showOnboarding()
+//        }
         if scenarioResolver.shouldShowPreviousResults {
             showPreviousResultsSheet(delayed: !rootIsVisible)
         }
