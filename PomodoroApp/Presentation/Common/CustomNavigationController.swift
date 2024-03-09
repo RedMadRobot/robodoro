@@ -16,25 +16,23 @@ extension CustomStackControllerCommonBehavior {
     func setupAppearance() {
         let tintColor = Colors.black.color
         let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
         
         let titleTextAttributes = [
             NSAttributedString.Key.font: TextStyle.regularTitle.uiFont,
             NSAttributedString.Key.foregroundColor: tintColor
         ]
-        
         appearance.titleTextAttributes = titleTextAttributes
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        appearance.shadowImage = UIImage()
-        appearance.backgroundImage = UIImage()
-        appearance.shadowColor = .clear
         
         let backButtonImage = Images.arrowLeft.image
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         
+        let standardAppearance = appearance.copy()
+        standardAppearance.configureWithDefaultBackground()
+        
         navigationBar.tintColor = tintColor
         navigationBar.scrollEdgeAppearance = appearance
-        navigationBar.standardAppearance = appearance
+        navigationBar.standardAppearance = standardAppearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
     }
