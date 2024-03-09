@@ -27,5 +27,4 @@ struct SettingsScreen: Screen {
         
         return controller
     }
-    
 }

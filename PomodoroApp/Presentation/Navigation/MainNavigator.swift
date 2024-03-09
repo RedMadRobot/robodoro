@@ -11,7 +11,6 @@ import SwiftUI
 
 enum DelayedPresentingScreen {
     case pomodoro
-    case previousResults
 }
 
 final class MainNavigator: ObservableObject {
@@ -23,14 +22,10 @@ final class MainNavigator: ObservableObject {
     
     @Published
     var setTaskSheetPresented = false
-    
-    @Published
-    var previousResultsPresented = false
         
     var rootIsVisible: Bool {
         !pomodoroModalPresented &&
-        !setTaskSheetPresented &&
-        !previousResultsPresented
+        !setTaskSheetPresented
     }
     
     // MARK: - Private Properties
@@ -65,42 +60,5 @@ final class MainNavigator: ObservableObject {
     
     func hideSetTaskSheet() {
         setTaskSheetPresented = false
-    }
-    
-    func showPreviousResultsSheet(delayed: Bool = false) {
-        if delayed {
-            screensToPresent.insert(.previousResults, at: 0)
-        } else {
-            previousResultsPresented = true
-        }
-    }
-    
-    func hidePreviousResultsSheet() {
-        previousResultsPresented = false
-    }
-    
-    func resolveInitialNavigation() {
-//        if scenarioResolver.shouldShowOnboarding {
-//            showOnboarding()
-//        }
-        if scenarioResolver.shouldShowPreviousResults {
-            showPreviousResultsSheet(delayed: !rootIsVisible)
-        }
-        if scenarioResolver.shouldShowPomodoro {
-            scenarioResolver.setupPomodoroFromSavedData()
-            showPomodoroModal(delayed: !rootIsVisible)
-        }
-    }
-    
-    func resolveDelayedNavigation() {
-        switch screensToPresent.popLast() {
-        case .pomodoro:
-            guard scenarioResolver.readyToResumeTask else { return }
-            showPomodoroModal()
-        case .previousResults:
-            showPreviousResultsSheet()
-        default:
-            break
-        }
     }
 }

@@ -77,7 +77,10 @@ final class ResultsViewModel: ViewModel {
     // MARK: - Public Methods
     
     func viewDidAppear() {
-        showOverlayScreensIfNeeded()
+        // TODO: - Не вызывается повторно после закрытия шторок, использовать делегат
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.showOverlayScreensIfNeeded()
+        }
     }
     
     func moveToSettingsTapped() {
@@ -155,7 +158,21 @@ final class ResultsViewModel: ViewModel {
     
     private func showPreviousResultsScreenIfNeeded() -> Bool {
         if scenarioResolver.shouldShowPreviousResults {
-            // TODO: - Показ экрана с прошлыми результатами
+            let bottomSheet = BottomSheet(
+                detents: [.large],
+                preferredCard: BottomSheetCard(),
+                preferredGrabber: .default,
+                prefferedGrabberForMaximumDetentValue: .default
+            )
+            
+            navigator.navigate { route in
+                route
+                    .top(.container)
+                    .present(
+                        screens.previousResultsScreen()
+                            .withBottomSheet(bottomSheet)
+                    )
+            }
             return true
         }
         return false

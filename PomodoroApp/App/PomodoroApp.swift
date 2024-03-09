@@ -32,11 +32,10 @@ struct PomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack() {
-                resultsView
+                EmptyView()
             }
             .onAppear {
                 addObservers()
-                navigator.resolveInitialNavigation()
                 timedPomodoroWorker.requestNotificationPermissionIfNeeded()
                 timedPomodoroWorker.stopActivityIfNeeded()
             }
@@ -53,39 +52,6 @@ struct PomodoroApp: App {
             }
             .preferredColorScheme(.light)
         }
-    }
-    
-    // MARK: - Private Properties
-    
-    @ViewBuilder
-    private var resultsView: some View {
-//        ResultsView(navigator: navigator)
-        EmptyView()
-            .sheet(
-                isPresented: $navigator.previousResultsPresented,
-                onDismiss: {
-                    navigator.resolveDelayedNavigation()
-                }
-            ) {
-                PreviousResultsView(navigator: navigator)
-                    .interactiveDismissDisabled()
-            }
-            .sheet(
-                isPresented: $navigator.setTaskSheetPresented,
-                onDismiss: {
-                    navigator.resolveDelayedNavigation()
-                }
-            ) {
-                SetTaskView(navigator: navigator)
-            }
-            .fullScreenCover(isPresented: $navigator.pomodoroModalPresented) {
-                pomodoroView
-            }
-    }
-    
-    @ViewBuilder
-    private var pomodoroView: some View {
-        PomodoroView(navigator: navigator)
     }
     
     // MARK: - Private Methods

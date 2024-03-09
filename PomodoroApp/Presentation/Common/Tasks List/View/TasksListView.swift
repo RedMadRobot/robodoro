@@ -15,8 +15,6 @@ struct TasksListView: View {
     private var editingTask: PomodoroTaskItem?
     
     private let tasks: [PomodoroTaskItem]
-    // TODO: - Понять зачем это
-    private let disableAnimations: Bool
     
     private var onDelete: ((PomodoroTaskItem) -> Void)?
     
@@ -24,11 +22,9 @@ struct TasksListView: View {
     
     init(
         tasks: [PomodoroTaskItem],
-        disableAnimations: Bool = false,
         onDelete: ((PomodoroTaskItem) -> Void)? = nil
     ) {
         self.tasks = tasks
-        self.disableAnimations = disableAnimations
         self.onDelete = onDelete
     }
     
@@ -42,7 +38,7 @@ struct TasksListView: View {
         .background(
             RoundedRectangle(cornerRadius: 32)
                 .fill(Colors.white.swiftUIColor))
-        .animation(disableAnimations ? nil : .easeInOut, value: tasks)
+        .animation(.easeInOut, value: tasks)
     }
     
     // MARK: - Private Properties
@@ -91,6 +87,7 @@ struct TasksListView: View {
     // MARK: - Private Methods
     
     private func onRowTapped(task: PomodoroTaskItem) {
+        guard onDelete != nil else { return }
         if task == editingTask {
             editingTask = nil
         } else {
