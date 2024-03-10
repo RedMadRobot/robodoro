@@ -116,18 +116,17 @@ final class SetTaskViewModel: ViewModel {
             })
         timedPomodoroWorker.mainAction()
         
-        // TODO: - Показ экрана помодоро
-//        navigator.navigate { route in
-//            route
-//                .top(.container)
-//                .presenting
-//                .dismiss()
-//                .present(
-//                    screens.pomodoroScreen()
-//                        .withStackContainer(of: CustomStackController.self)
-//                        .withModalPresentationStyle(.fullScreen)
-//                )
-//        }
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .presenting
+                .dismiss()
+                .present(
+                    screens.pomodoroScreen()
+                        .withStackContainer(of: CustomStackController.self)
+                        .withModalPresentationStyle(.fullScreen)
+                )
+        }
     }
     
     func shouldChangeText(range: NSRange, replacementText: String) -> Bool {

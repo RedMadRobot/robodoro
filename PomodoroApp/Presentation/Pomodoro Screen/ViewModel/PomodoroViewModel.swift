@@ -6,10 +6,20 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 final class PomodoroViewModel: ViewModel {
 
+    // MARK: - Private Propeties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private let timedPomodoroWorker: TimedPomodoroWorker
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Public Properties
     
     @Published
@@ -20,6 +30,9 @@ final class PomodoroViewModel: ViewModel {
     
     @Published
     private(set) var leftTime: TimeInterval
+    
+    @Published
+    private(set) var alertState: AlertState = .noAlert
     
     var minutes: String {
         formattedTimeComponent(leftTime.minutesIgnoringHours)
@@ -59,23 +72,23 @@ final class PomodoroViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
-    // MARK: - Private Propeties
-    
-    private let timedPomodoroWorker: TimedPomodoroWorker
-    
-    private var subscriptions = Set<AnyCancellable>()
-    
     // MARK: - Init
   
     init(
+        navigator: ScreenNavigator,
+        screens: Screens,
         timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
+        self.navigator = navigator
+        self.screens = screens
         self.timedPomodoroWorker = timedPomodoroWorker
         self.feedbackService = feedbackService
+        
         self.pomodoroState = timedPomodoroWorker.pomodoroState.value
         self.timerState = timedPomodoroWorker.timerState.value
         self.leftTime = timedPomodoroWorker.leftTime.value
+        
         addSubscriptions()
     }
     
@@ -88,6 +101,29 @@ final class PomodoroViewModel: ViewModel {
     
     func resetWorker() {
         timedPomodoroWorker.reset()
+    }
+    
+    func endTaskTapped() {
+        let alertViewModel = AlertViewModel(
+            title: Strings.PomodoroScreen.EndTaskAlert.title,
+            primaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.primaryAction,
+            secondaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.secondaryAction,
+            primaryAction: resetTimerAndHideScreen,
+            commonCompletion: { [weak self] in
+                self?.alertState = .noAlert
+            }
+        )
+        
+        alertState = .presenting(alertViewModel)
+    }
+    
+    func hideScreen() {
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .presenting
+                .dismiss()
+        }
     }
     
     // MARK: - Private Methods
@@ -103,6 +139,11 @@ final class PomodoroViewModel: ViewModel {
             self?.leftTime = leftTime
         }
         .store(in: &subscriptions)
+    }
+    
+    private func resetTimerAndHideScreen() {
+        timedPomodoroWorker.reset()
+        hideScreen()
     }
     
     private func formattedTimeComponent(_ component: Int) -> String {

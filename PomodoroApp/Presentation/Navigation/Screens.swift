@@ -35,6 +35,11 @@ struct Screens {
             .eraseToAnyScreen()
     }
     
+    func pomodoroScreen() -> AnyModalScreen {
+        PomodoroScreen(screens: self)
+            .eraseToAnyScreen()
+    }
+    
     func settingsScreen() -> AnyModalScreen {
         SettingsScreen(screens: self)
             .eraseToAnyScreen()

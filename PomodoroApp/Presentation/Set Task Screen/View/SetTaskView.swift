@@ -69,6 +69,7 @@ struct SetTaskView: View {
                         .padding(16)
                     }
                     .frame(minHeight: geometry.size.height)
+                    .padding(.top, 30)
                 }
                 .frame(width: geometry.size.width)
             }

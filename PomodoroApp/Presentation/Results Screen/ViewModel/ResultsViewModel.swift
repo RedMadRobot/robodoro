@@ -125,13 +125,6 @@ final class ResultsViewModel: ViewModel {
         alertState = .presenting(alertViewModel)
     }
     
-    func deleteSelectedTask() {
-        guard let taskToDelete else { return }
-        tasksStorage.deleteTask(withId: taskToDelete.id)
-        userDefaultsStorage.deleteFeatureUsed = true
-        showDeletionOnboarding = false
-    }
-    
     // MARK: - Private Methods
     
     private func addSubscriptions() {
@@ -145,6 +138,13 @@ final class ResultsViewModel: ViewModel {
     private func recalculateTime(tasks: [PomodoroTask]) {
         dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: tasks)
         totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
+    }
+    
+    private func deleteSelectedTask() {
+        guard let taskToDelete else { return }
+        tasksStorage.deleteTask(withId: taskToDelete.id)
+        userDefaultsStorage.deleteFeatureUsed = true
+        showDeletionOnboarding = false
     }
     
     private func showOverlayScreensIfNeeded() {
@@ -194,20 +194,18 @@ final class ResultsViewModel: ViewModel {
     }
     
     private func showPomodoroScreenIfNeeded() -> Bool {
-        if scenarioResolver.shouldShowPomodoro, scenarioResolver.readyToResumeTask { // TODO: - Проверить работу
+        if scenarioResolver.shouldShowPomodoro {
             scenarioResolver.setupPomodoroFromSavedData()
-            // TODO: - Показ экрана помодоро
-//            navigator.navigate { route in
-//                route
-//                    .top(.container)
-//                    .presenting
-//                    .dismiss()
-//                    .present(
-//                        screens.pomodoroScreen()
-//                            .withStackContainer(of: CustomStackController.self)
-//                            .withModalPresentationStyle(.fullScreen)
-//                    )
-//            }
+            guard scenarioResolver.readyToResumeTask else { return false }
+            navigator.navigate { route in
+                route
+                    .top(.container)
+                    .present(
+                        screens.pomodoroScreen()
+                            .withStackContainer(of: CustomStackController.self)
+                            .withModalPresentationStyle(.fullScreen)
+                    )
+            }
             return true
         }
         return false

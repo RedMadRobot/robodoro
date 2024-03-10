@@ -5,48 +5,51 @@
 //  Created by Петр Тартынских  on 11.11.2022.
 //
 
+import Nivelir
 import SwiftUI
 
 struct PomodoroView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = PomodoroViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: PomodoroViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: PomodoroViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                BackgroundView(viewModel: viewModel)
-                frontView
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text(viewModel.pomodoroState.title)
-                        .textStyle(.stageLabel)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showAlert()
-                    } label: {
-                        Images.logout.swiftUIImage
-                            .padding([.top, .bottom, .leading], 10)
-                    }
-                }
-            }
-            .animation(.easeInOut, value: viewModel.pomodoroState)
+        ZStack {
+            BackgroundView(viewModel: viewModel)
+            frontView
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text(viewModel.pomodoroState.title)
+                    .textStyle(.stageLabel)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: viewModel.endTaskTapped) {
+                    Images.logout.swiftUIImage
+                }
+            }
+        }
+        .overlay(
+            ZStack {
+                switch viewModel.alertState {
+                case .noAlert:
+                    EmptyView()
+                case .presenting(let viewModel):
+                    AlertView(viewModel: viewModel)
+                }
+            }
+        )
+        .animation(.easeInOut, value: viewModel.pomodoroState)
     }
     
     // MARK: - Private Properties
@@ -64,7 +67,7 @@ struct PomodoroView: View {
             Spacer()
             Button {
                 if viewModel.timerState == .ended {
-                    navigator.hidePomodoroModal()
+                    viewModel.hideScreen()
                 } else {
                     viewModel.mainButtonAction()
                 }
@@ -88,26 +91,17 @@ struct PomodoroView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
-    
-    // MARK: - Private Methods
-    
-    private func showAlert() {
-//        navigator.showAlert(
-//            title: Strings.PomodoroScreen.EndTaskAlert.title,
-//            primaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.primaryAction,
-//            secondaryButtonTitle: Strings.PomodoroScreen.EndTaskAlert.secondaryAction,
-//            primaryAction: {
-//                viewModel.resetWorker()
-//                navigator.hidePomodoroModal()
-//            },
-//            commonCompletion: { navigator.hideAlert() })
-    }
 }
 
 // MARK: - PreviewProvider
 
 struct PomodoroView_Previews: PreviewProvider {
     static var previews: some View {
-        PomodoroView(navigator: MainNavigator())
+        PomodoroView(
+            viewModel: PomodoroViewModel(
+                navigator: ScreenNavigator(window: UIWindow()),
+                screens: Screens()
+            )
+        )
     }
 }
