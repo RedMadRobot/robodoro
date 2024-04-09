@@ -13,6 +13,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var navigator: ScreenNavigator?
+    let screens = Screens()
     
     func application(
         _ application: UIApplication,
@@ -20,7 +21,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
         let navigator = ScreenNavigator(window: window)
-        let screens = Screens()
         
         self.window = window
         self.navigator = navigator
@@ -29,6 +29,52 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             .navigate(to: screens.showTestRoute())
         
         return true
+    }
+    
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//        guard let action = LinkManager.manage(url: url) else { return false }
+//
+//        
+//        return true
+//    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        print("BACKGROUND")
+        
+//        performIfPomodoroScreenFound {
+//            let timedPomodoroWorker = DI.workers.timedPomodoroWorker
+//            timedPomodoroWorker.handleEnterBackground()
+//        }
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("FOREGROUND")
+        
+//        performIfPomodoroScreenFound {
+//            let timedPomodoroWorker = DI.workers.timedPomodoroWorker
+//            timedPomodoroWorker.handleEnterForeground()
+//        }
+    }
+    
+    // MARK: - Private methods
+    
+    private func performIfPomodoroScreenFound(_ action: @escaping () -> Void) {
+        let pomodoroScren = screens.pomodoroScreen()
+        
+        navigator?.navigate(
+            to: { route in
+                route
+                    .top(.container(of: pomodoroScren))
+            },
+            completion: { result in
+                switch result {
+                case .success:
+                    action()
+                case .failure:
+                    break
+                }
+            }
+        )
     }
 }
 

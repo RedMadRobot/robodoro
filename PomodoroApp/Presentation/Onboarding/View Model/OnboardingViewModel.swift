@@ -55,7 +55,7 @@ final class OnboardingViewModel: ViewModel {
                     .presenting
                     .dismiss()
             },
-            completion: { [weak self] result in
+            completion: { [weak self] _ in
                 self?.delegate?.onboardingCompleted()
             }
         )
