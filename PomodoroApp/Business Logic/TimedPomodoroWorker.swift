@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Nivelir
 
 // MARK: - TimedPomodoroWorker
 
@@ -29,9 +30,9 @@ protocol TimedPomodoroWorker {
     func mainAction()
     func reset()
     func setLinkAction(_ action: LinkManager.Action)
-    func handleLinkAction(_ action: LinkManager.Action, navigator: MainNavigator)
+    func handleLinkAction(_ action: LinkManager.Action, onEndedState: () -> Void)
     func handleEnterBackground()
-    func handleEnterForeground(navigator: MainNavigator)
+    func handleEnterForeground(onEndedState: () -> Void)
     func requestNotificationPermissionIfNeeded()
     func stopActivityIfNeeded()
     func cancelNotification()
@@ -213,7 +214,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         enterForegroundAction = action
     }
     
-    func handleLinkAction(_ action: LinkManager.Action, navigator: MainNavigator) {
+    func handleLinkAction(_ action: LinkManager.Action, onEndedState: () -> Void) {
         switch (action, timerState.value) {
         case (.start, .initial),
              (.start, .paused),
@@ -221,7 +222,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             mainAction()
         case (.stop, .ended):
             reset()
-            navigator.hidePomodoroModal()
+            onEndedState()
         default:
             break
         }
@@ -233,10 +234,10 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         timerService.suspend()
     }
     
-    func handleEnterForeground(navigator: MainNavigator) {
+    func handleEnterForeground(onEndedState: () -> Void) {
         guard let savedData = userDefaultsStorage.appReloadSavedData else { return }
         setup(savedData: savedData)
-        handleLinkActionIfNeeded(navigator: navigator)
+        handleLinkActionIfNeeded(onEndedState: onEndedState)
     }
     
     func requestNotificationPermissionIfNeeded() {
@@ -297,9 +298,9 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         .store(in: &subscriptions)
     }
     
-    private func handleLinkActionIfNeeded(navigator: MainNavigator) {
+    private func handleLinkActionIfNeeded(onEndedState: () -> Void) {
         guard let action = enterForegroundAction else { return }
-        handleLinkAction(action, navigator: navigator)
+        handleLinkAction(action, onEndedState: onEndedState)
         enterForegroundAction = nil
     }
     
