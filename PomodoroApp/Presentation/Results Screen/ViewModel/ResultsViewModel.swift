@@ -91,19 +91,12 @@ final class ResultsViewModel: ViewModel {
     }
     
     func setTaskTapped() {
-        let bottomSheet = BottomSheet(
-            detents: [.large],
-            preferredCard: BottomSheetCard(),
-            preferredGrabber: .default,
-            prefferedGrabberForMaximumDetentValue: .default
-        )
-        
         navigator.navigate { route in
             route
                 .top(.container)
                 .present(
                     screens.setTaskScreen()
-                        .withBottomSheetStack(bottomSheet, of: CustomBottomSheetStackController.self)
+                        .withStackContainer(of: CustomStackController.self)
                 )
         }
     }

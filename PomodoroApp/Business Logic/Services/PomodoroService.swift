@@ -91,7 +91,6 @@ final class PomodoroServiceImpl: PomodoroService {
         }
     }
     
-    // TODO: - Понять зачем
     private var ignoreDelegate = false
     
     // MARK: - Public Methods
