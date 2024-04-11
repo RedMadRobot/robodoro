@@ -14,15 +14,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navigator: ScreenNavigator?
     let screens = Screens()
-    
-    var delayedEnterForegroundAction: (() -> Void)?
-    
+        
     private var timedPomodoroWorker: TimedPomodoroWorker?
     
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
+        print("LAUNCHED")
         let window = UIWindow(frame: UIScreen.main.bounds)
         let navigator = ScreenNavigator(window: window, logger: .none)
         
@@ -33,26 +32,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         navigator
             .navigate(to: screens.showTestRoute())
         
+        timedPomodoroWorker?.handleEnterForeground()
+        
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
         guard let action = LinkManager.getAction(from: url) else { return false }
         print("HANDLE ACTION \(action)")
 
-        switch app.applicationState {
-        case .inactive:
-            delayedEnterForegroundAction = {
-                self.timedPomodoroWorker?.handleLinkAction(action) {
-                    self.dismissPomodoroScreen()
-                }
-            }
-        case .background:
-            delayedEnterForegroundAction = {
-                self.timedPomodoroWorker?.setLinkAction(action)
-            }
-        default:
-            break
+        self.timedPomodoroWorker?.handleLinkAction(action) {
+            self.dismissPomodoroScreen()
         }
         
         return true
@@ -61,49 +55,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         print("BACKGROUND")
         
-        performIfPomodoroScreenFound {
-            self.timedPomodoroWorker?.handleEnterBackground()
-        }
+        timedPomodoroWorker?.handleEnterBackground()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("FOREGROUND")
         
-        delayedEnterForegroundAction = {
-            self.performIfPomodoroScreenFound {
-                self.timedPomodoroWorker?.handleEnterForeground {
-                    self.dismissPomodoroScreen()
-                }
-            }
-        }
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        print("ACTIVE")
-        delayedEnterForegroundAction?()
-        delayedEnterForegroundAction = nil
+        timedPomodoroWorker?.handleEnterForeground()
     }
     
     // MARK: - Private methods
-    
-    private func performIfPomodoroScreenFound(_ action: @escaping () -> Void) {
-        let pomodoroScren = screens.pomodoroScreen()
-        
-        navigator?.navigate(
-            to: { route in
-                route
-                    .top(.container(of: pomodoroScren))
-            },
-            completion: { result in
-                switch result {
-                case .success:
-                    action()
-                case .failure:
-                    break
-                }
-            }
-        )
-    }
     
     private func dismissPomodoroScreen() {
         let pomodoroScreen = screens.pomodoroScreen()

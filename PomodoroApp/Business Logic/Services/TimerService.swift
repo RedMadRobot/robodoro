@@ -24,8 +24,7 @@ protocol TimerService {
     
     func start()
     func pause()
-    func resume()
-    func reset(waitingTime: TimeInterval)
+    func reset(waitingTime: TimeInterval, initial: Bool)
     func stop()
     func suspend()
 }
@@ -65,14 +64,9 @@ final class TimerServiceImpl: TimerService {
         timer?.invalidate()
     }
     
-    func resume() {
-        guard let _ = timer else { return }
-        runTimer()
-    }
-    
-    func reset(waitingTime: TimeInterval) {
+    func reset(waitingTime: TimeInterval, initial: Bool) {
         currentWaitingTime = waitingTime
-        currentState = .initial(currentWaitingTime)
+        currentState = initial ? .initial(currentWaitingTime) : .paused(currentWaitingTime)
         clearTimer()
     }
     

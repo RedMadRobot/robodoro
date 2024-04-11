@@ -24,17 +24,7 @@ final class ScenarioResolver {
     }
     
     var shouldShowPomodoro: Bool {
-        guard let _ = userDefaultsStorage.appReloadSavedData else { return false }
-        return true
-    }
-    
-    var readyToResumeTask: Bool {
-        guard let id = timedPomodoroWorker.currentTaskId,
-              let _ = tasksStorage.getTask(withId: id) else {
-            timedPomodoroWorker.reset()
-            return false
-        }
-        return true
+        timedPomodoroWorker.settedUp
     }
     
     // MARK: - Private Properties
@@ -62,10 +52,5 @@ final class ScenarioResolver {
     
     func onboardingCompleted() {
         userDefaultsStorage.onboadingShowed = true
-    }
-    
-    func setupPomodoroFromSavedData() {
-        guard let data = userDefaultsStorage.appReloadSavedData else { return }
-        timedPomodoroWorker.setup(savedData: data)
     }
 }

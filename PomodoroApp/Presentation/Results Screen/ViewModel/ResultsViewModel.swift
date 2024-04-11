@@ -179,7 +179,6 @@ final class ResultsViewModel: ViewModel {
                 preferredGrabber: .default,
                 prefferedGrabberForMaximumDetentValue: .default
             )
-            
             navigator.navigate { route in
                 route
                     .top(.container)
@@ -194,21 +193,17 @@ final class ResultsViewModel: ViewModel {
     }
     
     private func showPomodoroScreenIfNeeded() -> Bool {
-        if scenarioResolver.shouldShowPomodoro {
-            scenarioResolver.setupPomodoroFromSavedData()
-            guard scenarioResolver.readyToResumeTask else { return false }
-            navigator.navigate { route in
-                route
-                    .top(.container)
-                    .present(
-                        screens.pomodoroScreen()
-                            .withStackContainer(of: CustomStackController.self)
-                            .withModalPresentationStyle(.fullScreen)
-                    )
-            }
-            return true
+        guard scenarioResolver.shouldShowPomodoro else { return false }
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .present(
+                    screens.pomodoroScreen()
+                        .withStackContainer(of: CustomStackController.self)
+                        .withModalPresentationStyle(.fullScreen)
+                )
         }
-        return false
+        return true
     }
 }
 
