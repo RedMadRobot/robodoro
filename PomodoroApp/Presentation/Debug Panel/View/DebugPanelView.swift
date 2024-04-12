@@ -5,39 +5,25 @@
 //  Created by Петр Тартынских  on 16.02.2023.
 //
 
+import Nivelir
 import SwiftUI
 
 struct DebugPanelView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = DebugPanelViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: DebugPanelViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: DebugPanelViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
     
     var body: some View {
-        form
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(Strings.DebugPanel.navigationTitle)
-                }
-            }
-    }
-    
-    // MARK: - Private Properties
-    
-    @ViewBuilder
-    private var form: some View {
         Form {
             Section {
                 CustomTextField(
@@ -90,7 +76,12 @@ struct DebugPanelView: View {
 struct DebagPanelView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            DebugPanelView(navigator: MainNavigator())
+            DebugPanelView(
+                viewModel: DebugPanelViewModel(
+                    navigator: ScreenNavigator(window: UIWindow()),
+                    screens: Screens()
+                )
+            )
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 final class SetTaskViewModel: ViewModel {
@@ -14,6 +15,22 @@ final class SetTaskViewModel: ViewModel {
     
     private enum Constants {
         static let maxTitleLength = 50
+    }
+    
+    // MARK: - Private Properties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private let timedPomodoroWorker: TimedPomodoroWorker
+    private var userDefaultsStorage: LastUsedValuesStorage & SettingsStorage
+    
+    private var trimmedTaskTitle: String {
+        taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private var isTaskTitleEmpty: Bool {
+        trimmedTaskTitle == ""
     }
     
     // MARK: - Public Properties
@@ -53,26 +70,17 @@ final class SetTaskViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
-    // MARK: - Private Properties
-    
-    private let timedPomodoroWorker: TimedPomodoroWorker
-    private var userDefaultsStorage: LastUsedValuesStorage & SettingsStorage
-    
-    private var trimmedTaskTitle: String {
-        taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
-    private var isTaskTitleEmpty: Bool {
-        trimmedTaskTitle == ""
-    }
-    
     // MARK: - Init
     
     init(
+        navigator: ScreenNavigator,
+        screens: Screens,
         timedPomodoroWorker: TimedPomodoroWorker = DI.workers.timedPomodoroWorker,
         userDefaultsStorage: LastUsedValuesStorage & SettingsStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
+        self.navigator = navigator
+        self.screens = screens
         self.timedPomodoroWorker = timedPomodoroWorker
         self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
@@ -86,7 +94,7 @@ final class SetTaskViewModel: ViewModel {
     
     // MARK: - Public Methods
     
-    func applyParameters() {
+    func startTimerTapped() {
         saveLastValues()
         
         let focusTimeValue = focusTimeValue
@@ -107,6 +115,18 @@ final class SetTaskViewModel: ViewModel {
                 }
             })
         timedPomodoroWorker.mainAction()
+        
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .presenting
+                .dismiss()
+                .present(
+                    screens.pomodoroScreen()
+                        .withStackContainer(of: CustomStackController.self)
+                        .withModalPresentationStyle(.fullScreen)
+                )
+        }
     }
     
     func shouldChangeText(range: NSRange, replacementText: String) -> Bool {

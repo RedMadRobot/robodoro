@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 final class DebugPanelViewModel: ViewModel {
@@ -15,6 +16,26 @@ final class DebugPanelViewModel: ViewModel {
     private enum Constants {
         static let maxTitleLength = 50
     }
+    
+    // MARK: - Private Properties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private var trimmedTaskTitle: String {
+        taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private var isTaskTitleEmpty: Bool {
+        trimmedTaskTitle == ""
+    }
+    
+    private let tasksStorage: TasksStorage
+    private var userDefaultsStorage: SettingsStorage &
+                                     OnboardingStorage &
+                                     LastUsedValuesStorage
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Public Properties
     
@@ -40,39 +61,24 @@ final class DebugPanelViewModel: ViewModel {
     
     private(set) var feedbackService: FeedbackService
     
-    // MARK: - Private Properties
-    
-    private var trimmedTaskTitle: String {
-        taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
-    private var isTaskTitleEmpty: Bool {
-        trimmedTaskTitle == ""
-    }
-    
-    private let tasksStorage: TasksStorage
-    private var userDefaultsStorage: SettingsStorage &
-                                     OnboardingStorage &
-                                     LastUsedValuesStorage
-    
-    private var subscriptions = Set<AnyCancellable>()
-    
     // MARK: - Init
     
     init(
+        navigator: ScreenNavigator,
+        screens: Screens,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
         userDefaultsStorage: SettingsStorage &
                              OnboardingStorage &
                              LastUsedValuesStorage = DI.storages.userDefaultsStorage,
         feedbackService: FeedbackService = DI.services.feedbackService
     ) {
+        self.navigator = navigator
+        self.screens = screens
         self.tasksStorage = tasksStorage
         self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
-        
         self.shrinkSlidersStep = userDefaultsStorage.shrinkSlidersStep
-        
-        totalTasksCount = tasksStorage.tasks.value.count
+        self.totalTasksCount = tasksStorage.tasks.value.count
         
         addSubscriptions()
     }

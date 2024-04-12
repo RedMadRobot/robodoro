@@ -13,7 +13,7 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding(24)
-            .font(.custom(TextStyle.regularTitle.font.stringName, size: TextStyle.regularTitle.size))
+            .font(TextStyle.regularTitle.swiftUiFont)
             .foregroundColor(Colors.white.swiftUIColor)
             .background(Colors.black.swiftUIColor)
             .clipShape(Capsule())
@@ -28,7 +28,7 @@ struct SecondaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding(24)
-            .font(.custom(TextStyle.regularTitle.font.stringName, size: TextStyle.regularTitle.size))
+            .font(TextStyle.regularTitle.swiftUiFont)
             .foregroundColor(Colors.black.swiftUIColor)
             .background(Colors.white.swiftUIColor)
             .clipShape(Capsule())

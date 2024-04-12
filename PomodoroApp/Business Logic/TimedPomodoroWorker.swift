@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Nivelir
 
 // MARK: - TimedPomodoroWorker
 
@@ -14,12 +15,10 @@ protocol TimedPomodoroWorker {
     var pomodoroState: CurrentValueSubject<PomodoroState, Never> { get }
     var timerState: CurrentValueSubject<TimerState, Never> { get }
     var leftTime: CurrentValueSubject<TimeInterval, Never> { get }
-    
+    var settedUp: Bool { get }
     var maxStagesCount: Int { get }
     var activeStagesCount: Int { get }
     var lastStageState: StageElementViewState { get }
-    var enterForegroundAction: LinkManager.Action? { get }
-    var currentTaskId: UUID? { get }
     
     func setup(
         taskName: String?,
@@ -28,10 +27,9 @@ protocol TimedPomodoroWorker {
     func setup(savedData: AppReloadSavedData)
     func mainAction()
     func reset()
-    func setLinkAction(_ action: LinkManager.Action)
-    func handleLinkAction(_ action: LinkManager.Action, navigator: MainNavigator)
+    func handleLinkAction(_ action: LinkManager.Action, onEndedState: () -> Void)
     func handleEnterBackground()
-    func handleEnterForeground(navigator: MainNavigator)
+    func handleEnterForeground()
     func requestNotificationPermissionIfNeeded()
     func stopActivityIfNeeded()
     func cancelNotification()
@@ -67,9 +65,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         }
     }
     
-    var enterForegroundAction: LinkManager.Action?
-    
-    private(set) var currentTaskId: UUID?
+    private(set) var settedUp = false
     
     // MARK: - Private Properties
     
@@ -86,7 +82,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     
     private var customIntervals: ((PomodoroState) -> TimeInterval)?
     private var currentStagePassedTime: TimeInterval?
-    private var settedUp = false
+    private var currentTaskId: UUID?
     
     // MARK: - Init
     
@@ -114,7 +110,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         self.pomodoroService.delegate = self
         self.timerService.delegate = self
         
-        timerService.reset(waitingTime: pomodoroService.currentState.defaultWaitingTime)
+        timerService.reset(waitingTime: pomodoroService.currentState.defaultWaitingTime, initial: true)
         
         addSubscriptions()
     }
@@ -128,7 +124,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
     ) {
         pomodoroService.setup(stages: stages)
         customIntervals = intervals
-        timerService.reset(waitingTime: interval(for: pomodoroService.currentState))
+        timerService.reset(waitingTime: interval(for: pomodoroService.currentState), initial: true)
         currentTaskId = tasksStorage.createTask(withTitle: taskName).id
         currentStagePassedTime = 0
         settedUp = true
@@ -150,7 +146,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         currentTaskId = savedData.taskId
         currentStagePassedTime = interval(for: pomodoroService.currentState) - savedData.leftTime
         
-        timerService.reset(waitingTime: savedData.leftTime)
+        timerService.reset(waitingTime: savedData.leftTime, initial: currentStagePassedTime == 0)
         
         if let backgroundDate = savedData.backgroundDate {
             let currentInterval = interval(for: pomodoroService.currentState)
@@ -168,7 +164,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
                 timerService.stop()
                 pomodoroService.moveForward()
             } else {
-                timerService.reset(waitingTime: currentWaitingTime)
+                timerService.reset(waitingTime: currentWaitingTime, initial: true)
                 timerService.start()
             }
         }
@@ -193,7 +189,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             timerService.pause()
             cancelNotification()
         case .paused:
-            timerService.resume()
+            timerService.start()
             scheduleCurrentStateNotification()
         default:
             break
@@ -209,11 +205,7 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         settedUp = false
     }
     
-    func setLinkAction(_ action: LinkManager.Action) {
-        enterForegroundAction = action
-    }
-    
-    func handleLinkAction(_ action: LinkManager.Action, navigator: MainNavigator) {
+    func handleLinkAction(_ action: LinkManager.Action, onEndedState: () -> Void) {
         switch (action, timerState.value) {
         case (.start, .initial),
              (.start, .paused),
@@ -221,22 +213,21 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
             mainAction()
         case (.stop, .ended):
             reset()
-            navigator.hidePomodoroModal()
+            onEndedState()
         default:
             break
         }
     }
     
     func handleEnterBackground() {
-        guard let _ = currentTaskId  else { return }
+        guard let _ = currentTaskId else { return }
         saveState()
         timerService.suspend()
     }
     
-    func handleEnterForeground(navigator: MainNavigator) {
+    func handleEnterForeground() {
         guard let savedData = userDefaultsStorage.appReloadSavedData else { return }
         setup(savedData: savedData)
-        handleLinkActionIfNeeded(navigator: navigator)
     }
     
     func requestNotificationPermissionIfNeeded() {
@@ -297,16 +288,12 @@ final class TimedPomodoroWorkerImpl: TimedPomodoroWorker {
         .store(in: &subscriptions)
     }
     
-    private func handleLinkActionIfNeeded(navigator: MainNavigator) {
-        guard let action = enterForegroundAction else { return }
-        handleLinkAction(action, navigator: navigator)
-        enterForegroundAction = nil
-    }
-    
     private func updateManagingTaskIntervalIfNeeded() {
-        guard let currentTaskId = currentTaskId,
-              let currentStagePassedTime = currentStagePassedTime,
-              pomodoroState.value == .focus else { return }
+        guard
+            let currentTaskId,
+            let currentStagePassedTime,
+            pomodoroState.value == .focus
+        else { return }
         
         let newStagePassedTime = interval(for: pomodoroState.value) - leftTime.value
         
@@ -341,7 +328,7 @@ extension TimedPomodoroWorkerImpl: PomodoroServiceDelegate {
     func pomodoroService(_ service: PomodoroService, didChangeStateTo state: PomodoroState) {
         currentStagePassedTime = 0
         pomodoroState.send(state)
-        timerService.reset(waitingTime: interval(for: state))
+        timerService.reset(waitingTime: interval(for: state), initial: true)
     }
     
     func pomodoroServiceEnded(_ service: PomodoroService) {

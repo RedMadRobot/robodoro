@@ -5,22 +5,20 @@
 //  Created by Петр Тартынских  on 12.12.2022.
 //
 
+import Nivelir
 import SwiftUI
 
 struct SettingsView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = SettingsViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: SettingsViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
@@ -28,13 +26,13 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             Colors.white.swiftUIColor
+                .ignoresSafeArea()
             frontView
         }
-        .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                navBarView
-            }
+            #if DEBUG
+            ToolbarItem(placement: .topBarTrailing) { moveToDebugPanelButton }
+            #endif
         }
     }
     
@@ -60,29 +58,9 @@ struct SettingsView: View {
     }
     
     @ViewBuilder
-    private var navBarView: some View {
-        ZStack {
-            HStack {
-                Button {
-                    navigator.pop()
-                } label: {
-                    Images.arrowLeft.swiftUIImage
-                        .padding([.top, .bottom, .trailing], 10)
-                }
-                Spacer()
-            }
-            Text(Strings.Settings.title)
-                .textStyle(.regularTitle)
-            #if DEBUG
-            HStack {
-                Spacer()
-                Button {
-                    navigator.pushDebugPanel()
-                } label: {
-                    Text(Strings.Settings.debugPanel)
-                }
-            }
-            #endif
+    private var moveToDebugPanelButton: some View {
+        Button(action: viewModel.moveToDebugPanelTapped){
+            Text(Strings.Settings.debugPanel)
         }
     }
     
@@ -103,7 +81,12 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SettingsView(navigator: MainNavigator())
+            SettingsView(
+                viewModel: SettingsViewModel(
+                    navigator: ScreenNavigator(window: UIWindow()),
+                    screens: Screens()
+                )
+            )
         }
     }
 }

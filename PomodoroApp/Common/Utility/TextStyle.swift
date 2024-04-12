@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - TextStyle
+
 enum TextStyle {
     case stageLabel
     case time
@@ -18,7 +20,9 @@ enum TextStyle {
     case widgetBigTime
     case widgetSmallTime
     
-    enum Font {
+    // MARK: - Private
+    
+    private enum FontFamily {
         case cofoSans
         case unboundedBlond
         case unboundedRegular
@@ -35,7 +39,7 @@ enum TextStyle {
         }
     }
     
-    var font: Font {
+    private var fontFamily: FontFamily {
         switch self {
         case .stageLabel, .time, .miniTime, .bigTitle, .widgetBigTime, .widgetSmallTime:
             return .unboundedBlond
@@ -45,6 +49,8 @@ enum TextStyle {
             return .unboundedRegular
         }
     }
+    
+    // MARK: - Public
     
     var size: CGFloat {
         switch self {
@@ -68,7 +74,17 @@ enum TextStyle {
             return 48
         }
     }
+    
+    var swiftUiFont: SwiftUI.Font {
+        SwiftUI.Font(uiFont)
+    }
+    
+    var uiFont: UIFont {
+        UIFont(name: fontFamily.stringName, size: size) ?? .systemFont(ofSize: size)
+    }
 }
+
+// MARK: - Text+TextStyle
 
 extension Text {
     func textStyle(
@@ -76,7 +92,7 @@ extension Text {
         color: Color? = Colors.black.swiftUIColor,
         lineLimit: Int? = nil
     ) -> some View {
-        font(.custom(textStyle.font.stringName, size: textStyle.size))
+        font(textStyle.swiftUiFont)
             .lineLimit(lineLimit)
             .foregroundColor(color)
     }

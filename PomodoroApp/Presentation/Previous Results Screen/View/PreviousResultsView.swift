@@ -5,22 +5,20 @@
 //  Created by Петр Тартынских  on 17.01.2023.
 //
 
+import Nivelir
 import SwiftUI
 
 struct PreviousResultsView: View {
     
     // MARK: - Private Properties
     
-    @StateObject
-    private var viewModel = PreviousResultsViewModel()
-    
     @ObservedObject
-    private var navigator: MainNavigator
+    private var viewModel: PreviousResultsViewModel
     
     // MARK: - Init
     
-    init(navigator: MainNavigator) {
-        self.navigator = navigator
+    init(viewModel: PreviousResultsViewModel) {
+        self.viewModel = viewModel
     }
     
     // MARK: - View
@@ -38,9 +36,6 @@ struct PreviousResultsView: View {
     private var tasksView: some View {
         ScrollView {
             VStack(spacing: 8) {
-                Text(Strings.PreviousResults.title)
-                    .textStyle(.regularTitle)
-                    .padding(.top, 32)
                 warningView
                 SpendedMinutesView(
                     dailyAverageFocusValue: viewModel.dailyAverageFocusValue,
@@ -56,10 +51,10 @@ struct PreviousResultsView: View {
     private var frontView: some View {
         VStack {
             Spacer()
-            Button(Strings.PreviousResults.buttonTitle) {
-                viewModel.clearOldTasks()
-                navigator.hidePreviousResultsSheet()
-            }
+            Button(
+                Strings.PreviousResults.buttonTitle,
+                action: viewModel.confirmButtonTapped
+            )
             .buttonStyle(PrimaryButtonStyle())
             .padding(16)
         }
@@ -86,6 +81,11 @@ struct PreviousResultsView: View {
 
 struct PreviousResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviousResultsView(navigator: MainNavigator())
+        PreviousResultsView(
+            viewModel: PreviousResultsViewModel(
+                navigator: ScreenNavigator(window: UIWindow()),
+                screens: Screens()
+            )
+        )
     }
 }

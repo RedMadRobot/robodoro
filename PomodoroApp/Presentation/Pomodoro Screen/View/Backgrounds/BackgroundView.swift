@@ -5,6 +5,7 @@
 //  Created by Петр Тартынских  on 14.11.2022.
 //
 
+import Nivelir
 import SwiftUI
 
 struct BackgroundView: View {
@@ -51,6 +52,11 @@ struct BackgroundView: View {
 
 struct BackgroundView_Previews: PreviewProvider {
     static var previews: some View {
-        BackgroundView(viewModel: PomodoroViewModel())
+        BackgroundView(
+            viewModel: PomodoroViewModel(
+                navigator: ScreenNavigator(window: UIWindow()),
+                screens: Screens()
+            )
+        )
     }
 }

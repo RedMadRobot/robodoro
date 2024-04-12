@@ -5,9 +5,19 @@
 //  Created by Петр Тартынских  on 18.01.2023.
 //
 
+import Nivelir
 import SwiftUI
 
 final class OnboardingViewModel: ViewModel {
+    
+    // MARK: - Private properties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private weak var delegate: OnboardingScreenDelegate?
+    
+    private let scenarioResolver: ScenarioResolver
     
     // MARK: - Public Properties
     
@@ -18,11 +28,36 @@ final class OnboardingViewModel: ViewModel {
     
     // MARK: - Init
     
-    init(feedbackService: FeedbackService = DI.services.feedbackService) {
+    init(
+        navigator: ScreenNavigator,
+        screens: Screens,
+        feedbackService: FeedbackService = DI.services.feedbackService,
+        scenarioResolver: ScenarioResolver = ScenarioResolver(),
+        delegate: OnboardingScreenDelegate? = nil
+    ) {
+        self.navigator = navigator
+        self.screens = screens
         self.feedbackService = feedbackService
+        self.scenarioResolver = scenarioResolver
+        self.delegate = delegate
     }
     
-    func hideWhoWeAre() {
+    func whoWeAreViewButtonTapped() {
         whoWeAreIsVisible = false
+    }
+    
+    func onboardingButtonTapped() {
+        scenarioResolver.onboardingCompleted()
+        navigator.navigate(
+            to: { route in
+                route
+                    .top(.container)
+                    .presenting
+                    .dismiss()
+            },
+            completion: { [weak self] _ in
+                self?.delegate?.onboardingCompleted()
+            }
+        )
     }
 }

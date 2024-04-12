@@ -10,7 +10,7 @@ import Foundation
 final class AppServices {
     
     lazy var activityService: LiveActivityService = LiveActivityServiceImpl()
-    lazy var feedbackService: FeedbackService =  FeedbackServiceImpl(userDefaultsStorage: storages.userDefaultsStorage)
+    lazy var feedbackService: FeedbackService = FeedbackServiceImpl(userDefaultsStorage: storages.userDefaultsStorage)
     lazy var dateCalculatorService: DateCalculatorService = DateCalculatorServiceImpl()
     lazy var notificationService: NotificationService = NotificationServiceImpl()
     lazy var pomodoroService: PomodoroService = PomodoroServiceImpl()

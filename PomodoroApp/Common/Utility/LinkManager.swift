@@ -41,7 +41,7 @@ final class LinkManager {
         return components.url!
     }
     
-    static func manage(url: URL) -> Action? {
+    static func getAction(from url: URL) -> Action? {
         guard url.scheme == Constants.scheme,
               url.host == Constants.host,
               url.path == Constants.timerPath,

@@ -11,12 +11,12 @@ struct WhoAreWeView: View {
     
     // MARK: - Private Properties
     
-    private var onButtonClick: () -> Void
+    private var onButtonTapped: () -> Void
     
     // MARK: - Init
     
-    init(onButtonClick: @escaping () -> Void) {
-        self.onButtonClick = onButtonClick
+    init(onButtonTapped: @escaping () -> Void) {
+        self.onButtonTapped = onButtonTapped
     }
     
     // MARK: - Constants
@@ -86,7 +86,7 @@ struct WhoAreWeView: View {
             Spacer()
             Button(Strings.Onboaring.AboutUs.buttonTitle) {
                 withAnimation(.linear(duration: 0.3)) {
-                    onButtonClick()
+                    onButtonTapped()
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -99,6 +99,6 @@ struct WhoAreWeView: View {
 
 struct WhoAreWeView_Previews: PreviewProvider {
     static var previews: some View {
-        WhoAreWeView(onButtonClick: {})
+        WhoAreWeView(onButtonTapped: {})
     }
 }

@@ -6,9 +6,25 @@
 //
 
 import Combine
+import Nivelir
 import SwiftUI
 
 final class ResultsViewModel: ViewModel {
+        
+    // MARK: - Private Properties
+    
+    private let navigator: ScreenNavigator
+    private let screens: Screens
+    
+    private let dateCalculatorService: DateCalculatorService
+    private let tasksStorage: TasksStorage
+    private var userDefaultsStorage: OnboardingStorage
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private var taskToDelete: PomodoroTaskItem?
+    
+    private let scenarioResolver: ScenarioResolver
     
     // MARK: - Public Properties
     
@@ -24,30 +40,30 @@ final class ResultsViewModel: ViewModel {
     @Published
     private(set) var showDeletionOnboarding: Bool
     
+    @Published
+    private(set) var alertState: AlertState = .noAlert
+    
     private(set) var feedbackService: FeedbackService
-    
-    // MARK: - Private Properties
-        
-    private let dateCalculatorService: DateCalculatorService
-    private let tasksStorage: TasksStorage
-    private var userDefaultsStorage: OnboardingStorage
-    
-    private var subscriptions = Set<AnyCancellable>()
-    
-    private var taskToDelete: PomodoroTaskItem?
     
     // MARK: - Init
     
     init(
+        navigator: ScreenNavigator,
+        screens: Screens,
         dateCalculatorService: DateCalculatorService = DI.services.dateCalculatorService,
         tasksStorage: TasksStorage = DI.storages.taskStorage,
         userDefaultsStorage: OnboardingStorage = DI.storages.userDefaultsStorage,
-        feedbackService: FeedbackService = DI.services.feedbackService
+        feedbackService: FeedbackService = DI.services.feedbackService,
+        scenarioResolver: ScenarioResolver = ScenarioResolver()
     ) {
+        self.navigator = navigator
+        self.screens = screens
         self.dateCalculatorService = dateCalculatorService
         self.tasksStorage = tasksStorage
         self.userDefaultsStorage = userDefaultsStorage
         self.feedbackService = feedbackService
+        self.scenarioResolver = scenarioResolver
+        
         self.showDeletionOnboarding = !userDefaultsStorage.deleteFeatureUsed
         
         let allTasks = tasksStorage.tasks.value
@@ -60,16 +76,46 @@ final class ResultsViewModel: ViewModel {
     
     // MARK: - Public Methods
     
-    func prepareToDeleteTask(task: PomodoroTaskItem) {
-        taskToDelete = task
+    func viewDidAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.showOverlayScreensIfNeeded()
+        }
     }
     
-    func deleteSelectedTask() {
-        guard let taskToDelete else { return }
-        tasksStorage.deleteTask(withId: taskToDelete.id)
-        self.taskToDelete = nil
-        userDefaultsStorage.deleteFeatureUsed = true
-        showDeletionOnboarding = false
+    func moveToSettingsTapped() {
+        navigator.navigate { route in
+            route
+                .top(.stack)
+                .push(screens.settingsScreen())
+        }
+    }
+    
+    func setTaskTapped() {
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .present(
+                    screens.setTaskScreen()
+                        .withStackContainer(of: CustomStackController.self)
+                )
+        }
+    }
+    
+    func prepareToDeleteTask(task: PomodoroTaskItem) {
+        taskToDelete = task
+        
+        let alertViewModel = AlertViewModel(
+            title: Strings.ResultsScreen.DeleteTaskAlert.title,
+            primaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.primaryAction,
+            secondaryButtonTitle: Strings.ResultsScreen.DeleteTaskAlert.secondaryAction,
+            primaryAction: deleteSelectedTask,
+            commonCompletion: { [weak self] in
+                self?.taskToDelete = nil
+                self?.alertState = .noAlert
+            }
+        )
+        
+        alertState = .presenting(alertViewModel)
     }
     
     // MARK: - Private Methods
@@ -85,5 +131,79 @@ final class ResultsViewModel: ViewModel {
     private func recalculateTime(tasks: [PomodoroTask]) {
         dailyAverageFocusValue = dateCalculatorService.calculateCurrentWeekDailyAverageFocusValue(tasks: tasks)
         totalFocusValue = dateCalculatorService.calculateCurrentWeekTotalFocusValue(tasks: tasks)
+    }
+    
+    private func deleteSelectedTask() {
+        guard let taskToDelete else { return }
+        tasksStorage.deleteTask(withId: taskToDelete.id)
+        userDefaultsStorage.deleteFeatureUsed = true
+        showDeletionOnboarding = false
+    }
+    
+    private func showOverlayScreensIfNeeded() {
+        guard !showOnboardingIfNeeded() else { return }
+        guard !showPreviousResultsScreenIfNeeded() else { return }
+        guard !showPomodoroScreenIfNeeded() else { return }
+    }
+    
+    private func showOnboardingIfNeeded() -> Bool {
+        if scenarioResolver.shouldShowOnboarding {
+            navigator.navigate { route in
+                route
+                    .top(.container)
+                    .present(
+                        screens.onboardingScreen(
+                            delegate: self
+                        )
+                        .withModalPresentationStyle(.overFullScreen)
+                        .withModalTransitionStyle(.crossDissolve)
+                    )
+            }
+            return true
+        }
+        return false
+    }
+    
+    private func showPreviousResultsScreenIfNeeded() -> Bool {
+        if scenarioResolver.shouldShowPreviousResults {
+            let bottomSheet = BottomSheet(
+                detents: [.large],
+                preferredCard: BottomSheetCard(),
+                preferredGrabber: .default,
+                prefferedGrabberForMaximumDetentValue: .default
+            )
+            navigator.navigate { route in
+                route
+                    .top(.container)
+                    .present(
+                        screens.previousResultsScreen()
+                            .withBottomSheetStack(bottomSheet, of: CustomBottomSheetStackController.self)
+                    )
+            }
+            return true
+        }
+        return false
+    }
+    
+    private func showPomodoroScreenIfNeeded() -> Bool {
+        guard scenarioResolver.shouldShowPomodoro else { return false }
+        navigator.navigate { route in
+            route
+                .top(.container)
+                .present(
+                    screens.pomodoroScreen()
+                        .withStackContainer(of: CustomStackController.self)
+                        .withModalPresentationStyle(.fullScreen)
+                )
+        }
+        return true
+    }
+}
+
+// MARK: - OnboardingScreenDelegate
+
+extension ResultsViewModel: OnboardingScreenDelegate {
+    func onboardingCompleted() {
+        showOverlayScreensIfNeeded()
     }
 }
