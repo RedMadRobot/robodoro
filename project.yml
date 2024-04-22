@@ -27,11 +27,12 @@ options:
 settings:
   base:
     SWIFT_VERSION: 5.0
+    CURRENT_PROJECT_VERSION: 3
+    MARKETING_VERSION: 1.4
 targets:
   PomodoroApp:
     type: application
     platform: iOS
-    onlyCopyFilesOnInstall: true
     sources: 
       - path: PomodoroApp
     settings:
@@ -39,8 +40,6 @@ targets:
         TARGETED_DEVICE_FAMILY: 1
         PRODUCT_BUNDLE_IDENTIFIER: com.redmadrobot.pomodoro
         INFOPLIST_FILE: PomodoroApp/Supporting Files/Info.plist
-        CURRENT_PROJECT_VERSION: 2
-        MARKETING_VERSION: 1.4
         OTHER_SWIFT_FLAGS:
           $(inherited)
           -driver-time-compilation
@@ -67,6 +66,7 @@ targets:
     sources: 
       - path: PomodoroWidgetExtension
       - path: PomodoroApp/Common
+      - path: PomodoroApp/Resources
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1

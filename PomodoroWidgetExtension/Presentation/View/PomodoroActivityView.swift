@@ -1,6 +1,6 @@
 //
 //  PomodoroActivityView.swift
-//  PomodoroApp
+//  PomodoroWidgetExtension
 //
 //  Created by Петр Тартынских  on 16.11.2022.
 //

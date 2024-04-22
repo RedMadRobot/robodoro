@@ -1,6 +1,6 @@
 //
 //  Text+Timer.swift
-//  PomodoroWidgetExtensionExtension
+//  PomodoroWidgetExtension
 //
 //  Created by Anna Kocheshkova on 17.01.2023.
 //

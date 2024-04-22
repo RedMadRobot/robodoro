@@ -1,6 +1,6 @@
 //
 //  BreakBackground.swift
-//  PomodoroWidgetExtensionExtension
+//  PomodoroWidgetExtension
 //
 //  Created by Петр Тартынских  on 17.11.2022.
 //
