@@ -29,8 +29,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         self.navigator = navigator
         self.timedPomodoroWorker = DI.workers.timedPomodoroWorker
         
-        navigator
-            .navigate(to: screens.showResultsRoute())
+        navigator.navigate(to: screens.showResultsRoute())
         
         timedPomodoroWorker?.handleEnterForeground()
         
