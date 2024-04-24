@@ -6,3 +6,5 @@ brew install xcodegen
 brew install swiftgen
 
 xcodegen
+
+xcodebuild -resolvePackageDependencies
