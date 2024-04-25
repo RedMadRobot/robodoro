@@ -7,4 +7,5 @@ brew install swiftgen
 
 xcodegen
 
-xcodebuild -resolvePackageDependencies
+defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile
+defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution
