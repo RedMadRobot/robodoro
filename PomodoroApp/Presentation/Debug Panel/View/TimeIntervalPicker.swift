@@ -144,7 +144,7 @@ struct TimeIntervalPicker_Previews: PreviewProvider {
     struct BindingValueHolder: View {
         
         @State 
-        var value: TimeInterval = 10 * 3600 + 25 * 60 + 30
+        var value: TimeInterval = 0
         
         var body: some View {
             TimeIntervalPicker(value: $value)
